@@ -59,36 +59,35 @@
                 <input type="text" name="이메일" placeholder="청구서 수령 이메일" style="width: 200px; margin-left: 10px;">
             </div>
 
-            <div class="product-group">
-                <span>납부방법 선택:</span>
-                <label><input type="radio" name="pay_type" value="bank" onclick="togglePayment('bank')"> 자동이체(계좌) (체크5)</label>
-                <label><input type="radio" name="pay_type" value="card" onclick="togglePayment('card')"> 카드결제 (체크6)</label>
-                <label><input type="radio" name="pay_type" value="paper" onclick="togglePayment('none')"> 지로납부 (체크7)</label>
-            </div>
+          <div class="product-group">
+    <span>납부방법 선택:</span>
+    <label><input type="radio" name="pay_type" value="bank" onclick="togglePayment('bank')"> 자동이체</label>
+    <label><input type="radio" name="pay_type" value="card" onclick="togglePayment('card')"> 카드결제</label>
+</div>
 
-            <div id="bank_info" class="payment-box hidden">
-                <div class="input-grid">
-                    <label>예금주명: <input type="text" name="예금주"></label>
-                    <label>은행명: <input type="text" name="은행"></label>
-                    <label>계좌번호: <input type="text" name="계좌번호"></label>
-                </div>
-            </div>
-
-            <div id="card_info" class="payment-box hidden">
-                <div class="input-grid">
-                    <label>카드주명: <input type="text" name="카드주명"></label>
-                    <label>카드번호: <input type="text" name="카드번호"></label>
-                    <label>유효기간: <input type="text" name="유효기간" placeholder="MM/YY"></label>
-                </div>
-                <div class="product-group">
+<div class="product-group">
     <span>희망 납부일:</span>
     <label><input type="radio" name="납부일" value="5"> 5일</label>
     <label><input type="radio" name="납부일" value="10"> 10일</label>
     <label><input type="radio" name="납부일" value="15"> 15일</label>
     <label><input type="radio" name="납부일" value="25"> 25일</label>
 </div>
-            </div>
-        </div>
+
+<div id="bank_info" class="payment-box hidden">
+    <div class="input-grid">
+        <label>예금주명: <input type="text" name="예금주"></label>
+        <label>은행명: <input type="text" name="은행"></label>
+        <label>계좌번호: <input type="text" name="계좌번호"></label>
+    </div>
+</div>
+
+<div id="card_info" class="payment-box hidden">
+    <div class="input-grid">
+        <label>카드주명: <input type="text" name="카드주명"></label>
+        <label>카드번호: <input type="text" name="카드번호"></label>
+        <label>유효기간: <input type="text" name="유효기간" placeholder="MM/YY"></label>
+    </div>
+</div>
 
         <div class="section">
             <h3>2. 공통 서비스 정보</h3>
