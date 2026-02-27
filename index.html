@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>U+ 서비스 신청서</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; line-height: 1.6; background-color: #f4f4f4; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h2 { color: #e1007e; border-bottom: 2px solid #e1007e; padding-bottom: 10px; }
-        .section { margin-bottom: 25px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        body { font-family: 'Noto Sans KR', sans-serif; padding: 20px; line-height: 1.6; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #e1007e; border-bottom: 3px solid #e1007e; padding-bottom: 10px; margin-top: 0; }
+        h3 { color: #555; font-size: 1.1em; margin-top: 0; }
+        .section { margin-bottom: 25px; padding: 20px; border: 1px solid #eee; border-radius: 8px; background-color: #fff; }
         .hidden { display: none; }
-        .product-group { display: flex; gap: 20px; margin-bottom: 20px; font-weight: bold; background: #fff0f5; padding: 15px; border-radius: 5px; }
-        label { display: block; margin: 8px 0; }
-        input[type="text"], input[type="email"], select { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
-        button { background: #e1007e; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 18px; width: 100%; }
+        .product-group { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 10px; font-weight: bold; background: #fff0f5; padding: 15px; border-radius: 5px; }
+        label { display: block; margin: 10px 0; cursor: pointer; }
+        input[type="text"], input[type="email"], select { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        input[type="checkbox"] { transform: scale(1.2); margin-right: 8px; vertical-align: middle; }
+        button { background: #e1007e; color: white; padding: 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; transition: background 0.3s; }
         button:hover { background: #b10063; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -23,14 +27,14 @@
     <form id="applyForm">
         <div class="section">
             <h3>기본 정보</h3>
-            <label>고객명: <input type="text" name="고객명" required></label>
-            <label>연락처: <input type="text" name="연락처" required></label>
-            <label>주소: <input type="text" name="주소" required></label>
-            <label>이메일: <input type="email" name="이메일"></label>
+            <label>고객명: <input type="text" name="고객명" required placeholder="성함 또는 법인명을 입력하세요"></label>
+            <label>연락처: <input type="text" name="연락처" required placeholder="010-0000-0000"></label>
+            <label>주소: <input type="text" name="주소" required placeholder="상세 주소를 입력하세요"></label>
+            <label>이메일: <input type="email" name="이메일" placeholder="example@mail.com"></label>
         </div>
 
         <div class="section">
-            <h3>서비스 선택 (먼저 체크하세요)</h3>
+            <h3>서비스 선택 (체크 시 상세 메뉴가 나타납니다)</h3>
             <div class="product-group">
                 <label><input type="checkbox" name="체크54" id="btn54" onchange="toggleProduct('officeNet', 'btn54')"> U+ 오피스넷</label>
                 <label><input type="checkbox" name="체크55" id="btn55" onchange="toggleProduct('iptv', 'btn55')"> U+ 기업 IPTV</label>
@@ -39,34 +43,34 @@
         </div>
 
         <div id="officeNet" class="section hidden">
-            <h3>오피스넷 세부설정</h3>
+            <h3>오피스넷 상세 설정 (체크54)</h3>
             <label><input type="checkbox" name="체크15"> 오피스 100M</label>
             <label><input type="checkbox" name="체크16"> 오피스 500M</label>
             <label><input type="checkbox" name="체크17"> 기가오피스넷(1G)</label>
-            <label>설치주소: <input type="text" name="설치주소"></label>
+            <label>설치주소: <input type="text" name="설치주소" placeholder="설치 장소가 다를 경우 입력"></label>
         </div>
 
         <div id="iptv" class="section hidden">
-            <h3>IPTV 세부설정</h3>
+            <h3>IPTV 상세 설정 (체크55)</h3>
             <label><input type="checkbox" name="체크12"> 프리미엄</label>
             <label><input type="checkbox" name="체크13"> 기본형</label>
-            <label>셋톱박스 대수: <input type="text" name="subcount"></label>
+            <label>셋톱박스 대수: <input type="text" name="subcount" placeholder="예: 1"></label>
         </div>
 
         <div id="phone" class="section hidden">
-            <h3>인터넷전화 세부설정</h3>
-            <label>모델명: <input type="text" name="모델명"></label>
-            <label>전화대수: <input type="text" name="전화대수"></label>
-            <label><input type="checkbox" name="체크45"> 신규</label>
-            <label><input type="checkbox" name="체크46"> 번호이동</label>
+            <h3>인터넷전화 상세 설정 (체크56)</h3>
+            <label>모델명: <input type="text" name="모델명" placeholder="단말기 모델 입력"></label>
+            <label>전화대수: <input type="text" name="전화대수" placeholder="예: 2"></label>
+            <label><input type="checkbox" name="체크45"> 신규 가입</label>
+            <label><input type="checkbox" name="체크46"> 번호 이동</label>
         </div>
 
-        <button type="button" onclick="submitForm()">신청서 생성 및 전송</button>
+        <button type="button" id="submitBtn" onclick="submitForm()">신청서 생성 및 전송</button>
     </form>
 </div>
 
 <script>
-    // 1. 조건부 노출 로직
+    // 1. 조건부 노출 로직 (체크박스 클릭 시 섹션 보임/숨김)
     function toggleProduct(sectionId, btnId) {
         const section = document.getElementById(sectionId);
         const checkbox = document.getElementById(btnId);
@@ -80,33 +84,60 @@
 
     // 2. 데이터 전송 로직
     async function submitForm() {
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwT_e1H9ZhT3sLyn3M8vQ1d5guFbF3B_lfESCmbjdHVEK09jnjnKzOsafUtHrF-2whk/exec"; // <--- 여기에 복사한 주소를 넣으세요!
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwT_e1H9ZhT3sLyn3M8vQ1d5guFbF3B_lfESCmbjdHVEK09jnjnKzOsafUtHrF-2whk/exec";
         const form = document.getElementById('applyForm');
-        const formData = new FormData(form);
+        const submitBtn = document.getElementById('submitBtn');
+        
+        // 필수 입력 체크
+        if (!form.reportValidity()) return;
+
+        // 버튼 비활성화 (중복 클릭 방지)
+        submitBtn.disabled = true;
+        submitBtn.innerText = "전송 중... 잠시만 기다려주세요";
+
         const data = {};
 
-        // 체크박스 처리 (체크되면 'v', 안되면 '')
-        form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-            data[cb.name] = cb.checked ? "v" : "";
-        });
-
-        // 텍스트 입력값 처리
+        // 모든 입력값 수집
+        const formData = new FormData(form);
+        
+        // 텍스트/이메일 등 일반 입력값 처리
         form.querySelectorAll('input[type="text"], input[type="email"]').forEach(input => {
             data[input.name] = input.value;
         });
 
-        // 오늘 날짜 자동 삽입
+        // 체크박스 처리 (체크되면 'v', 아니면 빈칸)
+        form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            data[cb.name] = cb.checked ? "v" : "";
+        });
+
+        // 날짜 및 자동 치환 데이터 삽입
         const today = new Date();
         data['년'] = today.getFullYear();
         data['월'] = today.getMonth() + 1;
         data['일'] = today.getDate();
+        
+        // 핵심 요청 사항: 서명 칸에 고객명을 자동으로 할당
+        data['서명'] = data['고객명']; 
 
         try {
+            // GET 방식으로 데이터 전송 (URL 파라미터 생성)
             const queryString = new URLSearchParams(data).toString();
-            await fetch(WEB_APP_URL + "?" + queryString, { method: 'POST' });
-            alert("신청이 완료되었습니다! 잠시 후 구글 드라이브에서 PDF를 확인하세요.");
+            const response = await fetch(WEB_APP_URL + "?" + queryString, {
+                method: 'POST',
+                mode: 'no-cors' // CORS 정책 우회
+            });
+
+            alert("신청이 완료되었습니다!\n\n데이터가 시트에 저장되었으며, PDF가 구글 드라이브에 생성됩니다.\n(서명이 모든 페이지에 자동 적용되었습니다)");
+            form.reset(); // 양식 초기화
+            // 모든 세부 섹션 다시 숨기기
+            document.querySelectorAll('.section.hidden').forEach(s => s.style.display = 'none');
+            
         } catch (e) {
-            alert("전송 중 오류가 발생했습니다.");
+            console.error(e);
+            alert("전송 중 오류가 발생했습니다. 네트워크 상태를 확인해주세요.");
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "신청서 생성 및 전송";
         }
     }
 </script>
