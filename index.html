@@ -40,11 +40,14 @@
             <label>상세 주소: <input type="text" id="detail_address" name="주소_상세" placeholder="상세주소 입력"></label>
             <input type="hidden" name="주소" id="full_address">
 
-            <h4>청구 및 납부 정보</h4>
+            <h4>청구 및 납부 설정</h4>
             <div class="product-group" style="background: #f9f9f9;">
                 <span style="width:100%; margin-bottom:5px;">통합청구신청:</span>
-                <label><input type="checkbox" name="체크1"> 기존 청구서 통합</label>
-                <label><input type="checkbox" name="체크2"> 신규 신청</label>
+                <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+                    <label style="margin: 0;"><input type="checkbox" name="체크1"> 기존 청구서 통합</label>
+                    <input type="text" name="청구서번호" placeholder="청구서 번호 입력" style="width: 200px; padding: 5px; border: 1px solid #e1007e; border-radius: 4px;">
+                    <label style="margin: 0; margin-left: 20px;"><input type="checkbox" name="체크2"> 신규 신청</label>
+                </div>
             </div>
             
             <div class="product-group" style="background: #f9f9f9;">
