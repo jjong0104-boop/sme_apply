@@ -172,6 +172,43 @@
             submitBtn.disabled = false;
         }
     }
+
+    // 주소 복사 기능
+    function copyAddress() {
+        const isSame = document.getElementById("same_as_above").checked;
+        const mainAddr = document.getElementById("main_address").value;
+        const detailAddr = document.getElementById("detail_address").value;
+        const installAddrField = document.getElementById("install_address");
+
+        if (isSame) {
+            if (!mainAddr) {
+                alert("가입자 정보의 주소를 먼저 입력해주세요.");
+                document.getElementById("same_as_above").checked = false;
+                return;
+            }
+            // 기본 주소와 상세 주소를 합쳐서 설치주소에 입력
+            installAddrField.value = mainAddr + " " + detailAddr;
+        } else {
+            installAddrField.value = "";
+        }
+    }
+
+    // 기존 execDaumPostcode 함수에 설치주소 입력 로직 확인
+    function execDaumPostcode(target) {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
+                if(target === 'install') { 
+                    document.getElementById("install_address").value = addr;
+                    document.getElementById("same_as_above").checked = false; // 직접 입력 시 체크 해제
+                }
+                else { 
+                    document.getElementById("main_address").value = addr; 
+                    document.getElementById("detail_address").focus(); 
+                }
+            }
+        }).open();
+    }
 </script>
 </body>
 </html>
