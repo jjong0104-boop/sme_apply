@@ -19,11 +19,11 @@
         .payment-box { border: 2px solid #e1007e; padding: 20px; border-radius: 8px; margin-top: 10px; background: #fffafc; }
         label { display: block; margin: 8px 0; cursor: pointer; }
         input[type="text"], input[type="email"], select { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
-        .num-input { width: 60px !important; display: inline-block; padding: 5px !important; text-align: center; border: 1px solid #e1007e !important; }
+        .num-input { width: 80px !important; display: inline-block; padding: 5px !important; text-align: center; border: 1px solid #e1007e !important; }
         .address-input { background-color: #fff; border: 1px solid #e1007e !important; cursor: pointer; font-weight: bold; }
         input[type="checkbox"], input[type="radio"] { transform: scale(1.2); margin-right: 8px; vertical-align: middle; }
         button { background: #e1007e; color: white; padding: 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 20px; width: 100%; font-weight: bold; margin-top: 30px; transition: 0.3s; }
-        button:hover { background: #b10063; }
+        button:hover { background: #b10063; transform: translateY(-2px); }
     </style>
 </head>
 <body>
@@ -101,7 +101,7 @@
             </div>
 
             <div id="officeNet" class="hidden sub-box">
-                <h4>오피스넷 설정</h4>
+                <h4>U+ 오피스넷 설정</h4>
                 <div class="product-group">요금제: <label><input type="checkbox" name="체크15"> 100M</label><label><input type="checkbox" name="체크16"> 500M</label><label><input type="checkbox" name="체크17"> 1G</label><label><input type="checkbox" name="체크18"> 10G</label></div>
                 
                 <div class="product-group">
@@ -114,14 +114,12 @@
                 
                 <div class="product-group">
                     통신렉구매: 
-                    <label><input type="checkbox" name="체크32"> 소형 ( <input type="text" name="체크32_val" class="num-input"> )</label>
-                    <label><input type="checkbox" name="체크33"> 표준형 ( <input type="text" name="체크33_val" class="num-input"> )</label>
-                    <label><input type="checkbox" name="체크34"> 대형 ( <input type="text" name="체크34_val" class="num-input"> )</label>
-                    <label><input type="checkbox" name="체크35"> DCS전용 ( <input type="text" name="체크35_val" class="num-input"> )</label>
+                    <label><input type="checkbox" name="체크32"> 소형 ( <input type="text" name="체크32_val" class="num-input" placeholder="번호"> )</label>
+                    <label><input type="checkbox" name="체크33"> 표준형 ( <input type="text" name="체크33_val" class="num-input" placeholder="번호"> )</label>
+                    <label><input type="checkbox" name="체크34"> 대형 ( <input type="text" name="체크34_val" class="num-input" placeholder="번호"> )</label>
+                    <label><input type="checkbox" name="체크35"> DCS전용 ( <input type="text" name="체크35_val" class="num-input" placeholder="번호"> )</label>
                 </div>
 
-                <div class="product-group">렉약정: <label><input type="checkbox" name="체크36"> 3년</label><label><input type="checkbox" name="체크37"> 2년</label><label><input type="checkbox" name="체크38"> 1년</label><label><input type="checkbox" name="체크39"> 무약정</label></div>
-                
                 <div class="input-grid">
                     <label>번들(Y/N): <select name="yesorno1"><option value="">선택</option><option value="Y">Y</option><option value="N">N</option></select></label>
                     <label>구내공사(Y/N): <select name="yesorno21"><option value="">선택</option><option value="Y">Y</option><option value="N">N</option></select></label>
@@ -129,9 +127,28 @@
             </div>
 
             <div id="iptv" class="hidden sub-box">
-                <h4>IPTV 설정</h4>
-                <div class="product-group"><label><input type="checkbox" name="체크40"> 프리미엄</label><label><input type="checkbox" name="체크41"> 기본</label></div>
-                <label><input type="checkbox" name="체크44"> UHD 셋탑 ( <input type="text" name="UHD" class="num-input"> 대 )</label>
+                <h4>U+ 기업 IPTV 설정 (체크55)</h4>
+                <div class="product-group">
+                    요금제: <label><input type="checkbox" name="체크40"> 프리미엄</label>
+                    <label><input type="checkbox" name="체크41"> 기본</label>
+                    <label><input type="checkbox" name="체크42"> 실속</label>
+                    <label><input type="checkbox" name="체크43"> 단체</label>
+                </div>
+                <div class="input-grid">
+                    <label>오피스넷 회선번호 (12자리): <input type="text" name="회선번호" maxlength="12" placeholder="숫자만 입력"></label>
+                    <label>와이파이 모델명/개수: <input type="text" name="와이파이모델" placeholder="모델명 및 개수 입력"></label>
+                </div>
+                <div class="product-group">
+                    <label><input type="checkbox" name="체크44"> UHD 셋탑 ( <input type="text" name="UHD" class="num-input"> 대 )</label>
+                </div>
+            </div>
+
+            <div id="phone" class="hidden sub-box">
+                <h4>인터넷전화 상세 (체크56)</h4>
+                <div class="input-grid">
+                    <label>모델명: <input type="text" name="모델명"></label>
+                    <label>전화대수: <input type="text" name="전화대수"></label>
+                </div>
             </div>
         </div>
 
@@ -145,12 +162,11 @@
         document.getElementById('card_info').style.display = (type === 'card') ? 'block' : 'none';
     }
 
-    function execDaumPostcode(type) {
+    function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
-                var addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
-                if(type === 'install') document.getElementById("install_address").value = addr;
-                else { document.getElementById("main_address").value = addr; document.getElementById("detail_address").focus(); }
+                document.getElementById("main_address").value = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
+                document.getElementById("detail_address").focus();
             }
         }).open();
     }
@@ -171,7 +187,7 @@
         new FormData(form).forEach((val, key) => { data[key] = val; });
         form.querySelectorAll('input[type="checkbox"]').forEach(cb => { data[cb.name] = cb.checked ? "v" : ""; });
 
-        // 라디오 버튼(납부방법) 체크박스 치환
+        // 라디오 버튼 치환
         const payType = form.querySelector('input[name="pay_type"]:checked')?.value;
         if (payType === 'bank') data['체크5'] = 'v';
         if (payType === 'card') data['체크6'] = 'v';
@@ -179,7 +195,7 @@
 
         const today = new Date();
         data['년'] = today.getFullYear(); data['월'] = today.getMonth() + 1; data['일'] = today.getDate();
-        data['서명'] = data['고객명']; data['신청인'] = data['고객명'];
+        data['서명'] = data['고객명'];
 
         try {
             await fetch(WEB_APP_URL + "?" + new URLSearchParams(data).toString(), { method: 'POST', mode: 'no-cors' });
