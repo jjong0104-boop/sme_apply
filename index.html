@@ -18,8 +18,9 @@
         label { display: block; margin: 8px 0; cursor: pointer; }
         input[type="text"], input[type="email"], select { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
         .address-input { background-color: #fff; border: 1px solid #e1007e !important; cursor: pointer; font-weight: bold; }
-        input[type="checkbox"], input[type="radio"] { transform: scale(1.2); margin-right: 8px; vertical-align: middle; }
+        input[type="checkbox"] { transform: scale(1.2); margin-right: 8px; vertical-align: middle; }
         button { background: #e1007e; color: white; padding: 18px; border: none; border-radius: 5px; cursor: pointer; font-size: 20px; width: 100%; font-weight: bold; margin-top: 30px; }
+        button:hover { background: #b10063; }
     </style>
 </head>
 <body>
@@ -30,184 +31,155 @@
         
         <div class="section" style="background-color: #fef0f7; border: 1px solid #e1007e;">
             <div class="input-grid">
-                <label><strong>유치자:</strong> 
-                    <input type="text" name="유치자" placeholder="유치자 성함 입력">
-                </label>
-                <label><strong>제휴처:</strong> 
-                    <input type="text" name="제휴처" placeholder="제휴처 명칭 입력">
-                </label>
+                <label><strong>유치자:</strong> <input type="text" name="유치자" placeholder="유치자 성함"></label>
+                <label><strong>제휴처:</strong> <input type="text" name="제휴처" placeholder="제휴처 명칭"></label>
             </div>
         </div>
-        
+
         <div class="section">
             <h3>1. 가입자 정보</h3>
             <div class="input-grid">
-                <label>고객명(법인명): <input type="text" name="고객명" required></label>
+                <label>고객명(법인명): <input type="text" name="고객명" id="cust_name" required></label>
                 <label>연락처: <input type="text" name="연락처" required placeholder="010-0000-0000"></label>
-                <label>사업자등록번호: <input type="text" name="사업자등록번호" placeholder="000-00-00000"></label>
-                <label>생년월일/법인등록번호: <input type="text" name="생년월일" placeholder="6자리 또는 법인번호"></label>
+                <label>사업자등록번호: <input type="text" name="사업자등록번호"></label>
+                <label>생년월일/법인번호: <input type="text" name="생년월일"></label>
             </div>
             <label>주소 (클릭 검색): <input type="text" id="main_address" name="주소_기본" class="address-input" readonly onclick="execDaumPostcode()"></label>
             <label>상세 주소: <input type="text" id="detail_address" name="주소_상세" placeholder="상세주소 입력"></label>
             <input type="hidden" name="주소" id="full_address">
 
             <h4>청구 및 납부 설정</h4>
-            <div class="product-group" style="background: #f9f9f9;">
-                <span style="width:100%; margin-bottom:5px;">통합청구신청:</span>
-                <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
-                    <label style="margin: 0;"><input type="checkbox" name="체크1"> 기존 청구서 통합</label>
-                    <input type="text" name="청구서번호" placeholder="청구서 번호 입력" style="width: 200px; padding: 5px; border: 1px solid #e1007e; border-radius: 4px;">
-                    <label style="margin: 0; margin-left: 20px;"><input type="checkbox" name="체크2"> 신규 신청</label>
-                </div>
+            <div class="product-group">
+                <label><input type="checkbox" name="체크1"> 기존 통합</label>
+                <input type="text" name="청구서번호" placeholder="청구서 번호" style="width: 150px; margin: 0 10px;">
+                <label><input type="checkbox" name="체크2"> 신규 신청</label>
             </div>
-            
-            <div class="product-group" style="background: #f9f9f9;">
-                <span style="width:100%; margin-bottom:5px;">요금확인방법:</span>
-                <label><input type="checkbox" name="체크3"> 이메일</label>
-                <label><input type="checkbox" name="체크4"> 우편</label>
-                <input type="text" name="이메일" placeholder="이메일 주소 입력" style="width: 200px; margin-left: 10px;">
-            </div>
-
-            <div class="product-group" style="background: #fdf2f8;">
-                <span style="width:100%; margin-bottom:5px;">납부방법:</span>
+            <div class="product-group">
                 <label><input type="checkbox" name="체크5"> 자동이체</label>
                 <label><input type="checkbox" name="체크6"> 카드결제</label>
-                <label><input type="checkbox" name="체크7"> 지로납부</label>
-            </div>
-
-            <h4>자동이체/카드 정보</h4>
-            <div class="input-grid">
-                <label>예금주/카드주: <input type="text" name="예금주"></label>
-                <label>은행/카드사: <input type="text" name="은행"></label>
-                <label>계좌/카드번호: <input type="text" name="계좌번호"></label>
-                <label>카드 유효기간: <input type="text" name="유효기간" placeholder="MM/YY"></label>
-            </div>
-
-            <h4>납부일 선택</h4>
-            <div class="product-group">
-                <label><input type="checkbox" name="체크10"> 15일</label>
-                <label><input type="checkbox" name="체크18"> 18일</label>
-                <label><input type="checkbox" name="체크20"> 22일</label>
-                <label><input type="checkbox" name="체크26"> 26일</label>
+                <label>은행/카드사: <input type="text" name="은행" style="width: 120px;"></label>
+                <label>번호: <input type="text" name="계좌번호" style="width: 180px;"></label>
             </div>
         </div>
 
-       <div class="section">
+        <div class="section">
             <h3>2. 공통 서비스 정보</h3>
-            
             <h4>서비스 약정기간</h4>
             <div class="product-group">
                 <label><input type="checkbox" name="체크12"> 3년</label>
                 <label><input type="checkbox" name="체크13"> 1년</label>
                 <label><input type="checkbox" name="체크14"> 5년</label>
-                <label><input type="checkbox" name="무약정"> 무약정</label>
             </div>
-
             <h4>설치 정보</h4>
-            <div style="margin-bottom: 10px;">
-                <label style="display: inline-block; font-weight: bold; color: #e1007e;">
-                    <input type="checkbox" id="same_as_above" onchange="copyAddress()"> 가입자 정보 주소와 동일
-                </label>
-            </div>
-            <label>설치주소 (클릭 검색): 
-                <input type="text" id="install_address" name="설치주소" class="address-input" readonly onclick="execDaumPostcode('install')" placeholder="주소를 입력하거나 위와 동일을 체크하세요">
-            </label>
-            
+            <label style="color: #e1007e; font-weight: bold;"><input type="checkbox" id="same_as_above" onchange="copyAddress()"> 가입자 정보 주소와 동일</label>
+            <label>설치주소: <input type="text" id="install_address" name="설치주소" class="address-input" readonly onclick="execDaumPostcode('install')"></label>
             <div class="input-grid">
-                <label>담당자 성함: <input type="text" name="담당자" placeholder="설치 장소 담당자"></label>
-                <label>휴대폰번호: <input type="text" name="휴대폰" placeholder="010-0000-0000"></label>
+                <label>담당자: <input type="text" name="담당자"></label>
+                <label>휴대폰: <input type="text" name="휴대폰"></label>
             </div>
         </div>
+
+        <div class="section">
+            <h3>3. 서비스 신청사항</h3>
+            <div class="product-group">
+                <label><input type="checkbox" name="체크54" id="btn54" onchange="toggleSection('officeNet', 'btn54')"> U+ 오피스넷</label>
+                <label><input type="checkbox" name="체크55" id="btn55" onchange="toggleSection('iptv', 'btn55')"> U+ 기업 IPTV</label>
+                <label><input type="checkbox" name="체크56" id="btn56" onchange="toggleSection('phone', 'btn56')"> U+ 인터넷 전화</label>
+            </div>
+            
+            <div id="officeNet" class="hidden" style="padding:10px; border-top:1px solid #eee;">
+                <h4>오피스넷 요금제</h4>
+                <div class="product-group">
+                    <label><input type="checkbox" name="체크15"> 100M</label>
+                    <label><input type="checkbox" name="체크16"> 500M</label>
+                    <label><input type="checkbox" name="체크17"> 1G</label>
+                </div>
+            </div>
+
+            <div id="iptv" class="hidden" style="padding:10px; border-top:1px solid #eee;">
+                <h4>IPTV 세부</h4>
+                <label><input type="checkbox" name="체크12_iptv"> 프리미엄</label>
+                <label>셋톱박스 대수: <input type="text" name="체크9"></label>
+            </div>
+
+            <div id="phone" class="hidden" style="padding:10px; border-top:1px solid #eee;">
+                <h4>인터넷전화 상세</h4>
+                <div class="input-grid">
+                    <label>모델명: <input type="text" name="모델명"></label>
+                    <label>전화대수: <input type="text" name="전화대수"></label>
+                </div>
+                <label><input type="checkbox" name="체크53" id="btn53" onchange="toggleSection('phonePlan', 'btn53')"> 정액제 가입</label>
+                <div id="phonePlan" class="hidden" style="background:#f9f9f9; padding:10px;">
+                    <label>정액제명: <input type="text" name="정액제명"></label>
+                    <label>회선수: <input type="text" name="회선수"></label>
+                </div>
+            </div>
+        </div>
+
         <button type="button" id="submitBtn" onclick="submitForm()">신청서 생성 및 전송</button>
     </form>
 </div>
 
 <script>
+    // 주소 검색 (중복 제거 통합 버전)
     function execDaumPostcode(type) {
         new daum.Postcode({
             oncomplete: function(data) {
                 var addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
-                if(type === 'install') { document.getElementsByName("설치주소")[0].value = addr; }
-                else { document.getElementById("main_address").value = addr; document.getElementById("detail_address").focus(); }
+                if(type === 'install') { 
+                    document.getElementById("install_address").value = addr; 
+                    document.getElementById("same_as_above").checked = false;
+                } else { 
+                    document.getElementById("main_address").value = addr; 
+                    document.getElementById("detail_address").focus(); 
+                }
             }
         }).open();
     }
 
+    // 주소 복사
+    function copyAddress() {
+        const isSame = document.getElementById("same_as_above").checked;
+        if (isSame) {
+            const main = document.getElementById("main_address").value;
+            const detail = document.getElementById("detail_address").value;
+            if (!main) { alert("가입자 주소를 먼저 입력하세요."); document.getElementById("same_as_above").checked = false; return; }
+            document.getElementById("install_address").value = main + " " + detail;
+        } else { document.getElementById("install_address").value = ""; }
+    }
+
+    // 섹션 토글
     function toggleSection(sectionId, btnId) {
         const section = document.getElementById(sectionId);
         const checkbox = document.getElementById(btnId);
         section.style.display = checkbox.checked ? 'block' : 'none';
     }
 
+    // 전송
     async function submitForm() {
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwT_e1H9ZhT3sLyn3M8vQ1d5guFbF3B_lfESCmbjdHVEK09jnjnKzOsafUtHrF-2whk/exec";
         const form = document.getElementById('applyForm');
         document.getElementById("full_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
 
         const submitBtn = document.getElementById('submitBtn');
-        submitBtn.disabled = true;
-        submitBtn.innerText = "전송 중...";
+        submitBtn.disabled = true; submitBtn.innerText = "전송 중...";
 
         const data = {};
         const formData = new FormData(form);
         for (let [key, value] of formData.entries()) { data[key] = value; }
-        
-        form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-            data[cb.name] = cb.checked ? "v" : "";
-        });
+        form.querySelectorAll('input[type="checkbox"]').forEach(cb => { data[cb.name] = cb.checked ? "v" : ""; });
 
-        // 자동 날짜 및 서명 데이터
         const today = new Date();
         data['년'] = today.getFullYear(); data['월'] = today.getMonth() + 1; data['일'] = today.getDate();
-        data['서명'] = data['고객명']; // 고객명을 서명으로 자동 사용
-        data['예금주2'] = data['예금주']; // 예금주 중복 태그 처리
+        data['서명'] = data['고객명'];
+        data['예금주2'] = data['예금주'];
 
         try {
             const queryString = new URLSearchParams(data).toString();
             await fetch(WEB_APP_URL + "?" + queryString, { method: 'POST', mode: 'no-cors' });
             alert("신청서 접수가 완료되었습니다!");
             location.reload();
-        } catch (e) {
-            alert("오류가 발생했습니다.");
-            submitBtn.disabled = false;
-        }
-    }
-
-    // 주소 복사 기능
-    function copyAddress() {
-        const isSame = document.getElementById("same_as_above").checked;
-        const mainAddr = document.getElementById("main_address").value;
-        const detailAddr = document.getElementById("detail_address").value;
-        const installAddrField = document.getElementById("install_address");
-
-        if (isSame) {
-            if (!mainAddr) {
-                alert("가입자 정보의 주소를 먼저 입력해주세요.");
-                document.getElementById("same_as_above").checked = false;
-                return;
-            }
-            // 기본 주소와 상세 주소를 합쳐서 설치주소에 입력
-            installAddrField.value = mainAddr + " " + detailAddr;
-        } else {
-            installAddrField.value = "";
-        }
-    }
-
-    // 기존 execDaumPostcode 함수에 설치주소 입력 로직 확인
-    function execDaumPostcode(target) {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                var addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
-                if(target === 'install') { 
-                    document.getElementById("install_address").value = addr;
-                    document.getElementById("same_as_above").checked = false; // 직접 입력 시 체크 해제
-                }
-                else { 
-                    document.getElementById("main_address").value = addr; 
-                    document.getElementById("detail_address").focus(); 
-                }
-            }
-        }).open();
+        } catch (e) { alert("오류 발생"); submitBtn.disabled = false; }
     }
 </script>
 </body>
