@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>U+ 통합신청서 시스템</title>
+    <title>U+ 통합신청서 입력 시스템</title>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; padding: 20px; line-height: 1.6; background-color: #f4f4f4; color: #333; }
@@ -20,8 +20,9 @@
         input[type="text"], input[type="email"], select { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
         .address-input { background-color: #fff; border: 1px solid #e1007e !important; cursor: pointer; font-weight: bold; }
         input[type="checkbox"] { transform: scale(1.2); margin-right: 8px; vertical-align: middle; }
-        .date-signature { text-align: right; margin-top: 40px; border-top: 2px solid #333; padding-top: 20px; }
-        button { background: #e1007e; color: white; padding: 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 20px; width: 100%; font-weight: bold; margin-top: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .date-display { text-align: right; margin-top: 40px; border-top: 2px solid #333; padding-top: 20px; font-weight: bold; color: #666; }
+        button { background: #e1007e; color: white; padding: 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 20px; width: 100%; font-weight: bold; margin-top: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s; }
+        button:hover { background: #b10063; transform: translateY(-2px); }
     </style>
 </head>
 <body>
@@ -32,15 +33,15 @@
         
         <div class="section" style="background-color: #fef0f7; border: 1px solid #e1007e;">
             <div class="input-grid">
-                <label>유치자: <input type="text" name="유치자"></label>
-                <label>제휴처: <input type="text" name="제휴처"></label>
+                <label>유치자: <input type="text" name="유치자" placeholder="유치자 성함"></label>
+                <label>제휴처: <input type="text" name="제휴처" placeholder="제휴처 명칭"></label>
             </div>
         </div>
 
         <div class="section">
             <h3>1. 가입자 기본 정보</h3>
             <div class="input-grid">
-                <label>고객명: <input type="text" name="고객명" id="cust_name" required></label>
+                <label>고객명(신청인): <input type="text" name="고객명" id="cust_name" required></label>
                 <label>연락처: <input type="text" name="연락처" required></label>
                 <label>사업자등록번호: <input type="text" name="사업자등록번호"></label>
                 <label>생년월일(법인번호): <input type="text" name="생년월일"></label>
@@ -74,9 +75,9 @@
             <div class="product-group">
                 <span>납부일:</span>
                 <label><input type="checkbox" name="체크10"> 15일</label>
-                <label><input type="checkbox" name="체크18_pay"> 18일</label>
-                <label><input type="checkbox" name="체크20_pay"> 22일</label>
-                <label><input type="checkbox" name="체크26_pay"> 26일</label>
+                <label><input type="checkbox" name="체크18"> 18일</label>
+                <label><input type="checkbox" name="체크20"> 22일</label>
+                <label><input type="checkbox" name="체크26"> 26일</label>
             </div>
         </div>
 
@@ -107,61 +108,37 @@
 
             <div id="officeNet" class="hidden sub-box">
                 <h4>오피스넷 (체크54)</h4>
-                <p>요금제:</p>
-                <div class="product-group">
-                    <label><input type="checkbox" name="체크15"> 100M</label>
-                    <label><input type="checkbox" name="체크16"> 500M</label>
-                    <label><input type="checkbox" name="체크17"> 1G</label>
-                    <label><input type="checkbox" name="체크18"> 10G급</label>
-                </div>
-                <p>IP 신청:</p>
-                <div class="product-group"><label><input type="checkbox" name="체크19"> 유동IP</label><label><input type="checkbox" name="체크20"> 고정IP</label></div>
-                <p>통신장비임대:</p>
-                <div class="product-group">
-                    <label><input type="checkbox" name="체크21"> 광모뎀</label><label><input type="checkbox" name="체크22"> 기가L2</label><label><input type="checkbox" name="체크23"> 공유기형</label>
-                    | 약정: <label><input type="checkbox" name="체크24"> 3년</label>
-                </div>
-                <p>와이파이임대:</p>
-                <div class="product-group">
-                    <label><input type="checkbox" name="체크27"> 기가WF</label><label><input type="checkbox" name="체크28"> 프리미엄</label>
-                    | 약정: <label><input type="checkbox" name="체크29"> 3년</label>
-                </div>
-                <p>통신렉구매:</p>
-                <div class="product-group"><label><input type="checkbox" name="체크32"> 소형</label><label><input type="checkbox" name="체크33"> 표준</label><label><input type="checkbox" name="체크34"> 대형</label><label><input type="checkbox" name="체크35"> DCS</label></div>
-                <p>장비약정(렉):</p>
-                <div class="product-group"><label><input type="checkbox" name="체크36"> 3년</label><label><input type="checkbox" name="체크37"> 2년</label><label><input type="checkbox" name="체크38"> 1년</label><label><input type="checkbox" name="체크39"> 무약정</label></div>
+                <div class="product-group">요금제: <label><input type="checkbox" name="체크15"> 100M</label><label><input type="checkbox" name="체크16"> 500M</label><label><input type="checkbox" name="체크17"> 1G</label><label><input type="checkbox" name="체크18"> 10G</label></div>
+                <div class="product-group">IP신청: <label><input type="checkbox" name="체크19"> 유동</label><label><input type="checkbox" name="체크20"> 고정</label></div>
+                <div class="product-group">장비: <label><input type="checkbox" name="체크21"> 광모뎀</label><label><input type="checkbox" name="체크22"> L2</label><label><input type="checkbox" name="체크23"> 공유기형</label> | 3년약정: <label><input type="checkbox" name="체크24"> 체크</label></div>
+                <div class="product-group">와이파이: <label><input type="checkbox" name="체크27"> 기가</label><label><input type="checkbox" name="체크28"> 프리미엄</label> | 3년약정: <label><input type="checkbox" name="체크29"> 체크</label></div>
+                <div class="product-group">통신렉: <label><input type="checkbox" name="체크32"> 소</label><label><input type="checkbox" name="체크33"> 표준</label><label><input type="checkbox" name="체크34"> 대</label><label><input type="checkbox" name="체크35"> DCS</label></div>
+                <div class="product-group">렉약정: <label><input type="checkbox" name="체크36"> 3년</label><label><input type="checkbox" name="체크37"> 2년</label><label><input type="checkbox" name="체크38"> 1년</label><label><input type="checkbox" name="체크39"> 무약정</label></div>
                 <div class="input-grid"><label>번들(Y/N): <input type="text" name="yesorno1"></label><label>구내공사(Y/N): <input type="text" name="yesorno21"></label></div>
             </div>
 
             <div id="iptv" class="hidden sub-box">
                 <h4>기업 IPTV (체크55)</h4>
-                <div class="product-group"><label><input type="checkbox" name="체크40"> 프리미엄</label><label><input type="checkbox" name="체크41"> 기본형</label><label><input type="checkbox" name="체크42"> 실속형</label><label><input type="checkbox" name="체크43"> 단체형</label></div>
-                <label><input type="checkbox" name="체크44"> UHD 셋탑</label>
-                <label>수량(UHD): <input type="text" name="UHD" style="width:80px;"> 대</label>
+                <div class="product-group"><label><input type="checkbox" name="체크40"> 프리미엄</label><label><input type="checkbox" name="체크41"> 기본</label><label><input type="checkbox" name="체크42"> 실속</label><label><input type="checkbox" name="체크43"> 단체</label></div>
+                <label><input type="checkbox" name="체크44"> UHD 셋탑</label> <label>수량: <input type="text" name="UHD" style="width:50px;"> 대</label>
             </div>
 
             <div id="phone" class="hidden sub-box">
                 <h4>인터넷전화 (체크56)</h4>
-                <div class="input-grid">
-                    <label><input type="checkbox" name="체크45"> 신규(<input type="text" name="신규회선" style="width:40px;">회선)</label>
-                    <label><input type="checkbox" name="체크46"> 번호이동(<input type="text" name="번호이동회선" style="width:40px;">회선)</label>
-                </div>
+                <div class="input-grid"><label><input type="checkbox" name="체크45"> 신규(<input type="text" name="신규회선" style="width:30px;">)</label><label><input type="checkbox" name="체크46"> 번이(<input type="text" name="번호이동회선" style="width:30px;">)</label></div>
                 <label>희망번호: <input type="text" name="희망번호"></label>
-                <div class="product-group"><label><input type="checkbox" name="체크47"> 센트릭스</label><label><input type="checkbox" name="체크57"> 고급형</label> | 모델: <input type="text" name="model" style="width:100px;"></div>
+                <div class="product-group"><label><input type="checkbox" name="체크47"> 센트릭스</label><label><input type="checkbox" name="체크57"> 고급형</label> | 모델: <input type="text" name="model" style="width:80px;"></div>
                 <div class="product-group">장비할부(S): <label><input type="checkbox" name="체크61"> 일시불</label><label><input type="checkbox" name="체크62"> 3년</label></div>
                 <div class="input-grid"><label>단말모델명: <input type="text" name="모델명"></label><label>전화대수: <input type="text" name="전화대수"></label></div>
-                <div class="product-group">장비할부(D): <label><input type="checkbox" name="체크49"> 일시불</label><label><input type="checkbox" name="체크50"> 3년</label> | 보조대수: <input type="text" name="subcount" style="width:50px;"></div>
-                <div class="sub-box"><label><input type="checkbox" name="체크51"> CPG 1포트</label> | 포트대수: <input type="text" name="포트대수" style="width:50px;"></div>
-                <div class="product-group"><label><input type="checkbox" name="체크52"> 종량제</label><label><input type="checkbox" name="체크53"> 정액제</label></div>
+                <div class="product-group">장비할부(D): <label><input type="checkbox" name="체크49"> 일시불</label><label><input type="checkbox" name="체크50"> 3년</label> | 보조: <input type="text" name="subcount" style="width:30px;"></div>
+                <label><input type="checkbox" name="체크51"> CPG 1포트</label> <label>포트대수: <input type="text" name="포트대수" style="width:40px;"></label>
+                <div class="product-group"><label><input type="checkbox" name="체크52"> 종량</label><label><input type="checkbox" name="체크53"> 정액</label></div>
                 <div class="input-grid"><label>정액제명: <input type="text" name="정액제명"></label><label>회선수: <input type="text" name="회선수"></label><label>대상번호: <input type="text" name="대상번호"></label></div>
                 <label>부가서비스: <input type="text" name="부가서비스"></label>
             </div>
         </div>
 
-        <div class="date-signature">
-            <p id="displayDate"></p>
-            <p>신청인: <span id="signatureName" style="border-bottom: 1px solid #000; padding: 0 30px;"></span> (인)</p>
-        </div>
+        <div class="date-display" id="dateDisplay"></div>
 
         <button type="button" id="submitBtn" onclick="submitForm()">신청서 생성 및 전송</button>
     </form>
@@ -169,8 +146,7 @@
 
 <script>
     const today = new Date();
-    document.getElementById('displayDate').innerText = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
-    document.getElementById('cust_name').addEventListener('input', e => { document.getElementById('signatureName').innerText = e.target.value; });
+    document.getElementById('dateDisplay').innerText = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
 
     function execDaumPostcode(type) {
         new daum.Postcode({
@@ -201,16 +177,18 @@
         btn.disabled = true; btn.innerText = "전송 중...";
 
         const data = {};
-        new FormData(form).forEach((value, key) => { data[key] = value; });
+        new FormData(form).forEach((val, key) => { data[key] = val; });
         form.querySelectorAll('input[type="checkbox"]').forEach(cb => { data[cb.name] = cb.checked ? "v" : ""; });
 
+        // 신청인 및 서명 자동 매핑 (고객명으로 통일)
         data['년'] = today.getFullYear(); data['월'] = today.getMonth() + 1; data['일'] = today.getDate();
+        data['신청인'] = data['고객명']; 
         data['서명'] = data['고객명'];
         data['예금주2'] = data['예금주'];
 
         try {
             await fetch(WEB_APP_URL + "?" + new URLSearchParams(data).toString(), { method: 'POST', mode: 'no-cors' });
-            alert("신청서 접수 완료!");
+            alert("신청서 접수 완료! PDF가 생성됩니다.");
             location.reload();
         } catch (e) { alert("오류 발생"); btn.disabled = false; }
     }
