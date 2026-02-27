@@ -92,46 +92,32 @@
             </div>
         </div>
 
-        <div class="section">
-            <h3>2. 서비스 신청사항</h3>
+       <div class="section">
+            <h3>2. 공통 서비스 정보</h3>
+            
+            <h4>서비스 약정기간</h4>
             <div class="product-group">
-                <label><input type="checkbox" name="체크54" id="btn54" onchange="toggleSection('officeNet', 'btn54')"> U+ 오피스넷</label>
-                <label><input type="checkbox" name="체크55" id="btn55" onchange="toggleSection('iptv', 'btn55')"> U+ 기업 IPTV</label>
-                <label><input type="checkbox" name="체크56" id="btn56" onchange="toggleSection('phone', 'btn56')"> U+ 인터넷 전화</label>
+                <label><input type="checkbox" name="체크12"> 3년</label>
+                <label><input type="checkbox" name="체크13"> 1년</label>
+                <label><input type="checkbox" name="체크14"> 5년</label>
+                <label><input type="checkbox" name="무약정"> 무약정</label>
             </div>
-        </div>
 
-        <div id="officeNet" class="section hidden">
-            <h3>[체크54] U+ 오피스넷 세부설정</h3>
-            <div class="product-group">
-                <label><input type="checkbox" name="체크15"> 오피스 100M</label>
-                <label><input type="checkbox" name="체크16"> 오피스 500M</label>
-                <label><input type="checkbox" name="체크17"> 기가오피스넷(1G)</label>
+            <h4>설치 정보</h4>
+            <div style="margin-bottom: 10px;">
+                <label style="display: inline-block; font-weight: bold; color: #e1007e;">
+                    <input type="checkbox" id="same_as_above" onchange="copyAddress()"> 가입자 정보 주소와 동일
+                </label>
             </div>
-            <label>설치주소: <input type="text" name="설치주소" class="address-input" readonly onclick="execDaumPostcode('install')"></label>
-        </div>
-
-        <div id="iptv" class="section hidden">
-            <h3>[체크55] U+ 기업 IPTV 세부설정</h3>
-            <div class="product-group">
-                <label><input type="checkbox" name="체크12"> 프리미엄</label>
-                <label><input type="checkbox" name="체크13"> 기본형</label>
-            </div>
-            <label>셋톱박스 대수(체크9): <input type="text" name="체크9"></label>
-        </div>
-
-        <div id="phone" class="section hidden">
-            <h3>[체크56] U+ 기업 인터넷 전화 세부설정</h3>
-            <div class="product-group">
-                <label><input type="checkbox" name="체크45"> 신규</label>
-                <label><input type="checkbox" name="체크46"> 번호이동</label>
-            </div>
+            <label>설치주소 (클릭 검색): 
+                <input type="text" id="install_address" name="설치주소" class="address-input" readonly onclick="execDaumPostcode('install')" placeholder="주소를 입력하거나 위와 동일을 체크하세요">
+            </label>
+            
             <div class="input-grid">
-                <label>모델명: <input type="text" name="모델명"></label>
-                <label>전화대수: <input type="text" name="전화대수"></label>
+                <label>담당자 성함: <input type="text" name="담당자" placeholder="설치 장소 담당자"></label>
+                <label>휴대폰번호: <input type="text" name="휴대폰" placeholder="010-0000-0000"></label>
             </div>
         </div>
-
         <button type="button" id="submitBtn" onclick="submitForm()">신청서 생성 및 전송</button>
     </form>
 </div>
