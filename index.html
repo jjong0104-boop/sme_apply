@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>U+ 서비스 신청서</title>
+    <title>U+ 통합신청서 입력 시스템</title>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; padding: 20px; line-height: 1.6; background-color: #f4f4f4; color: #333; }
         .container { max-width: 850px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         h2 { color: #e1007e; border-bottom: 3px solid #e1007e; padding-bottom: 10px; margin-top: 0; }
-        h3 { color: #555; font-size: 1.1em; margin-top: 0; }
-        h4 { margin: 10px 0 5px 0; color: #e1007e; font-size: 0.95em; }
+        h3 { color: #e1007e; font-size: 1.2em; border-left: 5px solid #e1007e; padding-left: 10px; margin: 25px 0 15px 0; }
+        h4 { margin: 15px 0 5px 0; color: #555; font-size: 0.95em; background: #f9f9f9; padding: 5px 10px; border-radius: 4px; }
         .section { margin-bottom: 25px; padding: 20px; border: 1px solid #eee; border-radius: 8px; background-color: #fff; }
         .hidden { display: none; }
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .product-group { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 10px; font-weight: bold; background: #fff0f5; padding: 15px; border-radius: 5px; }
-        .sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #f9f9f9; padding: 15px; border-radius: 5px; margin-top: 10px; }
         label { display: block; margin: 8px 0; cursor: pointer; }
-        input[type="text"], input[type="email"], select { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
-        .address-input { background-color: #fff; border: 1px solid #e1007e !important; cursor: pointer; }
-        input[type="checkbox"] { transform: scale(1.1); margin-right: 6px; vertical-align: middle; }
-        button { background: #e1007e; color: white; padding: 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 18px; width: 100%; font-weight: bold; margin-top: 20px; }
+        input[type="text"], input[type="email"], select { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        .address-input { background-color: #fff; border: 1px solid #e1007e !important; cursor: pointer; font-weight: bold; }
+        input[type="checkbox"], input[type="radio"] { transform: scale(1.2); margin-right: 8px; vertical-align: middle; }
+        button { background: #e1007e; color: white; padding: 18px; border: none; border-radius: 5px; cursor: pointer; font-size: 20px; width: 100%; font-weight: bold; margin-top: 30px; }
     </style>
 </head>
 <body>
@@ -27,13 +27,55 @@
 <div class="container">
     <h2>U+ 통합신청서 입력</h2>
     <form id="applyForm">
+        
         <div class="section">
-            <h3>1. 가입자 기본 정보</h3>
-            <label>고객명: <input type="text" name="고객명" required></label>
-            <label>연락처: <input type="text" name="연락처" required></label>
+            <h3>1. 가입자 정보</h3>
+            <div class="input-grid">
+                <label>고객명(법인명): <input type="text" name="고객명" required></label>
+                <label>연락처: <input type="text" name="연락처" required placeholder="010-0000-0000"></label>
+                <label>사업자등록번호: <input type="text" name="사업자등록번호" placeholder="000-00-00000"></label>
+                <label>생년월일/법인등록번호: <input type="text" name="생년월일" placeholder="6자리 또는 법인번호"></label>
+            </div>
             <label>주소 (클릭 검색): <input type="text" id="main_address" name="주소_기본" class="address-input" readonly onclick="execDaumPostcode()"></label>
-            <label>상세 주소: <input type="text" id="detail_address" name="주소_상세"></label>
+            <label>상세 주소: <input type="text" id="detail_address" name="주소_상세" placeholder="상세주소 입력"></label>
             <input type="hidden" name="주소" id="full_address">
+
+            <h4>청구 및 납부 정보</h4>
+            <div class="product-group" style="background: #f9f9f9;">
+                <span style="width:100%; margin-bottom:5px;">통합청구신청:</span>
+                <label><input type="checkbox" name="체크1"> 기존 청구서 통합</label>
+                <label><input type="checkbox" name="체크2"> 신규 신청</label>
+            </div>
+            
+            <div class="product-group" style="background: #f9f9f9;">
+                <span style="width:100%; margin-bottom:5px;">요금확인방법:</span>
+                <label><input type="checkbox" name="체크3"> 이메일</label>
+                <label><input type="checkbox" name="체크4"> 우편</label>
+                <input type="text" name="이메일" placeholder="이메일 주소 입력" style="width: 200px; margin-left: 10px;">
+            </div>
+
+            <div class="product-group" style="background: #fdf2f8;">
+                <span style="width:100%; margin-bottom:5px;">납부방법:</span>
+                <label><input type="checkbox" name="체크5"> 자동이체</label>
+                <label><input type="checkbox" name="체크6"> 카드결제</label>
+                <label><input type="checkbox" name="체크7"> 지로납부</label>
+            </div>
+
+            <h4>자동이체/카드 정보</h4>
+            <div class="input-grid">
+                <label>예금주/카드주: <input type="text" name="예금주"></label>
+                <label>은행/카드사: <input type="text" name="은행"></label>
+                <label>계좌/카드번호: <input type="text" name="계좌번호"></label>
+                <label>카드 유효기간: <input type="text" name="유효기간" placeholder="MM/YY"></label>
+            </div>
+
+            <h4>납부일 선택</h4>
+            <div class="product-group">
+                <label><input type="checkbox" name="체크10"> 15일</label>
+                <label><input type="checkbox" name="체크18"> 18일</label>
+                <label><input type="checkbox" name="체크20"> 22일</label>
+                <label><input type="checkbox" name="체크26"> 26일</label>
+            </div>
         </div>
 
         <div class="section">
@@ -45,66 +87,34 @@
             </div>
         </div>
 
-        <div id="officeNet" class="section hidden" style="border-left: 5px solid #e1007e;">
-            <h3>U+ 오피스넷 세부 정보 (체크54)</h3>
-            
-            <h4>요금제 선택</h4>
-            <div class="product-group" style="background: #fdfdfd; border: 1px solid #eee;">
-                <label><input type="checkbox" name="체크15"> 오피스넷 100M</label>
-                <label><input type="checkbox" name="체크16"> 오피스넷 500M</label>
+        <div id="officeNet" class="section hidden">
+            <h3>[체크54] U+ 오피스넷 세부설정</h3>
+            <div class="product-group">
+                <label><input type="checkbox" name="체크15"> 오피스 100M</label>
+                <label><input type="checkbox" name="체크16"> 오피스 500M</label>
                 <label><input type="checkbox" name="체크17"> 기가오피스넷(1G)</label>
             </div>
-
-            <h4>IP 신청</h4>
-            <div class="sub-grid">
-                <label>유동 IP (개수): <input type="text" name="유동IP" placeholder="예: 1"></label>
-                <label>고정 IP (개수): <input type="text" name="고정IP" placeholder="예: 0"></label>
-            </div>
-
-            <h4>장비 및 와이파이 임대</h4>
-            <div class="sub-grid">
-                <div>
-                    <label><input type="checkbox" name="체크21"> 광모뎀</label>
-                    <label><input type="checkbox" name="체크22"> 기가L2스위치</label>
-                    <label>장비약정: 
-                        <select name="장비약정_오피스">
-                            <option value="">선택</option>
-                            <option value="v">3년 (체크24)</option>
-                            <option value="v">2년 (체크25)</option>
-                            <option value="v">1년 (체크26)</option>
-                        </select>
-                    </label>
-                </div>
-                <div>
-                    <label><input type="checkbox" name="체크27"> 기가와이파이</label>
-                    <label><input type="checkbox" name="체크28"> 와이파이 프리미엄</label>
-                    <label>와이파이 약정: 
-                        <select name="와이파이약정">
-                            <option value="">선택</option>
-                            <option value="v">3년 (체크29)</option>
-                            <option value="v">2년 (체크30)</option>
-                            <option value="v">1년 (체크31)</option>
-                        </select>
-                    </label>
-                </div>
-            </div>
-
-            <h4>통신렉 구매 및 기타</h4>
-            <div class="sub-grid">
-                <label><input type="checkbox" name="체크32"> 소형</label>
-                <label><input type="checkbox" name="체크33"> 표준형</label>
-                <label>번들 여부: <input type="text" name="yesorno1" placeholder="예: 선택"></label>
-                <label>구내공사: <input type="text" name="yesorno21" placeholder="예: 선택안함"></label>
-            </div>
+            <label>설치주소: <input type="text" name="설치주소" class="address-input" readonly onclick="execDaumPostcode('install')"></label>
         </div>
 
-        <div id="iptv" class="section hidden"><h3>U+ 기업 IPTV 상세</h3></div>
+        <div id="iptv" class="section hidden">
+            <h3>[체크55] U+ 기업 IPTV 세부설정</h3>
+            <div class="product-group">
+                <label><input type="checkbox" name="체크12"> 프리미엄</label>
+                <label><input type="checkbox" name="체크13"> 기본형</label>
+            </div>
+            <label>셋톱박스 대수(체크9): <input type="text" name="체크9"></label>
+        </div>
+
         <div id="phone" class="section hidden">
-            <h3>U+ 기업 인터넷 전화 상세</h3>
-            <label><input type="checkbox" name="체크53" id="btn53" onchange="toggleSection('phonePlan', 'btn53')"> 정액제 가입</label>
-            <div id="phonePlan" class="hidden" style="padding-left:20px; border-left:2px solid #ccc;">
-                <label>정액제명: <input type="text" name="정액제명"></label>
-                <label>회선수: <input type="text" name="회선수"></label>
+            <h3>[체크56] U+ 기업 인터넷 전화 세부설정</h3>
+            <div class="product-group">
+                <label><input type="checkbox" name="체크45"> 신규</label>
+                <label><input type="checkbox" name="체크46"> 번호이동</label>
+            </div>
+            <div class="input-grid">
+                <label>모델명: <input type="text" name="모델명"></label>
+                <label>전화대수: <input type="text" name="전화대수"></label>
             </div>
         </div>
 
@@ -113,11 +123,12 @@
 </div>
 
 <script>
-    function execDaumPostcode() {
+    function execDaumPostcode(type) {
         new daum.Postcode({
             oncomplete: function(data) {
-                document.getElementById("main_address").value = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
-                document.getElementById("detail_address").focus();
+                var addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
+                if(type === 'install') { document.getElementsByName("설치주소")[0].value = addr; }
+                else { document.getElementById("main_address").value = addr; document.getElementById("detail_address").focus(); }
             }
         }).open();
     }
@@ -125,39 +136,41 @@
     function toggleSection(sectionId, btnId) {
         const section = document.getElementById(sectionId);
         const checkbox = document.getElementById(btnId);
-        if (checkbox.checked) { section.classList.remove('hidden'); }
-        else { section.classList.add('hidden'); }
+        section.style.display = checkbox.checked ? 'block' : 'none';
     }
 
     async function submitForm() {
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwT_e1H9ZhT3sLyn3M8vQ1d5guFbF3B_lfESCmbjdHVEK09jnjnKzOsafUtHrF-2whk/exec";
         const form = document.getElementById('applyForm');
         document.getElementById("full_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
-        
-        if (!form.reportValidity()) return;
+
         const submitBtn = document.getElementById('submitBtn');
         submitBtn.disabled = true;
+        submitBtn.innerText = "전송 중...";
 
         const data = {};
         const formData = new FormData(form);
         for (let [key, value] of formData.entries()) { data[key] = value; }
         
-        // 체크박스 v 처리
         form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
             data[cb.name] = cb.checked ? "v" : "";
         });
 
-        // 날짜 및 자동서명
+        // 자동 날짜 및 서명 데이터
         const today = new Date();
-        data['년'] = today.getFullYear(); data['월'] = today.getMonth()+1; data['일'] = today.getDate();
-        data['서명'] = data['고객명'];
+        data['년'] = today.getFullYear(); data['월'] = today.getMonth() + 1; data['일'] = today.getDate();
+        data['서명'] = data['고객명']; // 고객명을 서명으로 자동 사용
+        data['예금주2'] = data['예금주']; // 예금주 중복 태그 처리
 
         try {
             const queryString = new URLSearchParams(data).toString();
             await fetch(WEB_APP_URL + "?" + queryString, { method: 'POST', mode: 'no-cors' });
-            alert("신청 완료! PDF가 생성됩니다.");
-            location.reload(); 
-        } catch (e) { alert("전송 오류"); submitBtn.disabled = false; }
+            alert("신청서 접수가 완료되었습니다!");
+            location.reload();
+        } catch (e) {
+            alert("오류가 발생했습니다.");
+            submitBtn.disabled = false;
+        }
     }
 </script>
 </body>
