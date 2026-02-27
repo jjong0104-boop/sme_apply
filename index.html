@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>U+ 통합신청서 입력 시스템</title>
+    <title>U+ 통합신청서 시스템</title>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; padding: 20px; line-height: 1.6; background-color: #f4f4f4; color: #333; }
@@ -39,9 +39,9 @@
         </div>
 
         <div class="section">
-            <h3>1. 가입자 기본 정보</h3>
+            <h3>1. 가입자 및 납부 정보</h3>
             <div class="input-grid">
-                <label>고객명(신청인): <input type="text" name="고객명" id="cust_name" required></label>
+                <label>고객명: <input type="text" name="고객명" id="cust_name" required></label>
                 <label>연락처: <input type="text" name="연락처" required></label>
                 <label>사업자등록번호: <input type="text" name="사업자등록번호"></label>
                 <label>생년월일(법인번호): <input type="text" name="생년월일"></label>
@@ -69,7 +69,7 @@
                 <label>예금주/카드주명: <input type="text" name="예금주"></label>
                 <label>은행/카드사명: <input type="text" name="은행"></label>
                 <label>계좌/카드번호: <input type="text" name="계좌번호"></label>
-                <label>유효기간(카드만): <input type="text" name="유효기간" placeholder="MM/YY"></label>
+                <label>카드 유효기간: <input type="text" name="유효기간" placeholder="MM/YY"></label>
             </div>
 
             <div class="product-group">
@@ -107,14 +107,30 @@
             </div>
 
             <div id="officeNet" class="hidden sub-box">
-                <h4>오피스넷 (체크54)</h4>
+                <h4>U+ 오피스넷 설정 (체크54)</h4>
                 <div class="product-group">요금제: <label><input type="checkbox" name="체크15"> 100M</label><label><input type="checkbox" name="체크16"> 500M</label><label><input type="checkbox" name="체크17"> 1G</label><label><input type="checkbox" name="체크18"> 10G</label></div>
                 <div class="product-group">IP신청: <label><input type="checkbox" name="체크19"> 유동</label><label><input type="checkbox" name="체크20"> 고정</label></div>
                 <div class="product-group">장비: <label><input type="checkbox" name="체크21"> 광모뎀</label><label><input type="checkbox" name="체크22"> L2</label><label><input type="checkbox" name="체크23"> 공유기형</label> | 3년약정: <label><input type="checkbox" name="체크24"> 체크</label></div>
                 <div class="product-group">와이파이: <label><input type="checkbox" name="체크27"> 기가</label><label><input type="checkbox" name="체크28"> 프리미엄</label> | 3년약정: <label><input type="checkbox" name="체크29"> 체크</label></div>
                 <div class="product-group">통신렉: <label><input type="checkbox" name="체크32"> 소</label><label><input type="checkbox" name="체크33"> 표준</label><label><input type="checkbox" name="체크34"> 대</label><label><input type="checkbox" name="체크35"> DCS</label></div>
                 <div class="product-group">렉약정: <label><input type="checkbox" name="체크36"> 3년</label><label><input type="checkbox" name="체크37"> 2년</label><label><input type="checkbox" name="체크38"> 1년</label><label><input type="checkbox" name="체크39"> 무약정</label></div>
-                <div class="input-grid"><label>번들(Y/N): <input type="text" name="yesorno1"></label><label>구내공사(Y/N): <input type="text" name="yesorno21"></label></div>
+                
+                <div class="input-grid">
+                    <label>번들(Y/N): 
+                        <select name="yesorno1">
+                            <option value="">선택하세요</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </label>
+                    <label>구내공사(Y/N): 
+                        <select name="yesorno21">
+                            <option value="">선택하세요</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </label>
+                </div>
             </div>
 
             <div id="iptv" class="hidden sub-box">
@@ -180,7 +196,7 @@
         new FormData(form).forEach((val, key) => { data[key] = val; });
         form.querySelectorAll('input[type="checkbox"]').forEach(cb => { data[cb.name] = cb.checked ? "v" : ""; });
 
-        // 신청인 및 서명 자동 매핑 (고객명으로 통일)
+        // 신청인 및 서명 자동 매핑
         data['년'] = today.getFullYear(); data['월'] = today.getMonth() + 1; data['일'] = today.getDate();
         data['신청인'] = data['고객명']; 
         data['서명'] = data['고객명'];
