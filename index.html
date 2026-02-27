@@ -19,7 +19,7 @@
         .payment-box { border: 2px solid #e1007e; padding: 20px; border-radius: 8px; margin-top: 10px; background: #fffafc; }
         label { display: block; margin: 8px 0; cursor: pointer; }
         input[type="text"], input[type="email"], select { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
-        .num-input { width: 80px !important; display: inline-block; padding: 5px !important; text-align: center; border: 1px solid #e1007e !important; background: #fff; }
+        .num-input { width: 80px !important; display: inline-block; padding: 5px !important; text-align: center; border: 1px solid #e1007e !important; }
         .address-input { background-color: #fff; border: 1px solid #e1007e !important; cursor: pointer; font-weight: bold; }
         input[type="checkbox"], input[type="radio"] { transform: scale(1.2); margin-right: 8px; vertical-align: middle; }
         button { background: #e1007e; color: white; padding: 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 20px; width: 100%; font-weight: bold; margin-top: 30px; transition: 0.3s; }
@@ -51,10 +51,19 @@
             <label>상세 주소: <input type="text" id="detail_address" name="주소_상세"></label>
             <input type="hidden" name="주소" id="full_address">
 
+            <h4>납부 및 청구 설정</h4>
+            <div class="product-group">
+                <span>통합청구신청:</span>
+                <label><input type="checkbox" name="체크1"> 기존 통합</label>
+                <input type="text" name="청구서번호" placeholder="청구서 번호" style="width: 150px; margin: 0 10px;">
+                <label><input type="checkbox" name="체크2"> 신규 신청</label>
+            </div>
+            
             <div class="product-group">
                 <span>납부방법 선택:</span>
-                <label><input type="radio" name="pay_type" value="bank" onclick="togglePayment('bank')"> 자동이체(계좌)</label>
-                <label><input type="radio" name="pay_type" value="card" onclick="togglePayment('card')"> 카드결제</label>
+                <label><input type="radio" name="pay_type" value="bank" onclick="togglePayment('bank')"> 자동이체(계좌) (체크5)</label>
+                <label><input type="radio" name="pay_type" value="card" onclick="togglePayment('card')"> 카드결제 (체크6)</label>
+                <label><input type="radio" name="pay_type" value="paper" onclick="togglePayment('none')"> 지로납부 (체크7)</label>
             </div>
 
             <div id="bank_info" class="payment-box hidden">
@@ -99,39 +108,67 @@
             </div>
 
             <div id="officeNet" class="hidden sub-box">
-                <h4>오피스넷 설정</h4>
-                <div class="product-group">요금제: <label><input type="checkbox" name="체크15"> 100M</label><label><input type="checkbox" name="체크16"> 500M</label><label><input type="checkbox" name="체크17"> 1G</label></div>
+                <h4>U+ 오피스넷 설정</h4>
+                <div class="product-group">
+                    요금제: <label><input type="checkbox" name="체크15"> 100M</label>
+                    <label><input type="checkbox" name="체크16"> 500M</label>
+                    <label><input type="checkbox" name="체크17"> 1G</label>
+                    <label><input type="checkbox" name="체크18"> 10G급</label>
+                </div>
+                <div class="product-group">
+                    IP신청: <label><input type="checkbox" name="체크19"> 유동IP(<input type="text" name="유동IP" class="num-input">개)</label>
+                    <label><input type="checkbox" name="체크20"> 고정IP(<input type="text" name="고정IP" class="num-input">개)</label>
+                </div>
+                <div class="product-group">
+                    장비: <label><input type="checkbox" name="체크21"> 광모뎀</label>
+                    <label><input type="checkbox" name="체크22"> L2스위치</label>
+                    <label><input type="checkbox" name="체크23"> 공유기일체형</label>
+                    | 3년약정: <label><input type="checkbox" name="체크24"> 체크</label>
+                </div>
+                <div class="product-group">
+                    렉구매: <label><input type="checkbox" name="체크32"> 소형(<input type="text" name="체크32_val" class="num-input">)</label>
+                    <label><input type="checkbox" name="체크33"> 표준(<input type="text" name="체크33_val" class="num-input">)</label>
+                </div>
+                <div class="input-grid">
+                    <label>번들(Y/N): <select name="yesorno1"><option value="">선택</option><option value="Y">Y</option><option value="N">N</option></select></label>
+                    <label>구내공사(Y/N): <select name="yesorno21"><option value="">선택</option><option value="Y">Y</option><option value="N">N</option></select></label>
+                </div>
             </div>
 
             <div id="iptv" class="hidden sub-box">
-                <h4>IPTV 설정 (체크55)</h4>
-                <p><strong>요금제 선택:</strong></p>
+                <h4>U+ 기업 IPTV 설정</h4>
                 <div class="product-group">
-                    <label><input type="checkbox" name="체크40"> 프리미엄</label>
+                    요금제: <label><input type="checkbox" name="체크40"> 프리미엄</label>
                     <label><input type="checkbox" name="체크41"> 기본형</label>
                     <label><input type="checkbox" name="체크42"> 실속형</label>
                     <label><input type="checkbox" name="체크43" id="iptv_group_btn" onchange="toggleIptvGroup()"> 실속형(단체)</label>
                 </div>
-
                 <div id="iptv_group_detail" class="payment-box hidden">
-                    <p style="color: #e1007e; font-size: 0.9em;">* 실속형(단체) 상세 정보 입력</p>
                     <div class="input-grid">
-                        <label>셋톱 모델명: <input type="text" name="셋톱모델_단체" placeholder="직접 입력"></label>
-                        <label>셋톱 개수: <input type="text" name="셋톱개수_단체" placeholder="개수 입력"></label>
-                        <label>와이파이 모델명: <input type="text" name="와이파이모델_단체" placeholder="직접 입력"></label>
-                        <label>와이파이 개수: <input type="text" name="와이파이개수_단체" placeholder="개수 입력"></label>
+                        <label>셋톱 모델명: <input type="text" name="셋톱모델_단체"></label>
+                        <label>셋톱 개수: <input type="text" name="셋톱개수_단체"></label>
                     </div>
                 </div>
-
-                <div class="input-grid" style="margin-top:15px;">
-                    <label>오피스넷 회선번호: <input type="text" name="회선번호" maxlength="12" placeholder="숫자 12자리"></label>
-                    <label>셋톱박스 수량(UHD): <input type="text" name="UHD" class="num-input"> 대</label>
+                <div class="input-grid" style="margin-top:10px;">
+                    <label>오피스넷 회선번호: <input type="text" name="회선번호"></label>
+                    <label>셋톱박스 수량(UHD): <input type="text" name="UHD" class="num-input">대</label>
                 </div>
             </div>
 
             <div id="phone" class="hidden sub-box">
-                <h4>인터넷전화 상세</h4>
-                <div class="input-grid"><label>모델명: <input type="text" name="모델명"></label><label>전화대수: <input type="text" name="전화대수"></label></div>
+                <h4>U+ 기업 인터넷전화 설정</h4>
+                <div class="input-grid">
+                    <label><input type="checkbox" name="체크45"> 신규(<input type="text" name="신규회선" style="width:40px;">회선)</label>
+                    <label><input type="checkbox" name="체크46"> 번호이동(<input type="text" name="번호이동회선" style="width:40px;">회선)</label>
+                </div>
+                <div class="product-group">
+                    서비스: <label><input type="checkbox" name="체크47"> 센트릭스</label> | 모델명: <input type="text" name="model" style="width:120px;">
+                </div>
+                <div class="input-grid">
+                    <label>단말모델명: <input type="text" name="모델명"></label>
+                    <label>전화대수: <input type="text" name="전화대수"></label>
+                </div>
+                <label><input type="checkbox" name="체크53"> 정액제 가입 (정액제명: <input type="text" name="정액제명" style="width:150px;">)</label>
             </div>
         </div>
 
@@ -191,6 +228,7 @@
         const payType = form.querySelector('input[name="pay_type"]:checked')?.value;
         if (payType === 'bank') data['체크5'] = 'v';
         if (payType === 'card') data['체크6'] = 'v';
+        if (payType === 'paper') data['체크7'] = 'v';
 
         const today = new Date();
         data['년'] = today.getFullYear(); data['월'] = today.getMonth() + 1; data['일'] = today.getDate();
