@@ -339,7 +339,7 @@
 </div>
 
 
-           <div class="section">
+<div class="section">
     <h3>4. 특이사항 / 기타 메모</h3>
     <div class="sub-box">
         <textarea name="특이사항" rows="5" placeholder="추가 요청사항이나 특이사항을 자유롭게 기재해 주세요." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; resize: vertical;"></textarea>
@@ -352,44 +352,62 @@
         <p style="font-size: 0.9em; color: #666; margin-bottom: 5px;">아래 박스에 서명해 주세요 (마우스 또는 터치)</p>
         <canvas id="signature-pad" width="400" height="200" style="border: 2px dashed #ccc; background: #fff; cursor: crosshair; touch-action: none; max-width: 100%;"></canvas>
         <div style="margin-top: 10px;">
-            <button type="button" onclick="clearSignature()" style="background: #666; color: #fff; border: none; padding: 5px 15px; border-radius: 4px;">지우기</button>
+            <button type="button" onclick="clearSignature()" style="background: #666; color: #fff; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; width: auto; font-size: 14px;">지우기</button>
             <input type="hidden" name="서명데이터" id="signature-data">
         </div>
     </div>
 </div>
 
-            <div class="submit-btn" style="text-align: center; margin-top: 30px;">
+<div class="section" style="text-align: center; margin-top: 30px;">
     <button type="button" id="submitBtn" class="submit-btn" onclick="submitForm()">신청서 제출하기</button>
     
     <div id="loading" class="hidden" style="margin-top: 20px;">
         <div class="spinner"></div>
         <p>데이터 전송 및 PDF 생성 중입니다... (약 10~20초 소요)</p>
     </div>
-</div></form> 
 </div>
 
-
- <script>
-            
-    function togglePayment(type) {
-    const bankBox = document.getElementById('bank_info');
-    const cardBox = document.getElementById('card_info');
-    
-    // 모든 박스 숨기기
-    bankBox.style.display = 'none';
-    cardBox.style.display = 'none';
-    
-    // 선택된 타입만 보이기
-    if (type === 'bank') {
-        bankBox.style.display = 'block';
-    } else if (type === 'card') {
-        cardBox.style.display = 'block';
+</form> </div> <style>
+    /* 누락되었던 버튼 디자인 복구 */
+    .submit-btn {
+        background-color: #e1007e;
+        color: white;
+        padding: 15px 50px;
+        font-size: 1.2em;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+        width: 100%;
     }
+    .submit-btn:hover { background-color: #b50065; }
+    .submit-btn:disabled { background-color: #ccc; cursor: not-allowed; }
     
-    // 결제 수단이 바뀔 때마다 기존에 선택된 납부일 라디오 버튼 초기화 (권장)
-    const payDateRadios = document.querySelectorAll('input[name="납부일"]');
-    payDateRadios.forEach(radio => radio.checked = false);
-}
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #e1007e;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+</style>
+
+<script>
+    // 앱스크립트 주소 (본인 것으로 확인)
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlJTCRScNUzx5p59vf0gh4OR4hGRnhEXRLgRTkIjh9xDTBnwVrrM2WZPOEx5mILTk_/exec";
+
+    function togglePayment(type) {
+        document.getElementById('bank_info').style.display = (type === 'bank' ? 'block' : 'none');
+        document.getElementById('card_info').style.display = (type === 'card' ? 'block' : 'none');
+        const payDateRadios = document.querySelectorAll('input[name="납부일"]');
+        payDateRadios.forEach(radio => radio.checked = false);
+    }
 
     function toggleIptvGroup() {
         const detail = document.getElementById('iptv_group_detail');
@@ -422,220 +440,106 @@
         document.getElementById(id).style.display = document.getElementById(btnId).checked ? 'block' : 'none';
     }
 
-   async function submitForm() {
-    // 1. 구글 앱스크립트 URL 확인
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlJTCRScNUzx5p59vf0gh4OR4hGRnhEXRLgRTkIjh9xDTBnwVrrM2WZPOEx5mILTk_/exec"; 
-    
-    const form = document.getElementById('applyForm');
-    const btn = document.getElementById('submitBtn');
-    const loading = document.getElementById('loading');
-    const custNameInput = document.getElementById('cust_name');
-
-    // 필수 입력값(고객명) 확인
-    if (!custNameInput.value.trim()) {
-        alert("고객명을 입력해주세요.");
-        custNameInput.focus();
-        return;
+    function togglePhoneInput() {
+        document.getElementById('new_line_area').style.display = document.getElementById('chk_new_line').checked ? 'block' : 'none';
+        document.getElementById('port_in_area').style.display = document.getElementById('chk_port_in').checked ? 'block' : 'none';
     }
 
-    // 2. 버튼 비활성화 및 로딩 노출
-    btn.disabled = true;
-    btn.innerText = "데이터 처리 중...";
-    loading.classList.remove('hidden');
+    async function submitForm() {
+        const form = document.getElementById('applyForm');
+        const btn = document.getElementById('submitBtn');
+        const loading = document.getElementById('loading');
+        const custNameInput = document.getElementById('cust_name');
 
-    // 3. 데이터 수집 시작
-    // 주소 합치기
-    const mainAddr = document.getElementById("main_address").value;
-    const detailAddr = document.getElementById("detail_address").value;
-    document.getElementById("full_address").value = mainAddr + " " + detailAddr;
-
-    const formData = new FormData(form);
-    const data = {};
-    
-    // 기본 폼 데이터 수집
-    formData.forEach((val, key) => { data[key] = val; });
-    
-    // 체크박스 값 보정 (체크된 경우 'v', 아니면 빈값)
-    form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-        data[cb.name] = cb.checked ? "v" : "";
-    });
-
-    // 라디오 버튼(납부방법) 기반 체크박스 매핑 (템플릿 호환용)
-    const payType = form.querySelector('input[name="pay_type"]:checked')?.value;
-    if (payType === 'bank') data['체크5'] = 'v';
-    if (payType === 'card') data['체크6'] = 'v';
-    if (payType === 'paper') data['체크7'] = 'v';
-
-    // 폼 외부에 있거나 수동 수집이 필요한 데이터 강제 할당
-    // 특이사항(textarea)과 서명데이터(hidden)가 form 안에 있어도 안전하게 한 번 더 확인합니다.
-    const specialNote = document.querySelector('textarea[name="특이사항"]')?.value || "";
-    const signatureData = document.getElementById('signature-data')?.value || "";
-    
-    data['특이사항'] = specialNote;
-    data['서명데이터'] = signatureData;
-
-    // 날짜 및 자동 완성 필드
-    const today = new Date();
-    data['년'] = today.getFullYear();
-    data['월'] = today.getMonth() + 1;
-    data['일'] = today.getDate();
-    data['고객명'] = custNameInput.value;
-    data['서명'] = data['고객명'];      // 텍스트 이름 서명 대용
-    data['신청인'] = data['고객명'];    // 신청인 칸 대용
-
-    try {
-        // 4. POST 방식으로 데이터 전송 (이미지 포함 대용량 전송 대응)
-        // mode: 'no-cors'는 응답 본문을 읽을 수는 없으나 전송은 확실히 이루어집니다.
-        await fetch(WEB_APP_URL, {
-            method: 'POST',
-            mode: 'no-cors', 
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(data).toString()
-        });
-
-        alert("신청서가 성공적으로 접수되었습니다!\n약 10~20초 후 PDF 생성이 완료됩니다.");
-        location.reload(); // 성공 시 페이지 초기화
-        
-    } catch (e) {
-        console.error("전송 에러:", e);
-        alert("전송 중 오류가 발생했습니다. 다시 시도해 주세요.");
-        btn.disabled = false;
-        btn.innerText = "신청서 제출하기";
-        loading.classList.add('hidden');
-    }
-}
-    
-    // 1. 이메일/우편 체크 여부에 따른 입력창 노출 제어
-function toggleBillInput() {
-    const isEmail = document.getElementById('chk_email').checked;
-    const isPost = document.getElementById('chk_post').checked;
-    
-    // 이메일 입력칸 제어
-    document.getElementById('email_input_area').style.display = isEmail ? 'inline-block' : 'none';
-    
-    // 우편 주소창 제어 (payment-box hidden 클래스 처리)
-    const postArea = document.getElementById('post_address_area');
-    if (isPost) {
-        postArea.classList.remove('hidden');
-        postArea.style.display = 'block';
-    } else {
-        postArea.classList.add('hidden');
-        postArea.style.display = 'none';
-    }
-}
-
-// 2. 가입자 정보 주소를 청구 주소로 복사
-function copyMainToBill() {
-    const isSame = document.getElementById('bill_same_as_main').checked;
-    const mainAddr = document.getElementById('main_address').value;
-    const mainDetail = document.getElementById('detail_address').value;
-    
-    if (isSame) {
-        if (!mainAddr) {
-            alert("가입자 정보의 주소를 먼저 입력해주세요.");
-            document.getElementById('bill_same_as_main').checked = false;
+        if (!custNameInput.value.trim()) {
+            alert("고객명을 입력해주세요.");
+            custNameInput.focus();
             return;
         }
-        document.getElementById('bill_address').value = mainAddr;
-        document.getElementById('bill_detail').value = mainDetail;
-    } else {
-        document.getElementById('bill_address').value = "";
-        document.getElementById('bill_detail').value = "";
-    }
-}
 
-// 3. 주소 검색 (execDaumPostcode) 함수 업데이트
-function execDaumPostcode(type) {
-    new daum.Postcode({
-        oncomplete: function(data) {
-            var addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
-            
-            if (type === 'install') {
-                document.getElementById("install_address").value = addr;
-            } else if (type === 'bill') {
-                document.getElementById("bill_address").value = addr;
-                document.getElementById("bill_detail").focus();
-                document.getElementById("bill_same_as_main").checked = false; // 직접 검색 시 동일 체크 해제
-            } else {
-                document.getElementById("main_address").value = addr;
-                document.getElementById("detail_address").focus();
-            }
+        btn.disabled = true;
+        btn.innerText = "데이터 처리 중...";
+        loading.classList.remove('hidden');
+
+        // 주소 합치기
+        document.getElementById("full_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
+
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((val, key) => { data[key] = val; });
+        
+        // 체크박스 v표시 처리
+        form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            data[cb.name] = cb.checked ? "v" : "";
+        });
+
+        // 날짜 생성
+        const today = new Date();
+        data['년'] = today.getFullYear();
+        data['월'] = today.getMonth() + 1;
+        data['일'] = today.getDate();
+
+        try {
+            // [중요] POST 방식으로 전송하여 길이 제한 해결
+            await fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(data).toString()
+            });
+
+            alert("신청서가 성공적으로 접수되었습니다!");
+            location.reload();
+        } catch (e) {
+            alert("전송 중 오류 발생: " + e.message);
+            btn.disabled = false;
+            loading.classList.add('hidden');
         }
-    }).open();
-}
-function togglePhoneInput() {
-    const isNew = document.getElementById('chk_new_line').checked;
-    const isPortIn = document.getElementById('chk_port_in').checked;
-    
-    // 신규 입력창 제어
-    const newArea = document.getElementById('new_line_area');
-    if (isNew) {
-        newArea.classList.remove('hidden');
-        newArea.style.display = 'block';
-    } else {
-        newArea.classList.add('hidden');
-        newArea.style.display = 'none';
     }
-    
-    // 번호이동 입력창 제어
-    const portArea = document.getElementById('port_in_area');
-    if (isPortIn) {
-        portArea.classList.remove('hidden');
-        portArea.style.display = 'block';
-    } else {
-        portArea.classList.add('hidden');
-        portArea.style.display = 'none';
-    }
-}
-    
+
+    // 서명 패드 로직
     const canvas = document.getElementById('signature-pad');
-const ctx = canvas.getContext('2d');
-let drawing = false;
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
 
-// 서명 시작
-canvas.addEventListener('mousedown', startDrawing);
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', stopDrawing);
-canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e.touches[0]); });
-canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
-canvas.addEventListener('touchend', stopDrawing);
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e.touches[0]); });
+    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
+    canvas.addEventListener('touchend', stopDrawing);
 
-function startDrawing(e) {
-    drawing = true;
-    ctx.beginPath();
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = '#000';
-    const pos = getMousePos(e);
-    ctx.moveTo(pos.x, pos.y);
-}
+    function startDrawing(e) {
+        drawing = true;
+        ctx.beginPath();
+        const pos = getMousePos(e);
+        ctx.moveTo(pos.x, pos.y);
+    }
 
-function draw(e) {
-    if (!drawing) return;
-    const pos = getMousePos(e);
-    ctx.lineTo(pos.x, pos.y);
-    ctx.stroke();
-    // 서명할 때마다 데이터 업데이트
-    document.getElementById('signature-data').value = canvas.toDataURL();
-}
+    function draw(e) {
+        if (!drawing) return;
+        const pos = getMousePos(e);
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        document.getElementById('signature-data').value = canvas.toDataURL();
+    }
 
-function stopDrawing() { drawing = false; }
+    function stopDrawing() { drawing = false; }
 
-function getMousePos(e) {
-    const rect = canvas.getBoundingClientRect();
-    return {
-        x: (e.clientX || e.pageX) - rect.left,
-        y: (e.clientY || e.pageY) - rect.top
-    };
-}
+    function getMousePos(e) {
+        const rect = canvas.getBoundingClientRect();
+        return {
+            x: (e.clientX || e.pageX) - rect.left,
+            y: (e.clientY || e.pageY) - rect.top
+        };
+    }
 
-function clearSignature() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    document.getElementById('signature-data').value = "";
-}
-
-// 폼 제출 시 서명 확인 로직 (필요 시 수정 가능)
-// 필수값이 아니므로 별도의 체크 없이 넘어갑니다.
+    function clearSignature() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        document.getElementById('signature-data').value = "";
+    }
 </script>
 </body>
 </html>
