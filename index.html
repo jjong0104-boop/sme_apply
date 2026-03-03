@@ -356,7 +356,6 @@
             <input type="hidden" name="서명데이터" id="signature-data">
         </div>
     </div>
-    </form>
 </div>
 
             <div class="section" style="text-align: center; margin-top: 30px;">
@@ -367,6 +366,7 @@
         <p>데이터 전송 및 PDF 생성 중입니다... (약 10~20초 소요)</p>
     </div>
 </div>
+    </form> </body>
 
 <style>
     .submit-btn {
@@ -450,48 +450,69 @@
     }
 
    async function submitForm() {
-    // 1. 본인의 구글 앱스크립트 URL을 반드시 아래에 넣으세요!
+    // 1. 구글 앱스크립트 URL 확인
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlJTCRScNUzx5p59vf0gh4OR4hGRnhEXRLgRTkIjh9xDTBnwVrrM2WZPOEx5mILTk_/exec"; 
     
     const form = document.getElementById('applyForm');
     const btn = document.getElementById('submitBtn');
     const loading = document.getElementById('loading');
+    const custNameInput = document.getElementById('cust_name');
 
-    // 주소 합치기
-    document.getElementById("full_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
+    // 필수 입력값(고객명) 확인
+    if (!custNameInput.value.trim()) {
+        alert("고객명을 입력해주세요.");
+        custNameInput.focus();
+        return;
+    }
 
-    // 버튼 비활성화 및 로딩 시작
+    // 2. 버튼 비활성화 및 로딩 노출
     btn.disabled = true;
     btn.innerText = "데이터 처리 중...";
     loading.classList.remove('hidden');
 
-    // 데이터 수집
+    // 3. 데이터 수집 시작
+    // 주소 합치기
+    const mainAddr = document.getElementById("main_address").value;
+    const detailAddr = document.getElementById("detail_address").value;
+    document.getElementById("full_address").value = mainAddr + " " + detailAddr;
+
     const formData = new FormData(form);
     const data = {};
+    
+    // 기본 폼 데이터 수집
     formData.forEach((val, key) => { data[key] = val; });
     
-    // 체크박스 값 (v 또는 빈값) 처리
+    // 체크박스 값 보정 (체크된 경우 'v', 아니면 빈값)
     form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
         data[cb.name] = cb.checked ? "v" : "";
     });
 
-    // 라디오 버튼(납부방법) 별도 체크 로직
+    // 라디오 버튼(납부방법) 기반 체크박스 매핑 (템플릿 호환용)
     const payType = form.querySelector('input[name="pay_type"]:checked')?.value;
     if (payType === 'bank') data['체크5'] = 'v';
     if (payType === 'card') data['체크6'] = 'v';
     if (payType === 'paper') data['체크7'] = 'v';
 
-    // 날짜 및 고정값 자동 생성
+    // 폼 외부에 있거나 수동 수집이 필요한 데이터 강제 할당
+    // 특이사항(textarea)과 서명데이터(hidden)가 form 안에 있어도 안전하게 한 번 더 확인합니다.
+    const specialNote = document.querySelector('textarea[name="특이사항"]')?.value || "";
+    const signatureData = document.getElementById('signature-data')?.value || "";
+    
+    data['특이사항'] = specialNote;
+    data['서명데이터'] = signatureData;
+
+    // 날짜 및 자동 완성 필드
     const today = new Date();
     data['년'] = today.getFullYear();
     data['월'] = today.getMonth() + 1;
     data['일'] = today.getDate();
-    data['고객명'] = document.getElementById('cust_name').value;
-    data['서명'] = data['고객명'];
-    data['신청인'] = data['고객명'];
+    data['고객명'] = custNameInput.value;
+    data['서명'] = data['고객명'];      // 텍스트 이름 서명 대용
+    data['신청인'] = data['고객명'];    // 신청인 칸 대용
 
     try {
-        // POST 방식으로 데이터 전송 (URI Too Long 방지)
+        // 4. POST 방식으로 데이터 전송 (이미지 포함 대용량 전송 대응)
+        // mode: 'no-cors'는 응답 본문을 읽을 수는 없으나 전송은 확실히 이루어집니다.
         await fetch(WEB_APP_URL, {
             method: 'POST',
             mode: 'no-cors', 
@@ -499,11 +520,11 @@
             body: new URLSearchParams(data).toString()
         });
 
-        alert("신청서가 성공적으로 접수되었습니다!\n약 10초 후 PDF 생성이 완료됩니다.");
-        location.reload(); 
+        alert("신청서가 성공적으로 접수되었습니다!\n약 10~20초 후 PDF 생성이 완료됩니다.");
+        location.reload(); // 성공 시 페이지 초기화
         
     } catch (e) {
-        console.error(e);
+        console.error("전송 에러:", e);
         alert("전송 중 오류가 발생했습니다. 다시 시도해 주세요.");
         btn.disabled = false;
         btn.innerText = "신청서 제출하기";
