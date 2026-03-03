@@ -358,13 +358,14 @@
     </div>
 </div>
 
-            <div class="section" style="text-align: center; margin-top: 30px;">
-    <button type="button" id="submitBtn" onclick="submitForm()">신청서 제출하기</button>
+            <div class="submit-btn" style="text-align: center; margin-top: 30px;">
+    <button type="button" id="submitBtn" class="submit-btn" onclick="submitForm()">신청서 제출하기</button>
     
     <div id="loading" class="hidden" style="margin-top: 20px;">
         <div class="spinner"></div>
         <p>데이터 전송 및 PDF 생성 중입니다... (약 10~20초 소요)</p>
     </div>
+                     </form> </div>
 </div>
 <style>
     .submit-btn {
@@ -394,7 +395,7 @@
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 </style>
-        </form> </div>
+   
 
         <script>
             
