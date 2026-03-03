@@ -361,6 +361,65 @@
             location.reload();
         } catch (e) { alert("오류 발생"); btn.disabled = false; }
     }
+
+    // 1. 이메일/우편 체크 여부에 따른 입력창 노출 제어
+function toggleBillInput() {
+    const isEmail = document.getElementById('chk_email').checked;
+    const isPost = document.getElementById('chk_post').checked;
+    
+    // 이메일 입력칸 제어
+    document.getElementById('email_input_area').style.display = isEmail ? 'inline-block' : 'none';
+    
+    // 우편 주소창 제어 (payment-box hidden 클래스 처리)
+    const postArea = document.getElementById('post_address_area');
+    if (isPost) {
+        postArea.classList.remove('hidden');
+        postArea.style.display = 'block';
+    } else {
+        postArea.classList.add('hidden');
+        postArea.style.display = 'none';
+    }
+}
+
+// 2. 가입자 정보 주소를 청구 주소로 복사
+function copyMainToBill() {
+    const isSame = document.getElementById('bill_same_as_main').checked;
+    const mainAddr = document.getElementById('main_address').value;
+    const mainDetail = document.getElementById('detail_address').value;
+    
+    if (isSame) {
+        if (!mainAddr) {
+            alert("가입자 정보의 주소를 먼저 입력해주세요.");
+            document.getElementById('bill_same_as_main').checked = false;
+            return;
+        }
+        document.getElementById('bill_address').value = mainAddr;
+        document.getElementById('bill_detail').value = mainDetail;
+    } else {
+        document.getElementById('bill_address').value = "";
+        document.getElementById('bill_detail').value = "";
+    }
+}
+
+// 3. 주소 검색 (execDaumPostcode) 함수 업데이트
+function execDaumPostcode(type) {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            var addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
+            
+            if (type === 'install') {
+                document.getElementById("install_address").value = addr;
+            } else if (type === 'bill') {
+                document.getElementById("bill_address").value = addr;
+                document.getElementById("bill_detail").focus();
+                document.getElementById("bill_same_as_main").checked = false; // 직접 검색 시 동일 체크 해제
+            } else {
+                document.getElementById("main_address").value = addr;
+                document.getElementById("detail_address").focus();
+            }
+        }
+    }).open();
+}
 </script>
 </body>
 </html>
