@@ -449,22 +449,22 @@
     }
 
    async function submitForm() {
-    const WEB_APP_URL = "본인의_앱스크립트_URL"; // 실제 URL로 교체하세요
+    // 1. 본인의 구글 앱스크립트 URL을 반드시 아래에 넣으세요!
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlJTCRScNUzx5p59vf0gh4OR4hGRnhEXRLgRTkIjh9xDTBnwVrrM2WZPOEx5mILTk_/exec"; 
+    
     const form = document.getElementById('applyForm');
     const btn = document.getElementById('submitBtn');
     const loading = document.getElementById('loading');
 
-    // 1. 주소 합치기 및 서명 확인
+    // 주소 합치기
     document.getElementById("full_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
-    const signatureData = document.getElementById('signature-data').value;
-    const specialNote = document.querySelector('textarea[name="특이사항"]').value;
 
-    // 2. 버튼 비활성화 및 로딩 시작
+    // 버튼 비활성화 및 로딩 시작
     btn.disabled = true;
     btn.innerText = "데이터 처리 중...";
     loading.classList.remove('hidden');
 
-    // 3. 데이터 수집
+    // 데이터 수집
     const formData = new FormData(form);
     const data = {};
     formData.forEach((val, key) => { data[key] = val; });
@@ -474,28 +474,32 @@
         data[cb.name] = cb.checked ? "v" : "";
     });
 
-    // 특이사항 및 서명 데이터 강제 할당
-    data['특이사항'] = specialNote;
-    data['서명데이터'] = signatureData;
+    // 라디오 버튼(납부방법) 별도 체크 로직
+    const payType = form.querySelector('input[name="pay_type"]:checked')?.value;
+    if (payType === 'bank') data['체크5'] = 'v';
+    if (payType === 'card') data['체크6'] = 'v';
+    if (payType === 'paper') data['체크7'] = 'v';
 
-    // 날짜 자동 생성
+    // 날짜 및 고정값 자동 생성
     const today = new Date();
     data['년'] = today.getFullYear();
     data['월'] = today.getMonth() + 1;
     data['일'] = today.getDate();
     data['고객명'] = document.getElementById('cust_name').value;
+    data['서명'] = data['고객명'];
+    data['신청인'] = data['고객명'];
 
     try {
-        // 4. POST 방식으로 데이터 전송 (URI Too Long 해결)
-        const response = await fetch(WEB_APP_URL, {
+        // POST 방식으로 데이터 전송 (URI Too Long 방지)
+        await fetch(WEB_APP_URL, {
             method: 'POST',
-            mode: 'no-cors', // 구글 앱스크립트 보안상 필수
+            mode: 'no-cors', 
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: new URLSearchParams(data).toString()
         });
 
-        alert("신청서가 성공적으로 접수되었습니다!\n약 10초 후 PDF가 생성됩니다.");
-        location.reload(); // 성공 시 페이지 초기화
+        alert("신청서가 성공적으로 접수되었습니다!\n약 10초 후 PDF 생성이 완료됩니다.");
+        location.reload(); 
         
     } catch (e) {
         console.error(e);
