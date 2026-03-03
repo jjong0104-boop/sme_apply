@@ -171,23 +171,80 @@
                 </div>
             </div>
 
-            <div id="phone" class="hidden sub-box">
-                <h4>U+ 기업 인터넷전화 설정</h4>
-                <div class="input-grid">
-                    <label><input type="checkbox" name="체크45"> 신규(<input type="text" name="신규회선" style="width:40px;">회선)</label>
-                    <label><input type="checkbox" name="체크46"> 번호이동(<input type="text" name="번호이동회선" style="width:40px;">회선)</label>
-                </div>
-                <div class="product-group">
-                    서비스: <label><input type="checkbox" name="체크47"> 센트릭스</label> | 모델명: <input type="text" name="model" style="width:120px;">
-                </div>
-                <div class="input-grid">
-                    <label>단말모델명: <input type="text" name="모델명"></label>
-                    <label>전화대수: <input type="text" name="전화대수"></label>
-                </div>
-                <label><input type="checkbox" name="체크53"> 정액제 가입</label>
-            </div>
+<div id="phone" class="hidden sub-box">
+    <h4>U+ 기업 인터넷전화 설정 (체크56)</h4>
+    
+    <div class="sub-box">
+        <p><strong>[회선구분]</strong></p>
+        <div class="input-grid">
+            <label><input type="checkbox" name="체크45"> 신규 ( <input type="text" name="신규회선" class="num-input"> 회선 )</label>
+            <label><input type="checkbox" name="체크46"> 번호이동 ( <input type="text" name="번호이동회선" class="num-input"> 회선 )</label>
         </div>
+        <label>희망번호 기재: <input type="text" name="희망번호" placeholder="예: 070-1234-5678"></label>
+    </div>
 
+    <div class="sub-box">
+        <p><strong>[서비스 신청]</strong></p>
+        <div class="product-group">
+            <label><input type="checkbox" name="체크47"> 센트릭스</label>
+            <label><input type="checkbox" name="체크57"> 고급형</label>
+            <label><input type="checkbox" name="체크58"> IMS</label>
+            <label><input type="checkbox" name="체크48"> 일반형</label>
+            <label><input type="checkbox" name="체크59"> 자급 IP-PBX</label>
+        </div>
+        <div class="input-grid">
+            <label>모델명 (model): <input type="text" name="model"></label>
+            <label>할부선택: <select name="할부선택"><option value="">선택</option><option value="일시불">일시불</option><option value="3년">3년</option></select></label>
+        </div>
+    </div>
+
+    <div class="sub-box">
+        <p><strong>[단말 정보 및 할부]</strong></p>
+        <div class="input-grid">
+            <label>단말모델명 (모델명): <input type="text" name="모델명"></label>
+            <label>전화대수: <input type="text" name="전화대수" class="num-input"> 대</label>
+        </div>
+        <div class="product-group">
+            <span>장비할부:</span>
+            <label><input type="checkbox" name="체크49"> 일시불</label>
+            <label><input type="checkbox" name="체크50"> 3년</label>
+        </div>
+        <div class="input-grid">
+            <label>단말보조 대수 (subcount): <input type="text" name="subcount" class="num-input"> 대</label>
+            <label><input type="checkbox" name="체크51"> 전화모뎀임대(CPG) 1포트</label>
+        </div>
+        <label>CPG 포트대수 (포트대수): <input type="text" name="포트대수" class="num-input"> 대</label>
+    </div>
+
+    <div class="sub-box">
+        <p><strong>[요금제 정보]</strong></p>
+        <div class="product-group">
+            <label><input type="checkbox" name="체크52"> 종량제</label>
+            <label><input type="checkbox" name="체크53"> 정액제</label>
+        </div>
+        <table class="table-form" style="width:100%; border-collapse: collapse; margin-top:10px;">
+            <thead>
+                <tr style="background:#f9f9f9;">
+                    <th style="border:1px solid #ddd; padding:8px;">정액제명</th>
+                    <th style="border:1px solid #ddd; padding:8px;">회선수</th>
+                    <th style="border:1px solid #ddd; padding:8px;">대상번호</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:5px;"><input type="text" name="정액제명" style="border:none; width:100%;"></td>
+                    <td style="border:1px solid #ddd; padding:5px;"><input type="text" name="회선수" style="border:none; width:100%;"></td>
+                    <td style="border:1px solid #ddd; padding:5px;"><input type="text" name="대상번호" style="border:none; width:100%;"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="sub-box">
+        <p><strong>[부가서비스]</strong></p>
+        <input type="text" name="부가서비스" placeholder="부가서비스 내용을 직접 기재하세요.">
+    </div>
+</div>
         <button type="button" id="submitBtn" onclick="submitForm()">신청서 생성 및 전송</button>
     </form>
 </div>
