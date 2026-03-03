@@ -61,22 +61,22 @@
             
            <div class="product-group">
     <span>요금확인방법:</span>
-    <label><input type="checkbox" name="체크3" id="chk_email" onchange="toggleBillInput()"> 이메일</label>
+    <label><input type="checkbox" name="체크3" id="chk_email" onchange="toggleBillInput()"> 이메일 (체크3)</label>
     <div id="email_input_area" class="hidden" style="display:inline-block; margin-left:10px;">
         <input type="text" name="이메일" placeholder="청구서 수령 이메일" style="width: 200px;">
     </div>
 
-    <label style="margin-left:20px;"><input type="checkbox" name="체크4" id="chk_post" onchange="toggleBillInput()"> 우편</label>
+    <label style="margin-left:20px;"><input type="checkbox" name="체크4" id="chk_post" onchange="toggleBillInput()"> 우편 (체크4)</label>
 </div>
 
-<div id="post_address_area" class="payment-box hidden">
-    <p style="color: #e1007e; font-size: 0.9em; font-weight: bold; margin-bottom: 10px;">[청구서 수령 주소]</p>
-    <label style="margin-bottom:10px;">
-        <input type="checkbox" id="bill_same_install" onchange="copyInstallToBill()"> 설치주소와 동일
+<div id="post_address_area" class="payment-box hidden" style="border: 2px solid #666; background: #f9f9f9;">
+    <p style="color: #333; font-weight: bold; margin-bottom: 10px;">[청구서 수령 주소]</p>
+    <label style="color: #e1007e; font-weight: bold; margin-bottom: 10px; display: block;">
+        <input type="checkbox" id="bill_same_as_main" onchange="copyMainToBill()"> 가입자 정보 주소와 동일
     </label>
     <div class="input-grid">
         <label>수령주소 (클릭 검색): 
-            <input type="text" id="bill_address" name="청구주소" class="address-input" readonly onclick="execDaumPostcode('bill')" placeholder="주소를 입력하세요">
+            <input type="text" id="bill_address" name="청구주소" class="address-input" readonly onclick="execDaumPostcode('bill')" placeholder="주소를 검색하세요">
         </label>
         <label>상세 주소: 
             <input type="text" id="bill_detail" name="청구주소_상세" placeholder="상세주소 입력">
