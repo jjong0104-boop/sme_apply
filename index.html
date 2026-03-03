@@ -284,9 +284,24 @@
 
 <script>
     function togglePayment(type) {
-        document.getElementById('bank_info').style.display = (type === 'bank') ? 'block' : 'none';
-        document.getElementById('card_info').style.display = (type === 'card') ? 'block' : 'none';
+    const bankBox = document.getElementById('bank_info');
+    const cardBox = document.getElementById('card_info');
+    
+    // 모든 박스 숨기기
+    bankBox.style.display = 'none';
+    cardBox.style.display = 'none';
+    
+    // 선택된 타입만 보이기
+    if (type === 'bank') {
+        bankBox.style.display = 'block';
+    } else if (type === 'card') {
+        cardBox.style.display = 'block';
     }
+    
+    // 결제 수단이 바뀔 때마다 기존에 선택된 납부일 라디오 버튼 초기화 (권장)
+    const payDateRadios = document.querySelectorAll('input[name="납부일"]');
+    payDateRadios.forEach(radio => radio.checked = false);
+}
 
     function toggleIptvGroup() {
         const detail = document.getElementById('iptv_group_detail');
