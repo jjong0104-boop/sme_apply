@@ -229,6 +229,31 @@
     </div>
 
    <div class="sub-box">
+       <div class="sub-box">
+    <p><strong>[회선구분]</strong></p>
+    <div class="product-group" style="display: flex; gap: 20px;">
+        <label>
+            <input type="checkbox" name="체크45" id="chk_new_line" onchange="togglePhoneInput()"> 신규 (체크45)
+        </label>
+        <label>
+            <input type="checkbox" name="체크46" id="chk_port_in" onchange="togglePhoneInput()"> 번호이동 (체크46)
+        </label>
+    </div>
+
+    <div id="new_line_area" class="hidden" style="margin-top: 10px; background: #fffaf0; padding: 10px; border-radius: 4px;">
+        <label>신규 회선수: <input type="text" name="신규회선" class="num-input" style="width: 50px;"> 회선</label><br>
+        <label style="margin-top:5px; display:block;">희망번호 기재 (070-XXXX-XXXX): 
+            <input type="text" name="희망번호" placeholder="예: 070-1234-5678" style="width: 80%;">
+        </label>
+    </div>
+
+    <div id="port_in_area" class="hidden" style="margin-top: 10px; background: #f0faff; padding: 10px; border-radius: 4px;">
+        <label>번호이동 회선수: <input type="text" name="번호이동회선" class="num-input" style="width: 50px;"> 회선</label><br>
+        <label style="margin-top:5px; display:block;">이동할 전화번호 (대상번호): 
+            <input type="text" name="번호이동번호" placeholder="예: 02-123-4567" style="width: 80%;">
+        </label>
+    </div>
+</div>
     <p><strong>[서비스 신청]</strong></p>
     <div class="product-group" style="display: flex; align-items: center; flex-wrap: nowrap; gap: 15px;">
         <div style="display: flex; align-items: center; gap: 5px; white-space: nowrap;">
