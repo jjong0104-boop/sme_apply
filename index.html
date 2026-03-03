@@ -359,17 +359,14 @@
 </div>
 
 <div class="section" style="text-align: center; margin-top: 30px;">
-    <button type="button" id="submitBtn" class="submit-btn" onclick="submitForm()">신청서 제출하기</button>
-    
-    <div id="loading" class="hidden" style="margin-top: 20px;">
-        <div class="spinner"></div>
-        <p>데이터 전송 및 PDF 생성 중입니다... (약 10~20초 소요)</p>
-    </div>
-</div>
-
-</form> 
-</div> <style>
-    /* 모든 디자인 코드를 이쪽으로 모았습니다 */
+            <button type="button" id="submitBtn" class="submit-btn" onclick="submitForm()">신청서 제출하기</button>
+            <div id="loading" class="hidden" style="margin-top: 20px;">
+                <div class="spinner"></div>
+                <p>데이터 전송 및 PDF 생성 중입니다... (약 10~20초 소요)</p>
+            </div>
+        </div>
+    </form> </div> <style>
+    /* 디자인 코드 보강 */
     .submit-btn {
         background-color: #e1007e;
         color: white;
@@ -400,20 +397,19 @@
 </style>
 
 <script>
-    // 앱스크립트 주소 (본인 것으로 확인)
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlJTCRScNUzx5p59vf0gh4OR4hGRnhEXRLgRTkIjh9xDTBnwVrrM2WZPOEx5mILTk_/exec";
 
- function togglePayment(type) {
-    document.getElementById('bank_info').style.display = (type === 'bank' ? 'block' : 'none');
-    document.getElementById('card_info').style.display = (type === 'card' ? 'block' : 'none'); // 이 줄 추가
-    const payDateRadios = document.querySelectorAll('input[name="납부일"]');
-    payDateRadios.forEach(radio => radio.checked = false);
-}
+    function togglePayment(type) {
+        document.getElementById('bank_info').style.display = (type === 'bank' ? 'block' : 'none');
+        document.getElementById('card_info').style.display = (type === 'card' ? 'block' : 'none');
+        const payDateRadios = document.querySelectorAll('input[name="납부일"]');
+        payDateRadios.forEach(radio => radio.checked = false);
+    }
 
     function toggleIptvGroup() {
         const detail = document.getElementById('iptv_group_detail');
         const checkbox = document.getElementById('iptv_group_btn');
-        detail.style.display = checkbox.checked ? 'block' : 'none';
+        if(detail && checkbox) detail.style.display = checkbox.checked ? 'block' : 'none';
     }
 
     function execDaumPostcode(type) {
@@ -432,13 +428,13 @@
     function copyAddress() {
         if (document.getElementById("same_as_above").checked) {
             document.getElementById("install_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
-        } else {
-            document.getElementById("install_address").value = "";
         }
     }
 
     function toggleSection(id, btnId) {
-        document.getElementById(id).style.display = document.getElementById(btnId).checked ? 'block' : 'none';
+        const target = document.getElementById(id);
+        const btn = document.getElementById(btnId);
+        if(target && btn) target.style.display = btn.checked ? 'block' : 'none';
     }
 
     function togglePhoneInput() {
@@ -462,26 +458,22 @@
         btn.innerText = "데이터 처리 중...";
         loading.classList.remove('hidden');
 
-        // 주소 합치기
         document.getElementById("full_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
 
         const formData = new FormData(form);
         const data = {};
         formData.forEach((val, key) => { data[key] = val; });
         
-        // 체크박스 v표시 처리
         form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
             data[cb.name] = cb.checked ? "v" : "";
         });
 
-        // 날짜 생성
         const today = new Date();
         data['년'] = today.getFullYear();
         data['월'] = today.getMonth() + 1;
         data['일'] = today.getDate();
 
         try {
-            // [중요] POST 방식으로 전송하여 길이 제한 해결
             await fetch(WEB_APP_URL, {
                 method: 'POST',
                 mode: 'no-cors',
@@ -516,7 +508,6 @@
         const pos = getMousePos(e);
         ctx.moveTo(pos.x, pos.y);
     }
-
     function draw(e) {
         if (!drawing) return;
         const pos = getMousePos(e);
@@ -526,9 +517,7 @@
         ctx.stroke();
         document.getElementById('signature-data').value = canvas.toDataURL();
     }
-
     function stopDrawing() { drawing = false; }
-
     function getMousePos(e) {
         const rect = canvas.getBoundingClientRect();
         return {
@@ -536,7 +525,6 @@
             y: (e.clientY || e.pageY) - rect.top
         };
     }
-
     function clearSignature() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         document.getElementById('signature-data').value = "";
