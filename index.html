@@ -525,11 +525,15 @@
     canvas.addEventListener('touchend', stopDrawing);
 
     function startDrawing(e) {
-        drawing = true;
-        ctx.beginPath();
-        const pos = getMousePos(e);
-        ctx.moveTo(pos.x, pos.y);
-    }
+    drawing = true;
+    ctx.beginPath();
+    ctx.lineWidth = 4; // <--- 이 숫자를 4~6 사이로 높이면 서명이 훨씬 굵어집니다.
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#000'; // 선 색상 (검정)
+    const pos = getMousePos(e);
+    ctx.moveTo(pos.x, pos.y);
+}
+    
     function draw(e) {
         if (!drawing) return;
         const pos = getMousePos(e);
