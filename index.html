@@ -52,12 +52,37 @@
             <input type="hidden" name="주소" id="full_address">
 
             <h4>납부 및 청구 설정</h4>
-            <div class="product-group">
-                <span>요금확인방법:</span>
-                <label><input type="checkbox" name="체크3"> 이메일</label>
-                <label><input type="checkbox" name="체크4"> 우편</label>
-                <input type="text" name="이메일" placeholder="청구서 수령 이메일" style="width: 200px; margin-left: 10px;">
-            </div>
+<div class="product-group">
+    <span>청구 구분:</span>
+    <label><input type="checkbox" name="체크1"> 기존청구서통합</label>
+    <label style="margin-left:10px;">청구서번호: <input type="text" name="청구서번호" style="width:150px; display:inline-block;"></label>
+    <label style="margin-left:20px;"><input type="checkbox" name="체크2"> 신규신청서</label>
+</div>
+            
+           <div class="product-group">
+    <span>요금확인방법:</span>
+    <label><input type="checkbox" name="체크3" id="chk_email" onchange="toggleBillInput()"> 이메일</label>
+    <div id="email_input_area" class="hidden" style="display:inline-block; margin-left:10px;">
+        <input type="text" name="이메일" placeholder="청구서 수령 이메일" style="width: 200px;">
+    </div>
+
+    <label style="margin-left:20px;"><input type="checkbox" name="체크4" id="chk_post" onchange="toggleBillInput()"> 우편</label>
+</div>
+
+<div id="post_address_area" class="payment-box hidden">
+    <p style="color: #e1007e; font-size: 0.9em; font-weight: bold; margin-bottom: 10px;">[청구서 수령 주소]</p>
+    <label style="margin-bottom:10px;">
+        <input type="checkbox" id="bill_same_install" onchange="copyInstallToBill()"> 설치주소와 동일
+    </label>
+    <div class="input-grid">
+        <label>수령주소 (클릭 검색): 
+            <input type="text" id="bill_address" name="청구주소" class="address-input" readonly onclick="execDaumPostcode('bill')" placeholder="주소를 입력하세요">
+        </label>
+        <label>상세 주소: 
+            <input type="text" id="bill_detail" name="청구주소_상세" placeholder="상세주소 입력">
+        </label>
+    </div>
+</div>
 
           <div class="product-group">
     <span>납부방법 선택:</span>
