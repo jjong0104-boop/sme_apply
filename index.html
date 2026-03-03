@@ -367,8 +367,9 @@
     </div>
 </div>
 
-</form> </div> <style>
-    /* 누락되었던 버튼 디자인 복구 */
+</form> 
+</div> <style>
+    /* 모든 디자인 코드를 이쪽으로 모았습니다 */
     .submit-btn {
         background-color: #e1007e;
         color: white;
@@ -402,12 +403,12 @@
     // 앱스크립트 주소 (본인 것으로 확인)
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlJTCRScNUzx5p59vf0gh4OR4hGRnhEXRLgRTkIjh9xDTBnwVrrM2WZPOEx5mILTk_/exec";
 
-    function togglePayment(type) {
-        document.getElementById('bank_info').style.display = (type === 'bank' ? 'block' : 'none');
-        document.getElementById('card_info').style.display = (type === 'card' ? 'block' : 'none');
-        const payDateRadios = document.querySelectorAll('input[name="납부일"]');
-        payDateRadios.forEach(radio => radio.checked = false);
-    }
+ function togglePayment(type) {
+    document.getElementById('bank_info').style.display = (type === 'bank' ? 'block' : 'none');
+    document.getElementById('card_info').style.display = (type === 'card' ? 'block' : 'none'); // 이 줄 추가
+    const payDateRadios = document.querySelectorAll('input[name="납부일"]');
+    payDateRadios.forEach(radio => radio.checked = false);
+}
 
     function toggleIptvGroup() {
         const detail = document.getElementById('iptv_group_detail');
