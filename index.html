@@ -438,6 +438,27 @@
         if(target && btn) target.style.display = btn.checked ? 'block' : 'none';
     }
 
+    function toggleBillInput() {
+    const isEmail = document.getElementById('chk_email').checked;
+    const isPost = document.getElementById('chk_post').checked;
+    
+    // 이메일 입력칸 제어
+    const emailArea = document.getElementById('email_input_area');
+    if (emailArea) emailArea.style.display = isEmail ? 'inline-block' : 'none';
+    
+    // 우편 주소창 제어 (이 부분이 빠져서 안 열렸던 것입니다)
+    const postArea = document.getElementById('post_address_area');
+    if (postArea) {
+        if (isPost) {
+            postArea.classList.remove('hidden');
+            postArea.style.display = 'block';
+        } else {
+            postArea.classList.add('hidden');
+            postArea.style.display = 'none';
+        }
+    }
+}
+
     function togglePhoneInput() {
         document.getElementById('new_line_area').style.display = document.getElementById('chk_new_line').checked ? 'block' : 'none';
         document.getElementById('port_in_area').style.display = document.getElementById('chk_port_in').checked ? 'block' : 'none';
