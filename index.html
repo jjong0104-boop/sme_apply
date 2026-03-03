@@ -339,11 +339,7 @@
 </div>
 
 
-        <button type="button" id="submitBtn" onclick="submitForm()">신청서 생성 및 전송</button>
-    </form>
-</div>
-
-            <div class="section">
+           <div class="section">
     <h3>4. 특이사항 / 기타 메모</h3>
     <div class="sub-box">
         <textarea name="특이사항" rows="5" placeholder="추가 요청사항이나 특이사항을 자유롭게 기재해 주세요." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; resize: vertical;"></textarea>
@@ -363,7 +359,7 @@
 </div>
 
             <div class="section" style="text-align: center; margin-top: 30px;">
-    <button type="submit" id="submitBtn" class="submit-btn">신청서 제출하기</button>
+    <button type="button" id="submitBtn" class="submit-btn">신청서 제출하기</button>
     
     <div id="loading" class="hidden" style="margin-top: 20px;">
         <div class="spinner"></div>
@@ -452,34 +448,63 @@
         document.getElementById(id).style.display = document.getElementById(btnId).checked ? 'block' : 'none';
     }
 
-    async function submitForm() {
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlJTCRScNUzx5p59vf0gh4OR4hGRnhEXRLgRTkIjh9xDTBnwVrrM2WZPOEx5mILTk_/exec";
-        const form = document.getElementById('applyForm');
-        document.getElementById("full_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
+   async function submitForm() {
+    const WEB_APP_URL = "본인의_앱스크립트_URL"; // 실제 URL로 교체하세요
+    const form = document.getElementById('applyForm');
+    const btn = document.getElementById('submitBtn');
+    const loading = document.getElementById('loading');
+
+    // 1. 주소 합치기 및 서명 확인
+    document.getElementById("full_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
+    const signatureData = document.getElementById('signature-data').value;
+    const specialNote = document.querySelector('textarea[name="특이사항"]').value;
+
+    // 2. 버튼 비활성화 및 로딩 시작
+    btn.disabled = true;
+    btn.innerText = "데이터 처리 중...";
+    loading.classList.remove('hidden');
+
+    // 3. 데이터 수집
+    const formData = new FormData(form);
+    const data = {};
+    formData.forEach((val, key) => { data[key] = val; });
+    
+    // 체크박스 값 (v 또는 빈값) 처리
+    form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        data[cb.name] = cb.checked ? "v" : "";
+    });
+
+    // 특이사항 및 서명 데이터 강제 할당
+    data['특이사항'] = specialNote;
+    data['서명데이터'] = signatureData;
+
+    // 날짜 자동 생성
+    const today = new Date();
+    data['년'] = today.getFullYear();
+    data['월'] = today.getMonth() + 1;
+    data['일'] = today.getDate();
+    data['고객명'] = document.getElementById('cust_name').value;
+
+    try {
+        // 4. POST 방식으로 데이터 전송 (URI Too Long 해결)
+        const response = await fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors', // 구글 앱스크립트 보안상 필수
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(data).toString()
+        });
+
+        alert("신청서가 성공적으로 접수되었습니다!\n약 10초 후 PDF가 생성됩니다.");
+        location.reload(); // 성공 시 페이지 초기화
         
-        const btn = document.getElementById('submitBtn');
-        btn.disabled = true; btn.innerText = "전송 중...";
-
-        const data = {};
-        new FormData(form).forEach((val, key) => { data[key] = val; });
-        form.querySelectorAll('input[type="checkbox"]').forEach(cb => { data[cb.name] = cb.checked ? "v" : ""; });
-
-        const payType = form.querySelector('input[name="pay_type"]:checked')?.value;
-        if (payType === 'bank') data['체크5'] = 'v';
-        if (payType === 'card') data['체크6'] = 'v';
-        if (payType === 'paper') data['체크7'] = 'v';
-
-        const today = new Date();
-        data['년'] = today.getFullYear(); data['월'] = today.getMonth() + 1; data['일'] = today.getDate();
-        data['서명'] = data['고객명']; data['신청인'] = data['고객명'];
-
-        try {
-            await fetch(WEB_APP_URL + "?" + new URLSearchParams(data).toString(), { method: 'POST', mode: 'no-cors' });
-            alert("신청서 접수 완료!");
-            location.reload();
-        } catch (e) { alert("오류 발생"); btn.disabled = false; }
+    } catch (e) {
+        console.error(e);
+        alert("전송 중 오류가 발생했습니다. 다시 시도해 주세요.");
+        btn.disabled = false;
+        btn.innerText = "신청서 제출하기";
+        loading.classList.add('hidden');
     }
-
+}
     
     // 1. 이메일/우편 체크 여부에 따른 입력창 노출 제어
 function toggleBillInput() {
