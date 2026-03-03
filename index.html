@@ -365,39 +365,11 @@
         <div class="spinner"></div>
         <p>데이터 전송 및 PDF 생성 중입니다... (약 10~20초 소요)</p>
     </div>
-                     </form> </div>
+  </form> </div>
 </div>
-<style>
-    .submit-btn {
-        background-color: #e1007e;
-        color: white;
-        padding: 15px 50px;
-        font-size: 1.2em;
-        font-weight: bold;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-    .submit-btn:hover { background-color: #b50065; }
-    
-    /* 로딩 스피너 디자인 */
-    .spinner {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #e1007e;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 10px;
-    }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-</style>
-   
 
-        <script>
+
+ <script>
             
     function togglePayment(type) {
     const bankBox = document.getElementById('bank_info');
