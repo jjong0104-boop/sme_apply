@@ -443,6 +443,7 @@
         } catch (e) { alert("오류 발생"); btn.disabled = false; }
     }
 
+    
     // 1. 이메일/우편 체크 여부에 따른 입력창 노출 제어
 function toggleBillInput() {
     const isEmail = document.getElementById('chk_email').checked;
@@ -501,7 +502,31 @@ function execDaumPostcode(type) {
         }
     }).open();
 }
-
+function togglePhoneInput() {
+    const isNew = document.getElementById('chk_new_line').checked;
+    const isPortIn = document.getElementById('chk_port_in').checked;
+    
+    // 신규 입력창 제어
+    const newArea = document.getElementById('new_line_area');
+    if (isNew) {
+        newArea.classList.remove('hidden');
+        newArea.style.display = 'block';
+    } else {
+        newArea.classList.add('hidden');
+        newArea.style.display = 'none';
+    }
+    
+    // 번호이동 입력창 제어
+    const portArea = document.getElementById('port_in_area');
+    if (isPortIn) {
+        portArea.classList.remove('hidden');
+        portArea.style.display = 'block';
+    } else {
+        portArea.classList.add('hidden');
+        portArea.style.display = 'none';
+    }
+}
+    
     const canvas = document.getElementById('signature-pad');
 const ctx = canvas.getContext('2d');
 let drawing = false;
