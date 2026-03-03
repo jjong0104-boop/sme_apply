@@ -318,6 +318,26 @@
     </form>
 </div>
 
+            <div class="section">
+    <h3>4. 특이사항 / 기타 메모</h3>
+    <div class="sub-box">
+        <textarea name="특이사항" rows="5" placeholder="추가 요청사항이나 특이사항을 자유롭게 기재해 주세요." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; resize: vertical;"></textarea>
+    </div>
+</div>
+
+<div class="section">
+    <h3>서명 (선택사항)</h3>
+    <div class="sub-box" style="text-align: center;">
+        <p style="font-size: 0.9em; color: #666; margin-bottom: 5px;">아래 박스에 서명해 주세요 (마우스 또는 터치)</p>
+        <canvas id="signature-pad" width="400" height="200" style="border: 2px dashed #ccc; background: #fff; cursor: crosshair; touch-action: none; max-width: 100%;"></canvas>
+        <div style="margin-top: 10px;">
+            <button type="button" onclick="clearSignature()" style="background: #666; color: #fff; border: none; padding: 5px 15px; border-radius: 4px;">지우기</button>
+            <input type="hidden" name="서명데이터" id="signature-data">
+        </div>
+    </div>
+</div>
+
+            
 <script>
     function togglePayment(type) {
     const bankBox = document.getElementById('bank_info');
@@ -456,6 +476,55 @@ function execDaumPostcode(type) {
         }
     }).open();
 }
+
+    const canvas = document.getElementById('signature-pad');
+const ctx = canvas.getContext('2d');
+let drawing = false;
+
+// 서명 시작
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e.touches[0]); });
+canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
+canvas.addEventListener('touchend', stopDrawing);
+
+function startDrawing(e) {
+    drawing = true;
+    ctx.beginPath();
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#000';
+    const pos = getMousePos(e);
+    ctx.moveTo(pos.x, pos.y);
+}
+
+function draw(e) {
+    if (!drawing) return;
+    const pos = getMousePos(e);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    // 서명할 때마다 데이터 업데이트
+    document.getElementById('signature-data').value = canvas.toDataURL();
+}
+
+function stopDrawing() { drawing = false; }
+
+function getMousePos(e) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+        x: (e.clientX || e.pageX) - rect.left,
+        y: (e.clientY || e.pageY) - rect.top
+    };
+}
+
+function clearSignature() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById('signature-data').value = "";
+}
+
+// 폼 제출 시 서명 확인 로직 (필요 시 수정 가능)
+// 필수값이 아니므로 별도의 체크 없이 넘어갑니다.
 </script>
 </body>
 </html>
