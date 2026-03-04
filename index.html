@@ -434,13 +434,12 @@
     function copyAddressAndInfo() {
     const isChecked = document.getElementById("same_as_above").checked;
     if (isChecked) {
-        // 주소 복사
+        // 설치주소 복사
         const mainAddr = document.getElementById("main_address").value;
         const detailAddr = document.getElementById("detail_address").value;
         document.getElementById("install_address").value = mainAddr + (detailAddr ? " " + detailAddr : "");
         
-        // 가입자 정보(고객명, 휴대폰)를 담당자 칸으로 복사
-        // HTML의 id가 cust_name, cust_phone, manager_name, manager_phone이어야 작동합니다.
+        // 가입자 이름(cust_name)과 휴대폰(cust_phone)을 담당자 정보로 복사
         document.getElementById("manager_name").value = document.getElementById("cust_name").value;
         document.getElementById("manager_phone").value = document.getElementById("cust_phone").value;
     } else {
