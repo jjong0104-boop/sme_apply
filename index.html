@@ -561,7 +561,8 @@
     ctx.lineTo(pos.x, pos.y);
     ctx.stroke();
     // 품질을 0.5로 낮추고 JPEG 형식을 사용하여 데이터를 가볍게 만듭니다.
-    document.getElementById('signature-data').value = canvas.toDataURL('image/jpeg', 0.5);
+    canvas.toDataURL('image/jpeg', 품질); 품질은 0.1~1.0 사이로 설정 가능 (보통 0.5~0.7 권장)
+document.getElementById('signature-data').value = canvas.toDataURL('image/jpeg', 0.6);
 }
     
     function stopDrawing() { drawing = false; }
