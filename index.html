@@ -124,23 +124,26 @@
     </div>
 </div>
 
-        <div class="section">
-            <h3>2. 공통 서비스 정보</h3>
-            <div class="product-group">
-                <span>약정기간:</span>
-                <label><input type="checkbox" name="체크12"> 3년</label>
-                <label><input type="checkbox" name="체크13"> 1년</label>
-                <label><input type="checkbox" name="체크14"> 5년</label>
-            </div>
-            <label>설치주소: <input type="text" id="install_address" name="설치주소" class="address-input" readonly onclick="execDaumPostcode('install')"></label>
-<label style="color: #e1007e; font-weight: bold;">
-    <input type="checkbox" id="same_as_above" onchange="copyAddressAndInfo()"> 가입자 정보와 동일
-</label>
-<div class="input-grid">
-    <label>담당자: <input type="text" name="담당자" id="manager_name"></label>
-    <label>휴대폰: <input type="text" name="담당자휴대폰" id="manager_phone"></label>
+       <div class="section">
+    <h3>2. 공통 서비스 정보</h3>
+    <div class="product-group">
+        <span>약정기간:</span>
+        <label><input type="checkbox" name="체크12"> 3년</label>
+        <label><input type="checkbox" name="체크13"> 1년</label>
+        <label><input type="checkbox" name="체크14"> 5년</label>
+    </div>
+
+    <label>설치주소: <input type="text" id="install_address" name="설치주소" class="address-input" readonly onclick="execDaumPostcode('install')"></label>
+
+    <label style="color: #e1007e; font-weight: bold; margin-top: 10px; display: block;">
+        <input type="checkbox" id="same_as_above" onchange="copyAddressAndInfo()"> 가입자 정보와 동일
+    </label>
+
+    <div class="input-grid">
+        <label>담당자: <input type="text" name="담당자" id="manager_name"></label>
+        <label>휴대폰: <input type="text" name="담당자휴대폰" id="manager_phone"></label>
+    </div>
 </div>
-        </div>
 
         <div class="section">
             <h3>3. 서비스 신청사항</h3>
