@@ -572,6 +572,20 @@
     // 투명도를 제거하는 image/jpeg 형식을 사용하고 품질을 0.6으로 설정합니다.
     document.getElementById('signature-data').value = canvas.toDataURL('image/jpeg', 0.6);
 }
+// 휴대폰 번호 자동 하이픈 생성 함수
+function formatPhoneNumber(input) {
+    let value = input.value.replace(/[^0-9]/g, ""); // 숫자만 남기기
+    if (value.length > 3 && value.length <= 7) {
+        input.value = value.slice(0, 3) + "-" + value.slice(3);
+    } else if (value.length > 7) {
+        input.value = value.slice(0, 3) + "-" + value.slice(3, 7) + "-" + value.slice(7, 11);
+    } else {
+        input.value = value;
+    }
+}
+
+// HTML 입력창에 oninput 이벤트 연결 (가입자용, 담당자용 모두 적용)
+// <input type="text" name="휴대폰" id="cust_phone" oninput="formatPhoneNumber(this)">
     
     function stopDrawing() { drawing = false; }
     function getMousePos(e) {
