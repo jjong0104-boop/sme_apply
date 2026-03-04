@@ -418,17 +418,21 @@
         if(detail && checkbox) detail.style.display = checkbox.checked ? 'block' : 'none';
     }
 
-    function execDaumPostcode(type) {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                var addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
-                if(type === 'install') document.getElementById("install_address").value = addr;
-                else {
-                    document.getElementById("main_address").value = addr;
-                    document.getElementById("detail_address").focus();
-                }
+   function execDaumPostcode(type) {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            var addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
+            if(type === 'install') {
+                document.getElementById("install_address").value = addr;
+            } else if(type === 'bill') {
+                document.getElementById("bill_address").value = addr;
+            } else {
+                document.getElementById("main_address").value = addr;
+                document.getElementById("detail_address").focus();
             }
-        }).open();
+        }
+    }).open();
+}
     }
 
     function copyAddressAndInfo() {
