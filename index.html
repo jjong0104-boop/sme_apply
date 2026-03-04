@@ -547,12 +547,19 @@
     canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
     canvas.addEventListener('touchend', stopDrawing);
 
-    function startDrawing(e) {
+ function startDrawing(e) {
+    // 처음 그리기 시작할 때 배경이 투명하면 흰색으로 한 번 채워줍니다.
+    // 이 작업이 없으면 PDF에서 검은색 박스가 생깁니다.
+    if (!drawing) {
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    
     drawing = true;
     ctx.beginPath();
-    ctx.lineWidth = 6; // <--- 이 숫자를 4~6 사이로 높이면 서명이 훨씬 굵어집니다.
+    ctx.lineWidth = 6; 
     ctx.lineCap = 'round';
-    ctx.strokeStyle = '#000'; // 선 색상 (검정)
+    ctx.strokeStyle = '#000'; 
     const pos = getMousePos(e);
     ctx.moveTo(pos.x, pos.y);
 }
