@@ -403,7 +403,7 @@
 </style>
 
 <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxKzMjp-jD2V32DgTHyeAmJyJp9TQwkHx9HNNqjFYlIdarQhjY6XQxbiaOV-MPSZwn3/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyd43Z4BvCg61_TFm1mWDQep4yqtXL8XMImiy7yQ-dVgbt99uNSM0CuiLsfqH5346De/exec";
 
     function togglePayment(type) {
         document.getElementById('bank_info').style.display = (type === 'bank' ? 'block' : 'none');
@@ -560,8 +560,8 @@
     const pos = getMousePos(e);
     ctx.lineTo(pos.x, pos.y);
     ctx.stroke();
-    // 품질을 0.5~0.7 정도로 설정하면 서버 부하가 줄어 PDF 생성이 빨라집니다.
-    document.getElementById('signature-data').value = canvas.toDataURL('image/jpeg', 0.6);
+    // 품질을 0.5로 낮추고 JPEG 형식을 사용하여 데이터를 가볍게 만듭니다.
+    document.getElementById('signature-data').value = canvas.toDataURL('image/jpeg', 0.5);
 }
     
     function stopDrawing() { drawing = false; }
