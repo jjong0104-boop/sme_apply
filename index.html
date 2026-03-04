@@ -43,7 +43,7 @@
             <h3>1. 가입자 및 납부 정보</h3>
             <div class="input-grid">
                 <label>고객명: <input type="text" name="고객명" id="cust_name" required></label>
-                <label>휴대폰: <input type="text" name="휴대폰" id="manager_phone"></label>
+                <label>휴대폰: <input type="text" name="휴대폰" id="ust_phone" required></label>
                 <label>사업자등록번호: <input type="text" name="사업자등록번호"></label>
                 <label>생년월일(법인번호): <input type="text" name="생년월일"></label>
             </div>
@@ -124,15 +124,8 @@
     </div>
 </div>
 
-       <div class="section">
+    <div class="section">
     <h3>2. 공통 서비스 정보</h3>
-    <div class="product-group">
-        <span>약정기간:</span>
-        <label><input type="checkbox" name="체크12"> 3년</label>
-        <label><input type="checkbox" name="체크13"> 1년</label>
-        <label><input type="checkbox" name="체크14"> 5년</label>
-    </div>
-
     <label>설치주소: <input type="text" id="install_address" name="설치주소" class="address-input" readonly onclick="execDaumPostcode('install')"></label>
 
     <label style="color: #e1007e; font-weight: bold; margin-top: 10px; display: block;">
@@ -438,23 +431,25 @@
     const isChecked = document.getElementById("same_as_above").checked;
     
     if (isChecked) {
-        // 1. 주소 복사
+        // 1. 주소 복사 (메인 주소 + 상세 주소 결합)
         const mainAddr = document.getElementById("main_address").value;
         const detailAddr = document.getElementById("detail_address").value;
         document.getElementById("install_address").value = mainAddr + (detailAddr ? " " + detailAddr : "");
         
-        // 2. 가입자 정보 복사 (가입자 섹션의 ID가 cust_name, cust_phone 이어야 함)
+        // 2. 가입자 정보(고객명, 휴대폰)를 담당자 칸으로 복사
         const custName = document.getElementById("cust_name").value;
-        const custPhone = document.getElementById("cust_phone").value; // '연락처' 혹은 '휴대폰' 입력칸 ID
+        const custPhone = document.getElementById("cust_phone").value;
         
         document.getElementById("manager_name").value = custName;
         document.getElementById("manager_phone").value = custPhone;
     } else {
         // 체크 해제 시 초기화
+        document.getElementById("install_address").value = "";
         document.getElementById("manager_name").value = "";
         document.getElementById("manager_phone").value = "";
     }
 }
+    
     function toggleSection(id, btnId) {
         const target = document.getElementById(id);
         const btn = document.getElementById(btnId);
