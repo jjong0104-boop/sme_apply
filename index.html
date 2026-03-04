@@ -403,7 +403,7 @@
 </style>
 
 <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyhiXJxMi2EwGDY-Z9K0hkFehH2utHRPqOqeZ2J5CoWKTnXKRpmaOLa_5EAe1Akb51a/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxKzMjp-jD2V32DgTHyeAmJyJp9TQwkHx9HNNqjFYlIdarQhjY6XQxbiaOV-MPSZwn3/exec";
 
     function togglePayment(type) {
         document.getElementById('bank_info').style.display = (type === 'bank' ? 'block' : 'none');
@@ -435,13 +435,16 @@
     const isChecked = document.getElementById("same_as_above").checked;
     if (isChecked) {
         // 주소 복사
-        document.getElementById("install_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
-        // 이름 및 연락처 복사
+        const mainAddr = document.getElementById("main_address").value;
+        const detailAddr = document.getElementById("detail_address").value;
+        document.getElementById("install_address").value = mainAddr + (detailAddr ? " " + detailAddr : "");
+        
+        // 가입자 정보(이름, 휴대폰)를 담당자 칸으로 복사
         document.getElementById("manager_name").value = document.getElementById("cust_name").value;
-        document.getElementById("manager_tel").value = document.getElementById("cust_tel").value;
+        document.getElementById("manager_phone").value = document.getElementById("cust_phone").value;
     } else {
         document.getElementById("manager_name").value = "";
-        document.getElementById("manager_tel").value = "";
+        document.getElementById("manager_phone").value = "";
     }
 }
 
@@ -552,13 +555,13 @@
     ctx.moveTo(pos.x, pos.y);
 }
     
-   function draw(e) {
+  function draw(e) {
     if (!drawing) return;
     const pos = getMousePos(e);
-    // ctx.lineWidth = 2; <--- 이 줄을 삭제하거나 숫자를 6으로 수정하세요.
     ctx.lineTo(pos.x, pos.y);
     ctx.stroke();
-    document.getElementById('signature-data').value = canvas.toDataURL();
+    // 품질을 0.5~0.7 정도로 설정하면 서버 부하가 줄어 PDF 생성이 빨라집니다.
+    document.getElementById('signature-data').value = canvas.toDataURL('image/jpeg', 0.6);
 }
     
     function stopDrawing() { drawing = false; }
