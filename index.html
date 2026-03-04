@@ -134,10 +134,15 @@
             </div>
             <label style="color: #e1007e; font-weight: bold;"><input type="checkbox" id="same_as_above" onchange="copyAddress()"> 가입자 정보 주소와 동일</label>
             <label>설치주소: <input type="text" id="install_address" name="설치주소" class="address-input" readonly onclick="execDaumPostcode('install')"></label>
-            <div class="input-grid">
-                <label>담당자: <input type="text" name="담당자"></label>
-                <label>휴대폰: <input type="text" name="휴대폰"></label>
-            </div>
+            <label>연락처: <input type="text" name="연락처" id="cust_tel" required></label>
+
+<label style="color: #e1007e; font-weight: bold;">
+    <input type="checkbox" id="same_as_above" onchange="copyAddressAndInfo()"> 가입자 정보와 동일
+</label>
+<div class="input-grid">
+    <label>담당자: <input type="text" name="담당자" id="manager_name"></label>
+    <label>휴대폰: <input type="text" name="휴대폰" id="manager_tel"></label>
+</div>
         </div>
 
         <div class="section">
@@ -426,11 +431,19 @@
         }).open();
     }
 
-    function copyAddress() {
-        if (document.getElementById("same_as_above").checked) {
-            document.getElementById("install_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
-        }
+    function copyAddressAndInfo() {
+    const isChecked = document.getElementById("same_as_above").checked;
+    if (isChecked) {
+        // 주소 복사
+        document.getElementById("install_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
+        // 이름 및 연락처 복사
+        document.getElementById("manager_name").value = document.getElementById("cust_name").value;
+        document.getElementById("manager_tel").value = document.getElementById("cust_tel").value;
+    } else {
+        document.getElementById("manager_name").value = "";
+        document.getElementById("manager_tel").value = "";
     }
+}
 
     function toggleSection(id, btnId) {
         const target = document.getElementById(id);
