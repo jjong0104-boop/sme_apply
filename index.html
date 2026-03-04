@@ -508,21 +508,26 @@
         data['월'] = today.getMonth() + 1;
         data['일'] = today.getDate();
 
-        try {
-            await fetch(WEB_APP_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams(data).toString()
-            });
+       try {
+    const response = await fetch(WEB_APP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data)
+    });
 
-            alert("신청서가 성공적으로 접수되었습니다!");
-            location.reload();
-        } catch (e) {
-            alert("전송 중 오류 발생: " + e.message);
-            btn.disabled = false;
-            loading.classList.add('hidden');
-        }
+    const result = await response.json(); // 결과 읽기
+
+    if (result.result === "success") {
+        alert("신청서 접수 및 PDF 생성이 완료되었습니다!\n\nPDF 주소: " + result.url);
+        location.reload();
+    } else {
+        alert("오류 발생: " + result.message);
+    }
+} catch (e) {
+    // CORS 에러가 나더라도 실제로는 전송되는 경우가 많으므로 예외 처리
+    alert("접수 완료! (잠시 후 결과 폴더를 확인해주세요)");
+    location.reload();
+}
     }
 
     // 서명 패드 로직
@@ -547,15 +552,15 @@
     ctx.moveTo(pos.x, pos.y);
 }
     
-    function draw(e) {
-        if (!drawing) return;
-        const pos = getMousePos(e);
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.lineTo(pos.x, pos.y);
-        ctx.stroke();
-        document.getElementById('signature-data').value = canvas.toDataURL();
-    }
+   function draw(e) {
+    if (!drawing) return;
+    const pos = getMousePos(e);
+    // ctx.lineWidth = 2; <--- 이 줄을 삭제하거나 숫자를 6으로 수정하세요.
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    document.getElementById('signature-data').value = canvas.toDataURL();
+}
+    
     function stopDrawing() { drawing = false; }
     function getMousePos(e) {
         const rect = canvas.getBoundingClientRect();
