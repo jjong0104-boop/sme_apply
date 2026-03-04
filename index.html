@@ -431,12 +431,12 @@
     const isChecked = document.getElementById("same_as_above").checked;
     
     if (isChecked) {
-        // 1. 주소 복사 (메인 주소 + 상세 주소 결합)
+        // 1. 주소 복사 (메인 주소 + 상세 주소를 결합하여 설치주소 칸에 기입)
         const mainAddr = document.getElementById("main_address").value;
         const detailAddr = document.getElementById("detail_address").value;
         document.getElementById("install_address").value = mainAddr + (detailAddr ? " " + detailAddr : "");
         
-        // 2. 가입자 정보(고객명, 휴대폰)를 담당자 칸으로 복사
+        // 2. 가입자 정보(고객명, 휴대폰)를 담당자 정보 섹션으로 복사
         const custName = document.getElementById("cust_name").value;
         const custPhone = document.getElementById("cust_phone").value;
         
@@ -562,7 +562,7 @@
     const pos = getMousePos(e);
     ctx.lineTo(pos.x, pos.y);
     ctx.stroke();
-    // image/jpeg 포맷을 사용하면 투명 배경이 흰색으로 채워져 검은 박스 현상이 사라집니다.
+    // JPEG 포맷 + 품질 0.6 설정으로 전송 용량을 줄이고 검은 박스 오류 방지
     document.getElementById('signature-data').value = canvas.toDataURL('image/jpeg', 0.6);
 }
     
