@@ -589,7 +589,11 @@ function formatPhoneNumber(input) {
 // HTML 입력창에 oninput 이벤트 연결 (가입자용, 담당자용 모두 적용)
 // <input type="text" name="휴대폰" id="cust_phone" oninput="formatPhoneNumber(this)">
     
-    function stopDrawing() { drawing = false; }
+    function stopDrawing() { 
+    drawing = false; 
+    // 마우스를 뗐을 때 최종적으로 PNG 데이터를 히든 필드에 저장
+    document.getElementById('signature-data').value = canvas.toDataURL('image/png');
+}
     function getMousePos(e) {
         const rect = canvas.getBoundingClientRect();
         return {
