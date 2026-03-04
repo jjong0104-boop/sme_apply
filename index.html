@@ -436,16 +436,21 @@
     
     function copyAddressAndInfo() {
     const isChecked = document.getElementById("same_as_above").checked;
+    
     if (isChecked) {
-        // 설치주소 복사
+        // 1. 주소 복사
         const mainAddr = document.getElementById("main_address").value;
         const detailAddr = document.getElementById("detail_address").value;
         document.getElementById("install_address").value = mainAddr + (detailAddr ? " " + detailAddr : "");
         
-        // 가입자 이름(cust_name)과 휴대폰(cust_phone)을 담당자 정보로 복사
-        document.getElementById("manager_name").value = document.getElementById("cust_name").value;
-        document.getElementById("manager_phone").value = document.getElementById("cust_phone").value;
+        // 2. 가입자 정보 복사 (가입자 섹션의 ID가 cust_name, cust_phone 이어야 함)
+        const custName = document.getElementById("cust_name").value;
+        const custPhone = document.getElementById("cust_phone").value; // '연락처' 혹은 '휴대폰' 입력칸 ID
+        
+        document.getElementById("manager_name").value = custName;
+        document.getElementById("manager_phone").value = custPhone;
     } else {
+        // 체크 해제 시 초기화
         document.getElementById("manager_name").value = "";
         document.getElementById("manager_phone").value = "";
     }
