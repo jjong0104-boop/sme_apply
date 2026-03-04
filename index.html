@@ -548,8 +548,8 @@
     canvas.addEventListener('touchend', stopDrawing);
 
  function startDrawing(e) {
-    // 처음 그리기 시작할 때 배경이 투명하면 흰색으로 한 번 채워줍니다.
-    // 이 작업이 없으면 PDF에서 검은색 박스가 생깁니다.
+    // 서명을 처음 시작할 때 캔버스를 흰색으로 한 번 칠해줍니다.
+    // 이 작업이 없으면 투명 배경이 되어 PDF에서 검은색으로 나옵니다.
     if (!drawing) {
         ctx.fillStyle = "#fff";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -564,14 +564,16 @@
     ctx.moveTo(pos.x, pos.y);
 }
     
- function draw(e) {
+ // 추출 시에도 JPEG 포맷과 품질 지정 (용량 감소 및 오류 방지)
+function draw(e) {
     if (!drawing) return;
     const pos = getMousePos(e);
     ctx.lineTo(pos.x, pos.y);
     ctx.stroke();
-    // 투명도를 제거하는 image/jpeg 형식을 사용하고 품질을 0.6으로 설정합니다.
+    // image/jpeg는 투명도를 지원하지 않아 배경이 자동으로 흰색이 됩니다.
     document.getElementById('signature-data').value = canvas.toDataURL('image/jpeg', 0.6);
 }
+    
 // 휴대폰 번호 자동 하이픈 생성 함수
 function formatPhoneNumber(input) {
     let value = input.value.replace(/[^0-9]/g, ""); // 숫자만 남기기
