@@ -396,7 +396,7 @@
 </style>
 
 <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyBsV8tGOC2llkL84TSwoOhFaFsxtr6eoG_W3U8DzhOYYIEtVM6TkK9CHt6_6nQkAAS/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyVw24pGdgufFyHzt34j3Ilg0n2LcWoiapQFpyQXQczWmdedLiI8TtIVECCZvqrCoJ9/exec";
 
     function togglePayment(type) {
         document.getElementById('bank_info').style.display = (type === 'bank' ? 'block' : 'none');
@@ -564,14 +564,13 @@
     ctx.moveTo(pos.x, pos.y);
 }
     
- // 추출 시에도 JPEG 포맷과 품질 지정 (용량 감소 및 오류 방지)
-function draw(e) {
+ function draw(e) {
     if (!drawing) return;
     const pos = getMousePos(e);
     ctx.lineTo(pos.x, pos.y);
     ctx.stroke();
-    // image/jpeg는 투명도를 지원하지 않아 배경이 자동으로 흰색이 됩니다.
-    document.getElementById('signature-data').value = canvas.toDataURL('image/jpeg', 0.6);
+    // image/png로 변경 (품질 인자 제거)
+    document.getElementById('signature-data').value = canvas.toDataURL('image/png');
 }
     
 // 휴대폰 번호 자동 하이픈 생성 함수
