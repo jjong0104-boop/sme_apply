@@ -465,6 +465,23 @@
         document.getElementById("manager_phone").value = "";
     }
 }
+
+    function copyMainToBill() {
+    const isChecked = document.getElementById("bill_same_as_main").checked;
+    if (isChecked) {
+        // 가입자 정보 주소(기본 + 상세) 가져오기
+        const mainAddr = document.getElementById("main_address").value;
+        const detailAddr = document.getElementById("detail_address").value;
+        
+        // 우편 수령 주소창에 복사
+        document.getElementById("bill_address").value = mainAddr;
+        document.getElementById("bill_detail").value = detailAddr;
+    } else {
+        // 체크 해제 시 초기화
+        document.getElementById("bill_address").value = "";
+        document.getElementById("bill_detail").value = "";
+    }
+}
     
     function toggleSection(id, btnId) {
         const target = document.getElementById(id);
