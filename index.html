@@ -253,13 +253,21 @@
         </label>
     </div>
 
-    <div id="port_in_area" class="hidden" style="margin-top: 10px; background: #f0faff; padding: 10px; border-radius: 4px;">
-        <label>번호이동 회선수: <input type="text" name="번호이동회선" class="num-input" style="width: 50px;"> 회선</label><br>
-        <label style="margin-top:5px; display:block;">이동할 전화번호 (대상번호): 
-            <input type="text" name="번호이동번호" placeholder="예: 02-123-4567" style="width: 80%;">
-        </label>
+    <div id="port_in_area" class="hidden" style="margin-top: 10px; background: #f0faff; padding: 15px; border-radius: 4px;">
+    <label style="font-weight: bold; margin-bottom: 10px; display: block;">[번호이동 대상번호 입력 (최대 6회선)]</label>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <input type="text" name="번호이동번호1" placeholder="번호이동 1 (예: 02-123-4561)">
+        <input type="text" name="번호이동번호2" placeholder="번호이동 2">
+        <input type="text" name="번호이동번호3" placeholder="번호이동 3">
+        <input type="text" name="번호이동번호4" placeholder="번호이동 4">
+        <input type="text" name="번호이동번호5" placeholder="번호이동 5">
+        <input type="text" name="번호이동번호6" placeholder="번호이동 6">
+    </div>
+    <div style="margin-top: 10px;">
+        <label>총 번호이동 회선수: <input type="text" name="번호이동회선" class="num-input" style="width: 50px;"> 회선</label>
     </div>
 </div>
+           
     <p><strong>[서비스 신청]</strong></p>
     <div class="product-group" style="display: flex; align-items: center; flex-wrap: nowrap; gap: 15px;">
         <div style="display: flex; align-items: center; gap: 5px; white-space: nowrap;">
