@@ -221,6 +221,18 @@
 <div id="phone" class="hidden sub-box">
     <h4>U+ 기업 인터넷전화 설정</h4>
 
+    <div class="sub-box">
+        <p><strong>[요금제 정보]</strong></p>
+        <div class="product-group">
+            <label><input type="checkbox" name="체크52"> 종량제</label>
+            <label><input type="checkbox" name="체크53"> 정액제</label>
+        </div>
+        </div>
+
+    <div class="sub-box">
+        </div>
+</div>
+
     <div class="sub-box" style="border: 2px solid #e1007e;">
         <p><strong>[DCS 장비신청]</strong></p>
         <div class="product-group" style="display: flex; align-items: center; gap: 10px;">
@@ -336,14 +348,6 @@
     </div>
 </div>
 
-   자급단말 정보의 모델명 입력란 또한 일관성 있게 **드롭다운(선택형)**으로 변경하여 입력 오류를 방지하고 편의성을 높일 수 있습니다.
-
-전화기 구매 섹션과 동일한 모델 리스트를 적용하여 3개 행 모두 드롭다운으로 교체하는 수정 가이드입니다.
-
-1. GitHub (index.html) 수정
-기존의 자유 입력창(<input type="text">)을 제거하고, 앞서 설정한 드롭다운 스타일과 통일된 <select> 태그로 교체합니다.
-
-[수정할 부분: 자급단말 정보 섹션]
 
 HTML
 <div class="sub-box" style="background-color: #f9f9f9;">
@@ -388,13 +392,7 @@ HTML
     </div>
 </div>
 
-    <div class="sub-box">
-        <p><strong>[요금제 정보]</strong></p>
-        <div class="product-group">
-            <label><input type="checkbox" name="체크52"> 종량제</label>
-            <label><input type="checkbox" name="체크53"> 정액제</label>
-        </div>
-        <table style="width:100%; border-collapse: collapse; font-size: 0.9em;">
+           <table style="width:100%; border-collapse: collapse; font-size: 0.9em;">
             <tr style="background:#eee;">
                 <th style="border:1px solid #ccc; padding:5px;">정액제명</th>
                 <th style="border:1px solid #ccc; padding:5px;">회선수</th>
