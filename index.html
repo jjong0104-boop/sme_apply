@@ -330,20 +330,29 @@
         </table>
     </div>
 
-    <div class="sub-box">
-        <div class="product-group" style="display: flex; align-items: center; gap: 12px;">
-            <label><input type="checkbox" name="체크51"> 전화모뎀(CPG) 1포트 :</label>
-            <input type="text" name="포트대수" class="num-input" placeholder="0"> 대
-            <span style="color: #ccc;">|</span>
-            <span>[대상번호] :</span>
-            <input type="text" name="CPG대상번호" placeholder="대상번호 입력" style="flex-grow: 1;">
+   <div class="sub-box">
+    <div class="product-group" style="display: flex; align-items: center; gap: 12px; flex-wrap: nowrap; background: #fff;">
+        <label style="white-space: nowrap; display: flex; align-items: center; margin: 0;">
+            <input type="checkbox" name="체크51"> 
+            <span style="margin-left:5px;">전화모뎀(CPG) 1포트 :</span>
+        </label>
+        
+        <div style="display: flex; align-items: center; gap: 5px; white-space: nowrap;">
+            <input type="text" name="포트대수" class="num-input" placeholder="0" style="width: 50px; text-align: center;"> 대
         </div>
-        <div class="product-group" style="background: #fdf2f8;">
-            <span style="font-weight: bold;">[부가서비스] :</span>
-            <input type="text" name="부가서비스" placeholder="신청할 부가서비스명 상세 기재" style="flex-grow: 1;">
+
+        <span style="color: #ccc; margin: 0 5px;">|</span>
+
+        <div style="display: flex; align-items: center; gap: 8px; flex-grow: 1;">
+            <span style="font-size: 0.9em; color: #333; white-space: nowrap; font-weight: bold;">[대상번호] :</span>
+            <input type="text" name="CPG대상번호" placeholder="대상번호 입력" style="flex: 0 1 200px; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
         </div>
     </div>
 
+    <div class="product-group" style="display: flex; align-items: center; gap: 8px; background: #fdf2f8; margin-top: 10px;">
+        <span style="font-size: 0.9em; color: #333; white-space: nowrap; font-weight: bold;">[부가서비스] :</span>
+        <input type="text" name="부가서비스" placeholder="신청할 부가서비스명을 상세히 기재해 주세요." style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+    </div>
 </div>
 
 
