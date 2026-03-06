@@ -221,32 +221,20 @@
 <div id="phone" class="hidden sub-box">
     <h4>U+ 기업 인터넷전화 설정</h4>
 
-    <div class="sub-box">
-        <p><strong>[요금제 정보]</strong></p>
-        <div class="product-group">
-            <label><input type="checkbox" name="체크52"> 종량제</label>
-            <label><input type="checkbox" name="체크53"> 정액제</label>
-        </div>
-        </div>
-
-    <div class="sub-box">
-        </div>
-</div>
-
     <div class="sub-box" style="border: 2px solid #e1007e;">
         <p><strong>[DCS 장비신청]</strong></p>
         <div class="product-group" style="display: flex; align-items: center; gap: 10px;">
             <span style="font-weight: bold; color: #333;">고급형DCS</span>
             <label style="margin-left: 10px;">모델명: 
-    <select name="DCS모델명" style="width:200px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
-        <option value="">모델을 선택하세요</option>
-        <option value="IP450S">IP450S</option>
-        <option value="IP520S">IP520S</option>
-        <option value="IP520GA">IP520GA</option>
-        <option value="IP700S">IP700S</option>
-        <option value="IP700S+EK700S">IP700S+EK700S</option>
-    </select>
-</label>
+                <select name="DCS모델명" style="width:200px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="">모델을 선택하세요</option>
+                    <option value="IP450S">IP450S</option>
+                    <option value="IP520S">IP520S</option>
+                    <option value="IP520GA">IP520GA</option>
+                    <option value="IP700S">IP700S</option>
+                    <option value="IP700S+EK700S">IP700S+EK700S</option>
+                </select>
+            </label>
         </div>
         <div class="product-group">
             <span>할부선택:</span>
@@ -255,144 +243,83 @@
         </div>
     </div>
 
-   <div class="sub-box">
-       <div class="sub-box">
-    <p><strong>[회선구분]</strong></p>
-    <div class="product-group" style="display: flex; gap: 20px;">
-        <label>
-            <input type="checkbox" name="체크45" id="chk_new_line" onchange="togglePhoneInput()"> 신규
-        </label>
-        <label>
-            <input type="checkbox" name="체크46" id="chk_port_in" onchange="togglePhoneInput()"> 번호이동
-        </label>
-    </div>
-
-    <div id="new_line_area" class="hidden" style="margin-top: 10px; background: #fffaf0; padding: 10px; border-radius: 4px;">
-        <label>신규 회선수: <input type="text" name="신규회선" class="num-input" style="width: 50px;"> 회선</label><br>
-        <label style="margin-top:5px; display:block;">희망번호 기재 (070-XXXX-XXXX): 
-            <input type="text" name="희망번호" placeholder="예: 070-1234-5678" style="width: 80%;">
-        </label>
-    </div>
-
-    <div id="port_in_area" class="hidden" style="margin-top: 10px; background: #f0faff; padding: 15px; border-radius: 4px;">
-    <label style="font-weight: bold; margin-bottom: 10px; display: block;">[번호이동 대상번호 입력 (최대 6회선)]</label>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-        <input type="text" name="번호이동번호1" placeholder="번호이동 1 (예: 02-123-4561)">
-        <input type="text" name="번호이동번호2" placeholder="번호이동 2">
-        <input type="text" name="번호이동번호3" placeholder="번호이동 3">
-        <input type="text" name="번호이동번호4" placeholder="번호이동 4">
-        <input type="text" name="번호이동번호5" placeholder="번호이동 5">
-        <input type="text" name="번호이동번호6" placeholder="번호이동 6">
-    </div>
-    <div style="margin-top: 10px;">
-        <label>총 번호이동 회선수: <input type="text" name="번호이동회선" class="num-input" style="width: 50px;"> 회선</label>
-    </div>
-</div>
-           
-    <p><strong>[서비스 신청]</strong></p>
-    <div class="product-group" style="display: flex; align-items: center; flex-wrap: nowrap; gap: 15px;">
-        <div style="display: flex; align-items: center; gap: 5px; white-space: nowrap;">
-            <label><input type="checkbox" name="체크47"> 센트릭스</label>
-            <span style="color: #666;">(</span>
-            <label><input type="checkbox" name="체크57"> 고급형</label>
-            <span>/</span>
-            <label><input type="checkbox" name="체크58"> IMS</label>
-            <span style="color: #666;">)</span>
+    <div class="sub-box">
+        <p><strong>[회선구분]</strong></p>
+        <div class="product-group" style="display: flex; gap: 20px;">
+            <label><input type="checkbox" name="체크45" id="chk_new_line" onchange="togglePhoneInput()"> 신규</label>
+            <label><input type="checkbox" name="체크46" id="chk_port_in" onchange="togglePhoneInput()"> 번호이동</label>
         </div>
-        
-        <span style="color: #ccc;">|</span> <label style="white-space: nowrap;"><input type="checkbox" name="체크48"> 일반형</label>
 
-        <span style="color: #ccc;">|</span> <label style="white-space: nowrap;"><input type="checkbox" name="체크59"> 자급 IP-PBX</label>
+        <div id="new_line_area" class="hidden" style="margin-top: 10px; background: #fffaf0; padding: 10px; border-radius: 4px;">
+            <label>신규 회선수: <input type="text" name="신규회선" class="num-input" style="width: 50px;"> 회선</label><br>
+            <label style="margin-top:5px; display:block;">희망번호 기재: <input type="text" name="희망번호" placeholder="예: 070-1234-5678" style="width: 80%;"></label>
+        </div>
+
+        <div id="port_in_area" class="hidden" style="margin-top: 10px; background: #f0faff; padding: 15px; border-radius: 4px;">
+            <label style="font-weight: bold; margin-bottom: 10px; display: block;">[번호이동 대상번호 입력 (최대 6회선)]</label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <input type="text" name="번호이동번호1" placeholder="번호이동 1">
+                <input type="text" name="번호이동번호2" placeholder="번호이동 2">
+                <input type="text" name="번호이동번호3" placeholder="번호이동 3">
+                <input type="text" name="번호이동번호4" placeholder="번호이동 4">
+                <input type="text" name="번호이동번호5" placeholder="번호이동 5">
+                <input type="text" name="번호이동번호6" placeholder="번호이동 6">
+            </div>
+            <div style="margin-top: 10px;">
+                <label>총 번호이동 회선수: <input type="text" name="번호이동회선" class="num-input" style="width: 50px;"> 회선</label>
+            </div>
+        </div>
     </div>
-</div>
 
-   <div class="sub-box">
-    <p><strong>[전화기 구매]</strong></p>
-    <p style="font-size: 0.85em; color: #e1007e; margin-bottom: 5px;">* 자유통화 무상프로모션인 경우 일시불 선택</p>
-    <div class="product-group">
-        <span>장비할부:</span>
-        <label><input type="checkbox" name="체크49"> 일시불</label>
-        <label><input type="checkbox" name="체크50"> 3년</label>
+    <div class="sub-box">
+        <p><strong>[서비스 신청]</strong></p>
+        <div class="product-group" style="display: flex; align-items: center; gap: 15px;">
+            <label><input type="checkbox" name="체크47"> 센트릭스</label>
+            <span>(</span>
+            <label><input type="checkbox" name="체크57"> 고급형</label> / 
+            <label><input type="checkbox" name="체크58"> IMS</label>
+            <span>)</span>
+            <span style="color: #ccc;">|</span>
+            <label><input type="checkbox" name="체크48"> 일반형</label>
+            <span style="color: #ccc;">|</span>
+            <label><input type="checkbox" name="체크59"> 자급 IP-PBX</label>
+        </div>
     </div>
 
-    <div class="input-grid" style="grid-template-columns: 2fr 1fr; gap: 5px; margin-bottom: 5px;">
-        <select name="모델명1" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-            <option value="">전화기 모델 선택 1</option>
-            <option value="IP450S">IP450S</option>
-            <option value="IP520S">IP520S</option>
-            <option value="IP520GA">IP520GA</option>
-            <option value="IP700S">IP700S</option>
-            <option value="IL-500">IL-500 (무선)</option>
-        </select>
-        <input type="text" name="대수1" placeholder="대수">
-
-        <select name="모델명2" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-            <option value="">전화기 모델 선택 2</option>
-            <option value="IP450S">IP450S</option>
-            <option value="IP520S">IP520S</option>
-            <option value="IP520GA">IP520GA</option>
-            <option value="IP700S">IP700S</option>
-            <option value="IL-500">IL-500 (무선)</option>
-        </select>
-        <input type="text" name="대수2" placeholder="대수">
-
-        <select name="모델명3" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-            <option value="">전화기 모델 선택 3</option>
-            <option value="IP450S">IP450S</option>
-            <option value="IP520S">IP520S</option>
-            <option value="IP520GA">IP520GA</option>
-            <option value="IP700S">IP700S</option>
-            <option value="IL-500">IL-500 (무선)</option>
-        </select>
-        <input type="text" name="대수3" placeholder="대수">
+    <div class="sub-box">
+        <p><strong>[전화기 구매]</strong></p>
+        <div class="product-group">
+            <span>장비할부:</span>
+            <label><input type="checkbox" name="체크49"> 일시불</label>
+            <label><input type="checkbox" name="체크50"> 3년</label>
+        </div>
+        <div class="input-grid" style="grid-template-columns: 2fr 1fr; gap: 5px;">
+            <select name="모델명1"><option value="">모델 선택 1</option><option value="IP450S">IP450S</option><option value="IP520S">IP520S</option><option value="IP520GA">IP520GA</option><option value="IP700S">IP700S</option><option value="IL-500">IL-500</option></select>
+            <input type="text" name="대수1" placeholder="대수">
+            <select name="모델명2"><option value="">모델 선택 2</option><option value="IP450S">IP450S</option><option value="IP520S">IP520S</option><option value="IP520GA">IP520GA</option><option value="IP700S">IP700S</option><option value="IL-500">IL-500</option></select>
+            <input type="text" name="대수2" placeholder="대수">
+        </div>
     </div>
-</div>
 
-
-HTML
-<div class="sub-box" style="background-color: #f9f9f9;">
-    <p><strong>[자급단말 정보]</strong></p>
-    <div class="input-grid" style="grid-template-columns: 1.2fr 1.2fr 2fr; gap: 5px; margin-bottom: 5px;">
-        <span style="font-size:0.8em; text-align:center;">전화번호</span>
-        <span style="font-size:0.8em; text-align:center;">모델명</span>
-        <span style="font-size:0.8em; text-align:center;">맥정보(MAC)</span>
-        
-        <input type="text" name="자급번호1">
-        <select name="자급모델1" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-            <option value="">모델 선택</option>
-            <option value="IP450S">IP450S</option>
-            <option value="IP520S">IP520S</option>
-            <option value="IP520GA">IP520GA</option>
-            <option value="IP700S">IP700S</option>
-            <option value="IL-500">IL-500 (무선)</option>
-        </select>
-        <input type="text" name="자급맥1">
-
-        <input type="text" name="자급번호2">
-        <select name="자급모델2" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-            <option value="">모델 선택</option>
-            <option value="IP450S">IP450S</option>
-            <option value="IP520S">IP520S</option>
-            <option value="IP520GA">IP520GA</option>
-            <option value="IP700S">IP700S</option>
-            <option value="IL-500">IL-500 (무선)</option>
-        </select>
-        <input type="text" name="자급맥2">
-
-        <input type="text" name="자급번호3">
-        <select name="자급모델3" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-            <option value="">모델 선택</option>
-            <option value="IP450S">IP450S</option>
-            <option value="IP520S">IP520S</option>
-            <option value="IP520GA">IP520GA</option>
-            <option value="IP700S">IP700S</option>
-            <option value="IL-500">IL-500 (무선)</option>
-        </select>
-        <input type="text" name="자급맥3">
+    <div class="sub-box" style="background-color: #f9f9f9;">
+        <p><strong>[자급단말 정보]</strong></p>
+        <div class="input-grid" style="grid-template-columns: 1.2fr 1.2fr 2fr; gap: 5px;">
+            <span style="font-size:0.8em; text-align:center;">전화번호</span>
+            <span style="font-size:0.8em; text-align:center;">모델명</span>
+            <span style="font-size:0.8em; text-align:center;">맥정보(MAC)</span>
+            <input type="text" name="자급번호1">
+            <select name="자급모델1"><option value="">모델 선택</option><option value="IP450S">IP450S</option><option value="IP520S">IP520S</option><option value="IP520GA">IP520GA</option><option value="IP700S">IP700S</option><option value="IL-500">IL-500</option></select>
+            <input type="text" name="자급맥1">
+        </div>
     </div>
-</div>
 
-           <table style="width:100%; border-collapse: collapse; font-size: 0.9em;">
+    <div class="sub-box">
+        <p><strong>[요금제 정보]</strong></p>
+        <div class="product-group">
+            <label><input type="checkbox" name="체크52"> 종량제</label>
+            <label><input type="checkbox" name="체크53"> 정액제</label>
+        </div>
+        <table style="width:100%; border-collapse: collapse; font-size: 0.9em; margin-top:10px;">
             <tr style="background:#eee;">
                 <th style="border:1px solid #ccc; padding:5px;">정액제명</th>
                 <th style="border:1px solid #ccc; padding:5px;">회선수</th>
@@ -400,32 +327,23 @@ HTML
             </tr>
             <tr><td style="border:1px solid #ccc;"><input type="text" name="정액제명1" style="width:100%; border:none;"></td><td style="border:1px solid #ccc;"><input type="text" name="회선수1" style="width:100%; border:none;"></td><td style="border:1px solid #ccc;"><input type="text" name="대상번호1" style="width:100%; border:none;"></td></tr>
             <tr><td style="border:1px solid #ccc;"><input type="text" name="정액제명2" style="width:100%; border:none;"></td><td style="border:1px solid #ccc;"><input type="text" name="회선수2" style="width:100%; border:none;"></td><td style="border:1px solid #ccc;"><input type="text" name="대상번호2" style="width:100%; border:none;"></td></tr>
-            <tr><td style="border:1px solid #ccc;"><input type="text" name="정액제명3" style="width:100%; border:none;"></td><td style="border:1px solid #ccc;"><input type="text" name="회선수3" style="width:100%; border:none;"></td><td style="border:1px solid #ccc;"><input type="text" name="대상번호3" style="width:100%; border:none;"></td></tr>
-            <tr><td style="border:1px solid #ccc;"><input type="text" name="정액제명4" style="width:100%; border:none;"></td><td style="border:1px solid #ccc;"><input type="text" name="회선수4" style="width:100%; border:none;"></td><td style="border:1px solid #ccc;"><input type="text" name="대상번호4" style="width:100%; border:none;"></td></tr>
         </table>
     </div>
 
-  <div class="sub-box">
-    <div class="product-group" style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-        <label style="white-space: nowrap; display: flex; align-items: center;">
-            <input type="checkbox" name="체크51"> <span style="margin-left:5px;">전화모뎀(CPG) 1포트 :</span>
-        </label>
-        <div style="display: flex; align-items: center; gap: 3px; white-space: nowrap;">
-            <input type="text" name="포트대수" class="num-input" placeholder="0" style="width: 50px;"> 대
+    <div class="sub-box">
+        <div class="product-group" style="display: flex; align-items: center; gap: 12px;">
+            <label><input type="checkbox" name="체크51"> 전화모뎀(CPG) 1포트 :</label>
+            <input type="text" name="포트대수" class="num-input" placeholder="0"> 대
+            <span style="color: #ccc;">|</span>
+            <span>[대상번호] :</span>
+            <input type="text" name="CPG대상번호" placeholder="대상번호 입력" style="flex-grow: 1;">
         </div>
-
-        <span style="color: #ccc; margin: 0 5px;">|</span>
-
-        <div style="display: flex; align-items: center; gap: 5px; flex-grow: 1;">
-            <span style="font-size: 0.9em; color: #333; white-space: nowrap;">[대상번호] :</span>
-            <input type="text" name="CPG대상번호" placeholder="대상번호 입력" style="flex-grow: 1; padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
+        <div class="product-group" style="background: #fdf2f8;">
+            <span style="font-weight: bold;">[부가서비스] :</span>
+            <input type="text" name="부가서비스" placeholder="신청할 부가서비스명 상세 기재" style="flex-grow: 1;">
         </div>
     </div>
 
-    <div class="product-group" style="display: flex; align-items: center; gap: 8px; background: #fdf2f8;">
-        <span style="font-size: 0.9em; color: #333; white-space: nowrap; font-weight: bold;">[부가서비스] :</span>
-        <input type="text" name="부가서비스" placeholder="신청할 부가서비스명을 상세히 기재해 주세요." style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-    </div>
 </div>
 
 
