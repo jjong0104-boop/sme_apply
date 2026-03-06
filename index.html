@@ -285,48 +285,69 @@
         </div>
     </div>
 
-    <div class="sub-box">
-    <div class="title-label"><p><strong>[전화기 구매]</strong></p></div>
-    <div class="info-text" style="color: #d81b60; font-size: 0.85em; margin-bottom: 8px;">
-        * 자유통화 무상프로모션인 경우 일시불 선택
-    </div>
-
-    <div class="product-group" style="background: #fdf2f8; margin-bottom: 10px;">
-        <span style="font-weight: bold; margin-right: 15px;">장비할부:</span>
+   <div class="sub-box">
+    <p><strong>[전화기 구매]</strong></p>
+    <p style="font-size: 0.85em; color: #e1007e; margin-bottom: 5px;">* 자유통화 무상프로모션인 경우 일시불 선택</p>
+    
+    <div class="product-group" style="background: #fdf2f8; margin-bottom: 10px; display: flex; align-items: center; gap: 15px;">
+        <span style="font-weight: bold;">장비할부:</span>
         <label><input type="radio" name="장비할부" value="일시불"> 일시불</label>
-        <label style="margin-left: 15px;"><input type="radio" name="장비할부" value="3년"> 3년</label>
-    <span style="color: #ccc; margin: 0 5px;">|</span>
+        <label><input type="radio" name="장비할부" value="3년"> 3년</label>
+        
+        <span style="color: #ccc; margin: 0 5px;">|</span>
         <label style="white-space: nowrap;">
             단말보조 : <input type="text" name="subcount" class="num-input" placeholder="0" style="width: 50px; text-align: center;"> 대
         </label>
     </div>
-    <div class="model-selection-container" style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="display: flex; gap: 10px;">
-            <select name="모델선택1" style="flex: 2; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-                <option value="">모델 선택 1</option>
-                <option value="CPG4020">CPG4020</option>
-                <option value="기타">기타</option>
-            </select>
-            <input type="text" name="모델대수1" placeholder="대수" style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-        </div>
 
-        <div style="display: flex; gap: 10px;">
-            <select name="모델선택2" style="flex: 2; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-                <option value="">모델 선택 2</option>
-                <option value="CPG4020">CPG4020</option>
-                <option value="기타">기타</option>
-            </select>
-            <input type="text" name="모델대수2" placeholder="대수" style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-        </div>
+    <div class="input-grid" style="grid-template-columns: 2fr 1fr; gap: 5px; margin-bottom: 5px;">
+        <select name="모델명1" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="">전화기 모델 선택 1</option>
+            <option value="IP450S">IP450S</option>
+            <option value="IP520S">IP520S</option>
+            <option value="IP520GA">IP520GA</option>
+            <option value="IP700S">IP700S</option>
+            <option value="IL-500">IL-500</option>
+            <option value="CPG4020">CPG4020</option>
+            <option value="기타">기타</option>
+        </select>
+        <input type="text" name="대수1" placeholder="대수">
 
-        <div style="display: flex; gap: 10px;">
-            <select name="모델선택3" style="flex: 2; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-                <option value="">모델 선택 3</option>
-                <option value="CPG4020">CPG4020</option>
-                <option value="기타">기타</option>
-            </select>
-            <input type="text" name="모델대수3" placeholder="대수" style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-        </div>
+        <select name="모델명2" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="">전화기 모델 선택 2</option>
+            <option value="IP450S">IP450S</option>
+            <option value="IP520S">IP520S</option>
+            <option value="IP520GA">IP520GA</option>
+            <option value="IP700S">IP700S</option>
+            <option value="IL-500">IL-500</option>
+            <option value="CPG4020">CPG4020</option>
+            <option value="기타">기타</option>
+        </select>
+        <input type="text" name="대수2" placeholder="대수">
+
+        <select name="모델명3" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="">전화기 모델 선택 3</option>
+            <option value="IP450S">IP450S</option>
+            <option value="IP520S">IP520S</option>
+            <option value="IP520GA">IP520GA</option>
+            <option value="IP700S">IP700S</option>
+            <option value="IL-500">IL-500</option>
+            <option value="CPG4020">CPG4020</option>
+            <option value="기타">기타</option>
+        </select>
+        <input type="text" name="대수3" placeholder="대수">
+
+        <select name="모델명4" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="">전화기 모델 선택 4</option>
+            <option value="IP450S">IP450S</option>
+            <option value="IP520S">IP520S</option>
+            <option value="IP520GA">IP520GA</option>
+            <option value="IP700S">IP700S</option>
+            <option value="IL-500">IL-500</option>
+            <option value="CPG4020">CPG4020</option>
+            <option value="기타">기타</option>
+        </select>
+        <input type="text" name="대수4" placeholder="대수">
     </div>
 </div>
 
