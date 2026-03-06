@@ -294,30 +294,99 @@
     </div>
 </div>
 
-    <div class="sub-box">
-        <p><strong>[전화기 구매]</strong></p>
-        <p style="font-size: 0.85em; color: #e1007e; margin-bottom: 5px;">* 자유통화 무상프로모션인 경우 일시불 선택</p>
-        <div class="product-group">
-            <span>장비할부:</span>
-            <label><input type="checkbox" name="체크49"> 일시불</label>
-            <label><input type="checkbox" name="체크50"> 3년</label>
-        </div>
-        <div class="input-grid" style="grid-template-columns: 2fr 1fr; margin-bottom:5px;">
-            <input type="text" name="모델명1" placeholder="모델명 1"> <input type="text" name="대수1" placeholder="대수">
-            <input type="text" name="모델명2" placeholder="모델명 2"> <input type="text" name="대수2" placeholder="대수">
-            <input type="text" name="모델명3" placeholder="모델명 3"> <input type="text" name="대수3" placeholder="대수">
-        </div>
+   <div class="sub-box">
+    <p><strong>[전화기 구매]</strong></p>
+    <p style="font-size: 0.85em; color: #e1007e; margin-bottom: 5px;">* 자유통화 무상프로모션인 경우 일시불 선택</p>
+    <div class="product-group">
+        <span>장비할부:</span>
+        <label><input type="checkbox" name="체크49"> 일시불</label>
+        <label><input type="checkbox" name="체크50"> 3년</label>
     </div>
 
-    <div class="sub-box" style="background-color: #f9f9f9;">
-        <p><strong>[자급단말 정보]</strong></p>
-        <div class="input-grid" style="grid-template-columns: 1.2fr 1.2fr 2fr; gap: 5px; margin-bottom: 5px;">
-            <span style="font-size:0.8em; text-align:center;">전화번호</span><span style="font-size:0.8em; text-align:center;">모델명</span><span style="font-size:0.8em; text-align:center;">맥정보(MAC)</span>
-            <input type="text" name="자급번호1"> <input type="text" name="자급모델1"> <input type="text" name="자급맥1">
-            <input type="text" name="자급번호2"> <input type="text" name="자급모델2"> <input type="text" name="자급맥2">
-            <input type="text" name="자급번호3"> <input type="text" name="자급모델3"> <input type="text" name="자급맥3">
-        </div>
+    <div class="input-grid" style="grid-template-columns: 2fr 1fr; gap: 5px; margin-bottom: 5px;">
+        <select name="모델명1" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="">전화기 모델 선택 1</option>
+            <option value="IP450S">IP450S</option>
+            <option value="IP520S">IP520S</option>
+            <option value="IP520GA">IP520GA</option>
+            <option value="IP700S">IP700S</option>
+            <option value="IL-500">IL-500 (무선)</option>
+        </select>
+        <input type="text" name="대수1" placeholder="대수">
+
+        <select name="모델명2" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="">전화기 모델 선택 2</option>
+            <option value="IP450S">IP450S</option>
+            <option value="IP520S">IP520S</option>
+            <option value="IP520GA">IP520GA</option>
+            <option value="IP700S">IP700S</option>
+            <option value="IL-500">IL-500 (무선)</option>
+        </select>
+        <input type="text" name="대수2" placeholder="대수">
+
+        <select name="모델명3" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="">전화기 모델 선택 3</option>
+            <option value="IP450S">IP450S</option>
+            <option value="IP520S">IP520S</option>
+            <option value="IP520GA">IP520GA</option>
+            <option value="IP700S">IP700S</option>
+            <option value="IL-500">IL-500 (무선)</option>
+        </select>
+        <input type="text" name="대수3" placeholder="대수">
     </div>
+</div>
+
+   자급단말 정보의 모델명 입력란 또한 일관성 있게 **드롭다운(선택형)**으로 변경하여 입력 오류를 방지하고 편의성을 높일 수 있습니다.
+
+전화기 구매 섹션과 동일한 모델 리스트를 적용하여 3개 행 모두 드롭다운으로 교체하는 수정 가이드입니다.
+
+1. GitHub (index.html) 수정
+기존의 자유 입력창(<input type="text">)을 제거하고, 앞서 설정한 드롭다운 스타일과 통일된 <select> 태그로 교체합니다.
+
+[수정할 부분: 자급단말 정보 섹션]
+
+HTML
+<div class="sub-box" style="background-color: #f9f9f9;">
+    <p><strong>[자급단말 정보]</strong></p>
+    <div class="input-grid" style="grid-template-columns: 1.2fr 1.2fr 2fr; gap: 5px; margin-bottom: 5px;">
+        <span style="font-size:0.8em; text-align:center;">전화번호</span>
+        <span style="font-size:0.8em; text-align:center;">모델명</span>
+        <span style="font-size:0.8em; text-align:center;">맥정보(MAC)</span>
+        
+        <input type="text" name="자급번호1">
+        <select name="자급모델1" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="">모델 선택</option>
+            <option value="IP450S">IP450S</option>
+            <option value="IP520S">IP520S</option>
+            <option value="IP520GA">IP520GA</option>
+            <option value="IP700S">IP700S</option>
+            <option value="IL-500">IL-500 (무선)</option>
+        </select>
+        <input type="text" name="자급맥1">
+
+        <input type="text" name="자급번호2">
+        <select name="자급모델2" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="">모델 선택</option>
+            <option value="IP450S">IP450S</option>
+            <option value="IP520S">IP520S</option>
+            <option value="IP520GA">IP520GA</option>
+            <option value="IP700S">IP700S</option>
+            <option value="IL-500">IL-500 (무선)</option>
+        </select>
+        <input type="text" name="자급맥2">
+
+        <input type="text" name="자급번호3">
+        <select name="자급모델3" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="">모델 선택</option>
+            <option value="IP450S">IP450S</option>
+            <option value="IP520S">IP520S</option>
+            <option value="IP520GA">IP520GA</option>
+            <option value="IP700S">IP700S</option>
+            <option value="IL-500">IL-500 (무선)</option>
+        </select>
+        <input type="text" name="자급맥3">
+    </div>
+</div>
 
     <div class="sub-box">
         <p><strong>[요금제 정보]</strong></p>
