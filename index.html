@@ -126,11 +126,17 @@
             <label>상세 주소: <input type="text" id="detail_address" name="주소_상세"></label>
             <input type="hidden" name="주소" id="full_address">
 
-           <h4>납부 및 청구 설정</h4>
+           <<h4>납부 및 청구 설정</h4>
 <div class="product-group">
     <span>청구 구분:</span>
     <label><input type="radio" name="청구구분" value="기존통합" onclick="togglePaymentSection(false)"> 기존청구서통합</label>
     <label style="margin-left:20px;"><input type="radio" name="청구구분" value="신규" onclick="togglePaymentSection(true)" checked> 신규신청서</label>
+</div>
+
+<div id="existing_bill_area" class="sub-box hidden" style="background-color: #e3f2fd; border: 1px solid #2196f3;">
+    <label style="color: #1565c0; font-weight: bold;">기존 청구번호 입력: 
+        <input type="text" name="청구서번호" id="bill_no_input" placeholder="숫자 10자리 또는 12자리 입력">
+    </label>
 </div>
 
 <div id="full_payment_area">
@@ -622,19 +628,23 @@
     /**
  * 청구 구분(기존통합/신규)에 따라 납부 섹션 전체를 토글
  */
-function togglePaymentSection(show) {
-    const area = document.getElementById('full_payment_area');
-    if (show) {
-        area.style.display = 'block'; // 신규신청서 클릭 시 보임
+/**
+ * 청구 구분(기존통합/신규)에 따라 섹션 토글
+ */
+function togglePaymentSection(isNew) {
+    const fullPaymentArea = document.getElementById('full_payment_area'); // 신규 납부 섹션
+    const existingBillArea = document.getElementById('existing_bill_area'); // 기존 번호 입력 섹션
+
+    if (isNew) {
+        // [신규신청서] 선택 시
+        fullPaymentArea.style.display = 'block';
+        existingBillArea.style.display = 'none';
+        document.getElementById('bill_no_input').value = ""; // 기존 번호 초기화
     } else {
-        area.style.display = 'none';  // 기존청구서통합 클릭 시 숨김
-        
-        // 숨길 때 내부 입력값 초기화 (원치 않으면 아래줄 삭제 가능)
-        const inputs = area.querySelectorAll('input');
-        inputs.forEach(input => {
-            if(input.type === 'radio' || input.type === 'checkbox') input.checked = false;
-            else input.value = '';
-        });
+        // [기존청구서통합] 선택 시
+        fullPaymentArea.style.display = 'none';
+        existingBillArea.style.display = 'block';
+        existingBillArea.classList.remove('hidden'); // hidden 클래스 제거
     }
 }
 
