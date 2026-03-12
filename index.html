@@ -52,12 +52,10 @@
             <input type="hidden" name="주소" id="full_address">
 
            <h4>납부 및 청구 설정</h4>
-<div class="product-group" style="background: #fdf2f8; padding: 10px; border-radius: 5px;">
+<div class="product-group">
     <span>청구 구분:</span>
-    <label><input type="radio" name="청구구분" id="bill_merge" value="v" onclick="togglePaymentSection(false)"> 기존청구서통합</label>
-    <label style="margin-left:10px;">청구서번호: <input type="text" name="청구서번호" style="width:150px; display:inline-block;"></label>
-    
-    <label style="margin-left:20px;"><input type="radio" name="청구구분" id="bill_new" value="v" onclick="togglePaymentSection(true)" checked> 신규신청서</label>
+    <label><input type="radio" name="청구구분" value="기존통합" onclick="togglePaymentSection(false)"> 기존청구서통합</label>
+    <label style="margin-left:20px;"><input type="radio" name="청구구분" value="신규" onclick="togglePaymentSection(true)" checked> 신규신청서</label>
 </div>
 
 <div id="full_payment_area">
