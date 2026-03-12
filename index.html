@@ -32,25 +32,87 @@
     <h2>U+ 통합신청서 입력</h2>
     <form id="applyForm">
 
-       <div class="sub-box" style="background-color: #f0f7ff; border: 1px solid #2196f3; margin-top: 20px; margin-bottom: 25px; padding: 15px; border-radius: 8px;">
-    <p style="margin-top: 0; margin-bottom: 10px; color: #1565c0;"><strong>🔍 기존 정보 불러오기</strong></p>
-    <div style="display: flex; gap: 8px; align-items: stretch;">
-        <input type="text" id="search_name" placeholder="고객명을 입력하세요" 
-               style="flex: 1; padding: 12px; border: 1px solid #bbdefb; border-radius: 4px; font-size: 14px; outline: none;">
-        <button type="button" onclick="loadCustomerData()" 
-                style="background: #2196f3; color: white; padding: 0 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; transition: background 0.2s;">
-            불러오기
-        </button>
-    </div>
-    <p style="margin: 8px 0 0 0; font-size: 11px; color: #64b5f6;">* 구글 시트에 등록된 가장 최근 정보를 가져옵니다.</p>
-</div>
-        
-        <div class="section" style="background-color: #fef0f7; border: 1px solid #e1007e;">
+        <div class="sub-box search-section">
+            <p class="search-title"><strong>🔍 기존 정보 불러오기</strong></p>
+            <div class="search-input-group">
+                <input type="text" id="search_name" placeholder="고객명을 입력하세요" class="search-input">
+                <button type="button" onclick="loadCustomerData()" class="search-btn">불러오기</button>
+            </div>
+            <p class="search-note">* 구글 시트에 등록된 가장 최근 정보를 가져옵니다.</p>
+        </div>
+
+        <div class="section recruiter-section">
             <div class="input-grid">
-                <label>유치자: <input type="text" name="유치자"></label>
-                <label>제휴: <input type="text" name="제휴"></label>
+                <label>유치자: <input type="text" name="유치자" placeholder="성함 입력"></label>
+                <label>제휴: <input type="text" name="제휴" placeholder="대리점명 등"></label>
             </div>
         </div>
+
+        <style>
+            .search-section {
+                background-color: #f0f7ff;
+                border: 1px solid #2196f3;
+                margin-top: 20px;
+                margin-bottom: 25px;
+                padding: 15px;
+                border-radius: 8px;
+            }
+            .search-title {
+                margin-top: 0;
+                margin-bottom: 12px;
+                color: #1565c0;
+                font-size: 15px;
+            }
+            .search-input-group {
+                display: flex;
+                gap: 8px;
+                width: 100%;
+                min-height: 45px; /* 버튼과 입력창 높이 통일 */
+            }
+            .search-input {
+                flex: 2; /* 입력창을 더 넓게 */
+                padding: 10px 12px;
+                border: 1px solid #bbdefb;
+                border-radius: 4px;
+                font-size: 14px;
+                outline: none;
+                box-sizing: border-box; /* 패딩 포함 크기 계산 */
+            }
+            .search-btn {
+                flex: 1; /* 버튼 비율 조절 */
+                background: #2196f3;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 14px;
+                white-space: nowrap; /* 글자 줄바꿈 방지 */
+            }
+            .search-btn:hover {
+                background: #1976d2;
+            }
+            .search-note {
+                margin: 8px 0 0 0;
+                font-size: 11px;
+                color: #64b5f6;
+            }
+            .recruiter-section {
+                background-color: #fef0f7;
+                border: 1px solid #e1007e;
+                padding: 15px;
+                border-radius: 8px;
+            }
+            .input-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            /* 모바일 대응 */
+            @media (max-width: 480px) {
+                .input-grid { grid-template-columns: 1fr; }
+            }
+        </style>
 
         <div class="section">
             <h3>1. 가입자 및 납부 정보</h3>
