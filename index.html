@@ -863,30 +863,57 @@ function formatPhoneNumber(input) {
     .then(data => {
         if (data.error) return alert(data.error);
         
-        // 데이터 하나씩 매칭 시작
+        // [디버깅용] 브라우저 개발자 도구(F12) 콘솔창에 실제 시트 열 이름을 찍어줍니다.
+        console.log("시트에서 가져온 데이터 전체:", data);
+
         Object.keys(data).forEach(key => {
-            // [1] 이름(Name)으로 찾아서 값 넣기
+            const value = data[key];
+            const cleanKey = key.trim(); // 앞뒤 공백 제거
+
+            // 1. 일반 필드 자동 매핑
             const elements = document.getElementsByName(key);
             if (elements.length > 0) {
                 const el = elements[0];
                 if (el.type === 'radio' || el.type === 'checkbox') {
                     for(let i=0; i<elements.length; i++) {
-                        if(elements[i].value === data[key] || data[key] === 'v') elements[i].checked = true;
+                        if(elements[i].value === value || value === 'v') elements[i].checked = true;
                     }
                 } else {
-                    el.value = data[key];
+                    el.value = value;
                 }
             }
 
-            // [2] 주소 필드 강제 매핑 (시트 이름이 '주소'여도 '주소_기본' 칸에 넣음)
-            if (key === "주소" || key === "주소_기본") document.getElementById("main_address").value = data[key];
-            if (key === "상세주소" || key === "주소_상세") document.getElementById("detail_address").value = data[key];
-            if (key === "설치주소") document.getElementById("install_address").value = data[key];
+            // 2. [강력 해결] 가입자 주소 매핑 (키워드 매칭)
+            // '설치'나 '청구'라는 말이 없는 '주소' 열을 찾습니다.
+            if (!cleanKey.includes("설치") && !cleanKey.includes("청구")) {
+                if (cleanKey === "주소" || cleanKey.includes("가입주소") || cleanKey.includes("주소_기본")) {
+                    document.getElementById("main_address").value = value;
+                }
+                if (cleanKey === "상세주소" || cleanKey.includes("주소_상세") || cleanKey === "상세") {
+                    document.getElementById("detail_address").value = value;
+                }
+            }
+            
+            // 3. 설치 주소 (기존 로직 유지)
+            if (cleanKey.includes("설치주소")) {
+                // 설치주소_상세가 별도로 있다면 합치고, 아니면 그냥 넣음
+                const base = data["설치주소"] || "";
+                const detail = data["설치주소_상세"] || "";
+                document.getElementById("install_address").value = (base + " " + detail).trim();
+            }
+            
+            // 4. 청구 주소 (기존 로직 유지)
+            if (cleanKey.includes("청구주소")) {
+                if (cleanKey === "청구주소") document.getElementById("bill_address").value = value;
+                if (cleanKey === "청구주소_상세") document.getElementById("bill_detail").value = value;
+            }
         });
-        alert(name + '님의 정보를 모두 불러왔습니다!');
+        alert(name + '님의 정보를 불러왔습니다. 주소를 확인해주세요!');
     })
     .catch(err => alert('조회 중 오류가 발생했습니다.'));
 }
+
+    
 </script>
 </body>
 </html>
