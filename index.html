@@ -31,6 +31,14 @@
 <div class="container">
     <h2>U+ 통합신청서 입력</h2>
     <form id="applyForm">
+
+        <div class="sub-box" style="background-color: #e3f2fd; border: 2px solid #2196f3;">
+    <p><strong>🔍 기존 정보 불러오기</strong></p>
+    <div style="display: flex; gap: 10px;">
+        <input type="text" id="search_name" placeholder="고객명을 입력하세요" style="flex: 1; padding: 10px;">
+        <button type="button" onclick="loadCustomerData()" style="background: #2196f3; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">불러오기</button>
+    </div>
+</div>
         
         <div class="section" style="background-color: #fef0f7; border: 1px solid #e1007e;">
             <div class="input-grid">
