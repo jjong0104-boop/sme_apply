@@ -774,6 +774,37 @@ function formatPhoneNumber(input) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         document.getElementById('signature-data').value = "";
     }
+
+    function loadCustomerData() {
+    const name = document.getElementById('search_name').value;
+    if (!name) return alert('이름을 입력해주세요.');
+
+    const WEB_APP_URL = "여기에_본인의_웹앱_URL_입력"; 
+    
+    fetch(`${WEB_APP_URL}?action=search&name=${encodeURIComponent(name)}`)
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) return alert(data.error);
+        
+        // 시트 헤더와 HTML의 name이 같으면 자동으로 매칭해서 채움
+        Object.keys(data).forEach(key => {
+            const elements = document.getElementsByName(key);
+            if (elements.length > 0) {
+                const el = elements[0];
+                if (el.type === 'radio' || el.type === 'checkbox') {
+                    // 체크박스/라디오 처리 (값이 'v'이면 체크)
+                    for(let i=0; i<elements.length; i++) {
+                        if(elements[i].value === data[key] || data[key] === 'v') elements[i].checked = true;
+                    }
+                } else {
+                    el.value = data[key];
+                }
+            }
+        });
+        alert(name + '님의 정보를 불러왔습니다. 수정 후 제출하세요!');
+    })
+    .catch(err => alert('조회 중 오류가 발생했습니다.'));
+}
 </script>
 </body>
 </html>
