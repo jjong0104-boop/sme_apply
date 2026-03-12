@@ -51,76 +51,78 @@
             <label>상세 주소: <input type="text" id="detail_address" name="주소_상세"></label>
             <input type="hidden" name="주소" id="full_address">
 
-            <h4>납부 및 청구 설정</h4>
-<div class="product-group">
+           <h4>납부 및 청구 설정</h4>
+<div class="product-group" style="background: #fdf2f8; padding: 10px; border-radius: 5px;">
     <span>청구 구분:</span>
-    <label><input type="checkbox" name="체크1"> 기존청구서통합</label>
+    <label><input type="radio" name="청구구분" id="bill_merge" value="v" onclick="togglePaymentSection(false)"> 기존청구서통합</label>
     <label style="margin-left:10px;">청구서번호: <input type="text" name="청구서번호" style="width:150px; display:inline-block;"></label>
-    <label style="margin-left:20px;"><input type="checkbox" name="체크2"> 신규신청서</label>
+    
+    <label style="margin-left:20px;"><input type="radio" name="청구구분" id="bill_new" value="v" onclick="togglePaymentSection(true)" checked> 신규신청서</label>
 </div>
-            
-           <div class="product-group">
-    <span>요금확인방법:</span>
-    <label><input type="checkbox" name="체크3" id="chk_email" onchange="toggleBillInput()"> 이메일</label>
-    <div id="email_input_area" class="hidden" style="display:inline-block; margin-left:10px;">
-        <input type="text" name="이메일" placeholder="청구서 수령 이메일" style="width: 200px;">
+
+<div id="full_payment_area">
+    <div class="product-group" style="margin-top:15px;">
+        <span>요금확인방법:</span>
+        <label><input type="checkbox" name="체크3" id="chk_email" onchange="toggleBillInput()"> 이메일</label>
+        <div id="email_input_area" class="hidden" style="display:inline-block; margin-left:10px;">
+            <input type="text" name="이메일" placeholder="청구서 수령 이메일" style="width: 200px;">
+        </div>
+
+        <label style="margin-left:20px;"><input type="checkbox" name="체크4" id="chk_post" onchange="toggleBillInput()"> 우편</label>
     </div>
 
-    <label style="margin-left:20px;"><input type="checkbox" name="체크4" id="chk_post" onchange="toggleBillInput()"> 우편</label>
-</div>
-
-<div id="post_address_area" class="payment-box hidden" style="border: 2px solid #666; background: #f9f9f9;">
-    <p style="color: #333; font-weight: bold; margin-bottom: 10px;">[청구서 수령 주소]</p>
-    <label style="color: #e1007e; font-weight: bold; margin-bottom: 10px; display: block;">
-        <input type="checkbox" id="bill_same_as_main" onchange="copyMainToBill()"> 가입자 정보 주소와 동일
-    </label>
-    <div class="input-grid">
-        <label>수령주소 (클릭 검색): 
-            <input type="text" id="bill_address" name="청구주소" class="address-input" readonly onclick="execDaumPostcode('bill')" placeholder="주소를 검색하세요">
+    <div id="post_address_area" class="payment-box hidden" style="border: 2px solid #666; background: #f9f9f9;">
+        <p style="color: #333; font-weight: bold; margin-bottom: 10px;">[청구서 수령 주소]</p>
+        <label style="color: #e1007e; font-weight: bold; margin-bottom: 10px; display: block;">
+            <input type="checkbox" id="bill_same_as_main" onchange="copyMainToBill()"> 가입자 정보 주소와 동일
         </label>
-        <label>상세 주소: 
-            <input type="text" id="bill_detail" name="청구주소_상세" placeholder="상세주소 입력">
-        </label>
+        <div class="input-grid">
+            <label>수령주소 (클릭 검색): 
+                <input type="text" id="bill_address" name="청구주소" class="address-input" readonly onclick="execDaumPostcode('bill')" placeholder="주소를 검색하세요">
+            </label>
+            <label>상세 주소: 
+                <input type="text" id="bill_detail" name="청구주소_상세" placeholder="상세주소 입력">
+            </label>
+        </div>
     </div>
-</div>
 
-       <div class="product-group">
-    <span>납부방법 선택:</span>
-    <label><input type="radio" name="pay_type" value="bank" onclick="togglePayment('bank')"> 자동이체(계좌)</label>
-    <label><input type="radio" name="pay_type" value="card" onclick="togglePayment('card')"> 카드결제</label>
-    <label><input type="radio" name="pay_type" value="paper" onclick="togglePayment('none')"> 지로납부</label>
-</div>
+    <div class="product-group" style="margin-top:15px;">
+        <span>납부방법 선택:</span>
+        <label><input type="radio" name="pay_type" value="bank" onclick="togglePayment('bank')"> 자동이체(계좌)</label>
+        <label><input type="radio" name="pay_type" value="card" onclick="togglePayment('card')"> 카드결제</label>
+        <label><input type="radio" name="pay_type" value="paper" onclick="togglePayment('none')"> 지로납부</label>
+    </div>
 
-<div id="bank_info" class="payment-box hidden">
-    <h4>자동이체 정보 (계좌)</h4>
-    <div class="input-grid">
-        <label>예금주명: <input type="text" name="예금주"></label>
-        <label>은행명: <input type="text" name="은행"></label>
-        <label>계좌번호: <input type="text" name="계좌번호"></label>
+    <div id="bank_info" class="payment-box hidden">
+        <h4>자동이체 정보 (계좌)</h4>
+        <div class="input-grid">
+            <label>예금주명: <input type="text" name="예금주"></label>
+            <label>은행명: <input type="text" name="은행"></label>
+            <label>계좌번호: <input type="text" name="계좌번호"></label>
+        </div>
+        <div class="product-group" style="margin-top:10px; background:#fff;">
+            <span>계좌 희망납부일:</span>
+            <label><input type="radio" name="납부일" value="15"> 15일</label>
+            <label><input type="radio" name="납부일" value="18"> 18일</label>
+            <label><input type="radio" name="납부일" value="22"> 22일</label>
+            <label><input type="radio" name="납부일" value="26"> 26일</label>
+        </div>
     </div>
-    <div class="product-group" style="margin-top:10px; background:#fff;">
-        <span>계좌 희망납부일:</span>
-        <label><input type="radio" name="납부일" value="15"> 15일</label>
-        <label><input type="radio" name="납부일" value="18"> 18일</label>
-        <label><input type="radio" name="납부일" value="22"> 22일</label>
-        <label><input type="radio" name="납부일" value="26"> 26일</label>
-        <label><input type="radio" name="납부일" value="말일"> 말일(법인)</label>
-    </div>
-</div>
 
-<div id="card_info" class="payment-box hidden">
-    <h4>카드결제 정보</h4>
-    <div class="input-grid">
-        <label>카드주: <input type="text" name="카드주"></label>
-        <label>카드번호: <input type="text" name="카드번호"></label>
-        <label>유효기간: <input type="text" name="유효기간" placeholder="MM/YY"></label>
-    </div>
-    <div class="product-group" style="margin-top:10px; background:#fff;">
-        <span>카드 희망납부일:</span>
-        <label><input type="radio" name="납부일" value="1차"> 1차(9영업일)</label>
-        <label><input type="radio" name="납부일" value="2차"> 2차(13영업일)</label>
-        <label><input type="radio" name="납부일" value="3차"> 3차(17영업일)</label>
-        <label><input type="radio" name="납부일" value="4차"> 4차(21영업일)</label>
+    <div id="card_info" class="payment-box hidden">
+        <h4>카드결제 정보</h4>
+        <div class="input-grid">
+            <label>카드주: <input type="text" name="카드주"></label>
+            <label>카드번호: <input type="text" name="카드번호"></label>
+            <label>유효기간: <input type="text" name="유효기간" placeholder="MM/YY"></label>
+        </div>
+        <div class="product-group" style="margin-top:10px; background:#fff;">
+            <span>카드 희망납부일:</span>
+            <label><input type="radio" name="납부일" value="1차"> 1차(9영업일)</label>
+            <label><input type="radio" name="납부일" value="2차"> 2차(13영업일)</label>
+            <label><input type="radio" name="납부일" value="3차"> 3차(17영업일)</label>
+            <label><input type="radio" name="납부일" value="4차"> 4차(21영업일)</label>
+        </div>
     </div>
 </div>
 
@@ -530,6 +532,30 @@
         const checkbox = document.getElementById('iptv_group_btn');
         if(detail && checkbox) detail.style.display = checkbox.checked ? 'block' : 'none';
     }
+
+    /**
+ * 청구 구분(기존통합/신규)에 따라 납부 섹션 전체를 토글
+ */
+function togglePaymentSection(show) {
+    const area = document.getElementById('full_payment_area');
+    if (show) {
+        area.style.display = 'block'; // 신규신청서 클릭 시 보임
+    } else {
+        area.style.display = 'none';  // 기존청구서통합 클릭 시 숨김
+        
+        // 숨길 때 내부 입력값 초기화 (원치 않으면 아래줄 삭제 가능)
+        const inputs = area.querySelectorAll('input');
+        inputs.forEach(input => {
+            if(input.type === 'radio' || input.type === 'checkbox') input.checked = false;
+            else input.value = '';
+        });
+    }
+}
+
+// 초기화: 페이지 로드 시 신규신청서가 기본이므로 보이게 설정
+window.addEventListener('load', function() {
+    togglePaymentSection(true); 
+});
 
    function execDaumPostcode(type) {
     new daum.Postcode({
