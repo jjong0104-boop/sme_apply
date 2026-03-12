@@ -32,12 +32,17 @@
     <h2>U+ 통합신청서 입력</h2>
     <form id="applyForm">
 
-        <div class="sub-box" style="background-color: #e3f2fd; border: 2px solid #2196f3;">
-    <p><strong>🔍 기존 정보 불러오기</strong></p>
-    <div style="display: flex; gap: 10px;">
-        <input type="text" id="search_name" placeholder="고객명을 입력하세요" style="flex: 1; padding: 10px;">
-        <button type="button" onclick="loadCustomerData()" style="background: #2196f3; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">불러오기</button>
+       <div class="sub-box" style="background-color: #f0f7ff; border: 1px solid #2196f3; margin-top: 20px; margin-bottom: 25px; padding: 15px; border-radius: 8px;">
+    <p style="margin-top: 0; margin-bottom: 10px; color: #1565c0;"><strong>🔍 기존 정보 불러오기</strong></p>
+    <div style="display: flex; gap: 8px; align-items: stretch;">
+        <input type="text" id="search_name" placeholder="고객명을 입력하세요" 
+               style="flex: 1; padding: 12px; border: 1px solid #bbdefb; border-radius: 4px; font-size: 14px; outline: none;">
+        <button type="button" onclick="loadCustomerData()" 
+                style="background: #2196f3; color: white; padding: 0 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; transition: background 0.2s;">
+            불러오기
+        </button>
     </div>
+    <p style="margin: 8px 0 0 0; font-size: 11px; color: #64b5f6;">* 구글 시트에 등록된 가장 최근 정보를 가져옵니다.</p>
 </div>
         
         <div class="section" style="background-color: #fef0f7; border: 1px solid #e1007e;">
