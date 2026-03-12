@@ -604,7 +604,7 @@
 </style>
 
 <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwi9S8IwLmT4EXd6563Arm0dFthnjYBqrCg_cnGcC9_qrbTzeUXjPgQkigQoDN6mp3Z/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwtymuUsM-JYZA5q2vpFfVlc3QqDfPRJOBCDmrU_pcIb6iY_wxcXmohVgAqJDrUkwDn/exec";
 
     function togglePayment(type) {
         document.getElementById('bank_info').style.display = (type === 'bank' ? 'block' : 'none');
@@ -859,7 +859,7 @@ function formatPhoneNumber(input) {
     const name = document.getElementById('search_name').value;
     if (!name) return alert('이름을 입력해주세요.');
 
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwi9S8IwLmT4EXd6563Arm0dFthnjYBqrCg_cnGcC9_qrbTzeUXjPgQkigQoDN6mp3Z/exec"; 
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwtymuUsM-JYZA5q2vpFfVlc3QqDfPRJOBCDmrU_pcIb6iY_wxcXmohVgAqJDrUkwDn/exec"; 
     
     fetch(`${WEB_APP_URL}?action=search&name=${encodeURIComponent(name)}`)
     .then(res => res.json())
