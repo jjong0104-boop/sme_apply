@@ -880,13 +880,19 @@ function formatPhoneNumber(input) {
 
             // 2. [핵심] 주소 필드 강제 매핑 (시트 헤더명에 상관없이 ID로 직접 입력)
             // 시트의 컬럼명이 '주소', '주소_기본', '주소_상세' 등 무엇이든 대응합니다.
-            if (key === "주소_기본" || key === "주소") {
-                document.getElementById("main_address").value = data[key];
-            }
-            if (key === "주소_상세" || key === "상세주소") {
-                document.getElementById("detail_address").value = data[key];
-            }
-        });
+            if (key === "주소") {
+        document.getElementById("main_address").value = data[key];
+    }
+    if (key === "상세주소") {
+        document.getElementById("detail_address").value = data[key];
+    }
+    if (key === "설치주소") {
+        document.getElementById("install_address").value = data[key];
+    }
+              if (key === "설치주소_상세") {
+        document.getElementById("install_address").value = data[key];
+    }
+});
         alert(name + '님의 정보를 불러왔습니다. 주소를 확인해주세요!');
     })
     .catch(err => alert('조회 중 오류가 발생했습니다.'));
