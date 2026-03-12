@@ -856,20 +856,20 @@ function formatPhoneNumber(input) {
     const name = document.getElementById('search_name').value;
     if (!name) return alert('이름을 입력해주세요.');
 
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnrAW23ivSJGYtV3aPx4PAW0icaETlEuq62tqpRtgEU5UAdUJfr3QUCCY9pnqBmAw/exec"; 
+    // 본인의 웹앱 URL 확인
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzWanbktzPHkpXn6SXvaccGu0fheXVTyFRwR7t20B-7wM4XGT5ZCwODbTMj9MRBmUUD/exec"; 
     
     fetch(`${WEB_APP_URL}?action=search&name=${encodeURIComponent(name)}`)
     .then(res => res.json())
     .then(data => {
         if (data.error) return alert(data.error);
         
-        // 시트 헤더와 HTML의 name이 같으면 자동으로 매칭해서 채움
         Object.keys(data).forEach(key => {
+            // 1. 일반 필드 채우기
             const elements = document.getElementsByName(key);
             if (elements.length > 0) {
                 const el = elements[0];
                 if (el.type === 'radio' || el.type === 'checkbox') {
-                    // 체크박스/라디오 처리 (값이 'v'이면 체크)
                     for(let i=0; i<elements.length; i++) {
                         if(elements[i].value === data[key] || data[key] === 'v') elements[i].checked = true;
                     }
@@ -877,8 +877,17 @@ function formatPhoneNumber(input) {
                     el.value = data[key];
                 }
             }
+
+            // 2. [핵심] 주소 필드 강제 매핑 (시트 헤더명에 상관없이 ID로 직접 입력)
+            // 시트의 컬럼명이 '주소', '주소_기본', '주소_상세' 등 무엇이든 대응합니다.
+            if (key === "주소_기본" || key === "주소") {
+                document.getElementById("main_address").value = data[key];
+            }
+            if (key === "주소_상세" || key === "상세주소") {
+                document.getElementById("detail_address").value = data[key];
+            }
         });
-        alert(name + '님의 정보를 불러왔습니다. 수정 후 제출하세요!');
+        alert(name + '님의 정보를 불러왔습니다. 주소를 확인해주세요!');
     })
     .catch(err => alert('조회 중 오류가 발생했습니다.'));
 }
