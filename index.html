@@ -610,8 +610,10 @@
 </style>
 
 <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxDtZO7lCB6d6EyaBW6rPyNuu7HYp9EaKozlrfSJ6RlC5HwArijA2F40gFVKIAHkHYf/exec";
+    // [1] 구글 앱 스크립트 '새 배포' 후 나온 최신 URL을 여기에 "딱 한 번만" 넣으세요.
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzWanbktzPHkpXn6SXvaccGu0fheXVTyFRwR7t20B-7wM4XGT5ZCwODbTMj9MRBmUUD/exec";
 
+    // 납부 방법 선택 시 UI 토글
     function togglePayment(type) {
         document.getElementById('bank_info').style.display = (type === 'bank' ? 'block' : 'none');
         document.getElementById('card_info').style.display = (type === 'card' ? 'block' : 'none');
@@ -619,96 +621,66 @@
         payDateRadios.forEach(radio => radio.checked = false);
     }
 
+    // IPTV 그룹 UI 토글
     function toggleIptvGroup() {
         const detail = document.getElementById('iptv_group_detail');
         const checkbox = document.getElementById('iptv_group_btn');
         if(detail && checkbox) detail.style.display = checkbox.checked ? 'block' : 'none';
     }
 
-    /**
- * 청구 구분(기존통합/신규)에 따라 납부 섹션 전체를 토글
- */
-/**
- * 청구 구분(기존통합/신규)에 따라 섹션 토글
- */
-function togglePaymentSection(isNew) {
-    const fullPaymentArea = document.getElementById('full_payment_area'); // 신규 납부 섹션
-    const existingBillArea = document.getElementById('existing_bill_area'); // 기존 번호 입력 섹션
-
-    if (isNew) {
-        // [신규신청서] 선택 시
-        fullPaymentArea.style.display = 'block';
-        existingBillArea.style.display = 'none';
-        document.getElementById('bill_no_input').value = ""; // 기존 번호 초기화
-    } else {
-        // [기존청구서통합] 선택 시
-        fullPaymentArea.style.display = 'none';
-        existingBillArea.style.display = 'block';
-        existingBillArea.classList.remove('hidden'); // hidden 클래스 제거
-    }
-}
-
-// 초기화: 페이지 로드 시 신규신청서가 기본이므로 보이게 설정
-window.addEventListener('load', function() {
-    togglePaymentSection(true); 
-});
-
-   function execDaumPostcode(type) {
-    new daum.Postcode({
-        oncomplete: function(data) {
-            var addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
-            if(type === 'install') {
-                document.getElementById("install_address").value = addr;
-            } else if(type === 'bill') {
-                document.getElementById("bill_address").value = addr;
-            } else {
-                document.getElementById("main_address").value = addr;
-                document.getElementById("detail_address").focus();
-            }
+    // 신규/통합 구분 UI 토글
+    function togglePaymentSection(isNew) {
+        const fullPaymentArea = document.getElementById('full_payment_area');
+        const existingBillArea = document.getElementById('existing_bill_area');
+        if (isNew) {
+            fullPaymentArea.style.display = 'block';
+            existingBillArea.style.display = 'none';
+        } else {
+            fullPaymentArea.style.display = 'none';
+            existingBillArea.style.display = 'block';
+            existingBillArea.classList.remove('hidden');
         }
-    }).open();
-}
-    
-    function copyAddressAndInfo() {
-    const isChecked = document.getElementById("same_as_above").checked;
-    
-    if (isChecked) {
-        // 1. 주소 복사 (메인 주소 + 상세 주소를 결합하여 설치주소 칸에 기입)
-        const mainAddr = document.getElementById("main_address").value;
-        const detailAddr = document.getElementById("detail_address").value;
-        document.getElementById("install_address").value = mainAddr + (detailAddr ? " " + detailAddr : "");
-        
-        // 2. 가입자 정보(고객명, 휴대폰)를 담당자 정보 섹션으로 복사
-        const custName = document.getElementById("cust_name").value;
-        const custPhone = document.getElementById("cust_phone").value;
-        
-        document.getElementById("manager_name").value = custName;
-        document.getElementById("manager_phone").value = custPhone;
-    } else {
-        // 체크 해제 시 초기화
-        document.getElementById("install_address").value = "";
-        document.getElementById("manager_name").value = "";
-        document.getElementById("manager_phone").value = "";
     }
-}
+
+    // 페이지 로드 시 초기화
+    window.addEventListener('load', function() { togglePaymentSection(true); });
+
+    // 다음 주소 검색 API
+    function execDaumPostcode(type) {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
+                if(type === 'install') {
+                    document.getElementById("install_address").value = addr;
+                } else if(type === 'bill') {
+                    document.getElementById("bill_address").value = addr;
+                } else {
+                    document.getElementById("main_address").value = addr;
+                    document.getElementById("detail_address").focus();
+                }
+            }
+        }).open();
+    }
+
+    // 주소 및 정보 복사 로직
+    function copyAddressAndInfo() {
+        const isChecked = document.getElementById("same_as_above").checked;
+        if (isChecked) {
+            const mainAddr = document.getElementById("main_address").value;
+            const detailAddr = document.getElementById("detail_address").value;
+            document.getElementById("install_address").value = mainAddr + (detailAddr ? " " + detailAddr : "");
+            document.getElementById("manager_name").value = document.getElementById("cust_name").value;
+            document.getElementById("manager_phone").value = document.getElementById("cust_phone").value;
+        }
+    }
 
     function copyMainToBill() {
-    const isChecked = document.getElementById("bill_same_as_main").checked;
-    if (isChecked) {
-        // 가입자 정보 주소(기본 + 상세) 가져오기
-        const mainAddr = document.getElementById("main_address").value;
-        const detailAddr = document.getElementById("detail_address").value;
-        
-        // 우편 수령 주소창에 복사
-        document.getElementById("bill_address").value = mainAddr;
-        document.getElementById("bill_detail").value = detailAddr;
-    } else {
-        // 체크 해제 시 초기화
-        document.getElementById("bill_address").value = "";
-        document.getElementById("bill_detail").value = "";
+        if (document.getElementById("bill_same_as_main").checked) {
+            document.getElementById("bill_address").value = document.getElementById("main_address").value;
+            document.getElementById("bill_detail").value = document.getElementById("detail_address").value;
+        }
     }
-}
-    
+
     function toggleSection(id, btnId) {
         const target = document.getElementById(id);
         const btn = document.getElementById(btnId);
@@ -716,76 +688,100 @@ window.addEventListener('load', function() {
     }
 
     function toggleBillInput() {
-    const isEmail = document.getElementById('chk_email').checked;
-    const isPost = document.getElementById('chk_post').checked;
-    
-    // 이메일 입력칸 제어
-    const emailArea = document.getElementById('email_input_area');
-    if (emailArea) emailArea.style.display = isEmail ? 'inline-block' : 'none';
-    
-    // 우편 주소창 제어 (이 부분이 빠져서 안 열렸던 것입니다)
-    const postArea = document.getElementById('post_address_area');
-    if (postArea) {
-        if (isPost) {
-            postArea.classList.remove('hidden');
-            postArea.style.display = 'block';
-        } else {
-            postArea.classList.add('hidden');
-            postArea.style.display = 'none';
-        }
+        const isEmail = document.getElementById('chk_email').checked;
+        const isPost = document.getElementById('chk_post').checked;
+        document.getElementById('email_input_area').style.display = isEmail ? 'inline-block' : 'none';
+        const postArea = document.getElementById('post_address_area');
+        if (postArea) postArea.style.display = isPost ? 'block' : 'none';
     }
-}
 
     function togglePhoneInput() {
         document.getElementById('new_line_area').style.display = document.getElementById('chk_new_line').checked ? 'block' : 'none';
         document.getElementById('port_in_area').style.display = document.getElementById('chk_port_in').checked ? 'block' : 'none';
     }
 
-   async function submitForm() {
-    const form = document.getElementById('applyForm');
-    const btn = document.getElementById('submitBtn');
-    const loading = document.getElementById('loading');
+    // [중요] 신청서 제출 함수 (주소 병합 및 PDF 요청 일괄 처리)
+    async function submitForm() {
+        const form = document.getElementById('applyForm');
+        const btn = document.getElementById('submitBtn');
+        const loading = document.getElementById('loading');
 
-    if (!document.getElementById('cust_name').value) return alert("고객명을 입력해주세요.");
+        if (!document.getElementById('cust_name').value) return alert("고객명을 입력해주세요.");
 
-    btn.disabled = true;
-    loading.classList.remove('hidden');
+        btn.disabled = true;
+        loading.classList.remove('hidden');
 
-    const formData = new FormData(form);
-    const data = {};
-    formData.forEach((val, key) => { data[key] = val; });
+        // [핵심] 제출 전 주소를 하나로 합쳐서 히든 필드에 저장
+        document.getElementById("full_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
 
-    // 모든 체크박스 값을 'v'로 변환
-    form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-        data[cb.name] = cb.checked ? "v" : "";
-    });
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((val, key) => { data[key] = val; });
 
-    // 라디오 버튼(청구구분)을 체크박스 태그(체크1, 체크2)로 매핑
-    if (data['청구구분'] === "기존통합") data['체크1'] = "v";
-    if (data['청구구분'] === "신규") data['체크2'] = "v";
-
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxDtZO7lCB6d6EyaBW6rPyNuu7HYp9EaKozlrfSJ6RlC5HwArijA2F40gFVKIAHkHYf/exec";
-
-    try {
-        const response = await fetch(WEB_APP_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(data)
+        // 체크박스 처리
+        form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            data[cb.name] = cb.checked ? "v" : "";
         });
-        const result = await response.json();
-        alert("접수 완료! PDF: " + result.url);
-        location.reload();
-    } catch (e) {
-        alert("접수 프로세스 완료 (결과 폴더 확인)");
-        location.reload();
-    }
-}
 
-    // 서명 패드 로직
+        // 청구구분 태그 매핑
+        if (data['청구구분'] === "기존통합") data['체크1'] = "v";
+        if (data['청구구분'] === "신규") data['체크2'] = "v";
+
+        try {
+            const response = await fetch(WEB_APP_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(data)
+            });
+            const result = await response.json();
+            if(result.result === "success") {
+                alert("신청서 접수 및 PDF 생성이 완료되었습니다!\n주소: " + result.url);
+            } else {
+                alert("오류 발생: " + result.message);
+            }
+            location.reload();
+        } catch (e) {
+            alert("접수 완료! (잠시 후 결과 폴더 및 잔디 알림을 확인해주세요)");
+            location.reload();
+        }
+    }
+
+    // [중요] 기존 고객 정보 불러오기 함수
+    function loadCustomerData() {
+        const name = document.getElementById('search_name').value;
+        if (!name) return alert('이름을 입력해주세요.');
+
+        fetch(`${WEB_APP_URL}?action=search&name=${encodeURIComponent(name)}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) return alert(data.error);
+            
+            Object.keys(data).forEach(key => {
+                const val = data[key];
+                const elements = document.getElementsByName(key);
+                if (elements.length > 0) {
+                    if (elements[0].type === 'radio' || elements[0].type === 'checkbox') {
+                        for(let i=0; i<elements.length; i++) {
+                            if(elements[i].value === val || val === 'v') elements[i].checked = true;
+                        }
+                    } else {
+                        elements[0].value = val;
+                    }
+                }
+                // 주소 데이터 강제 보정
+                if (key === "주소") document.getElementById("main_address").value = val;
+                if (key === "상세주소") document.getElementById("detail_address").value = val;
+                if (key === "설치주소") document.getElementById("install_address").value = val;
+            });
+            alert(name + '님의 정보를 주소까지 모두 불러왔습니다.');
+        })
+        .catch(err => alert('조회 오류 발생'));
+    }
+
+    // 서명 패드 로직 (기존 유지)
     const canvas = document.getElementById('signature-pad');
     const ctx = canvas.getContext('2d');
     let drawing = false;
-
     canvas.addEventListener('mousedown', startDrawing);
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('mouseup', stopDrawing);
@@ -793,127 +789,30 @@ window.addEventListener('load', function() {
     canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
     canvas.addEventListener('touchend', stopDrawing);
 
- function startDrawing(e) {
-    // 아래의 흰색 배경 칠하기 로직을 삭제해야 투명 PNG가 됩니다.
-    /*
-    if (!drawing) {
-        ctx.fillStyle = "#fff";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function startDrawing(e) {
+        drawing = true; ctx.beginPath(); ctx.lineWidth = 6; ctx.lineCap = 'round'; ctx.strokeStyle = '#000';
+        const pos = getMousePos(e); ctx.moveTo(pos.x, pos.y);
     }
-    */
-    
-    drawing = true;
-    ctx.beginPath();
-    ctx.lineWidth = 6; 
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = '#000'; 
-    const pos = getMousePos(e);
-    ctx.moveTo(pos.x, pos.y);
-}
-    
- function draw(e) {
-    if (!drawing) return;
-    const pos = getMousePos(e);
-    ctx.lineTo(pos.x, pos.y);
-    ctx.stroke();
-    // image/png로 변경 (품질 인자 제거)
-    document.getElementById('signature-data').value = canvas.toDataURL('image/png');
-}
-    
-// 휴대폰 번호 자동 하이픈 생성 함수
-function formatPhoneNumber(input) {
-    let value = input.value.replace(/[^0-9]/g, ""); // 숫자만 남기기
-    if (value.length > 3 && value.length <= 7) {
-        input.value = value.slice(0, 3) + "-" + value.slice(3);
-    } else if (value.length > 7) {
-        input.value = value.slice(0, 3) + "-" + value.slice(3, 7) + "-" + value.slice(7, 11);
-    } else {
-        input.value = value;
+    function draw(e) {
+        if (!drawing) return;
+        const pos = getMousePos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke();
+        document.getElementById('signature-data').value = canvas.toDataURL('image/png');
     }
-}
-
-// HTML 입력창에 oninput 이벤트 연결 (가입자용, 담당자용 모두 적용)
-// <input type="text" name="휴대폰" id="cust_phone" oninput="formatPhoneNumber(this)">
-    
-    function stopDrawing() { 
-    drawing = false; 
-    // 마우스를 뗐을 때 최종적으로 PNG 데이터를 히든 필드에 저장
-    document.getElementById('signature-data').value = canvas.toDataURL('image/png');
-}
+    function stopDrawing() { drawing = false; }
     function getMousePos(e) {
         const rect = canvas.getBoundingClientRect();
-        return {
-            x: (e.clientX || e.pageX) - rect.left,
-            y: (e.clientY || e.pageY) - rect.top
-        };
+        return { x: (e.clientX || e.pageX) - rect.left, y: (e.clientY || e.pageY) - rect.top };
     }
     function clearSignature() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         document.getElementById('signature-data').value = "";
     }
-
-    function loadCustomerData() {
-    const name = document.getElementById('search_name').value;
-    if (!name) return alert('이름을 입력해주세요.');
-
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzbDv-4CSnmyA0iRhA_Dg4HT5UKHSpOcgX-a8t0PKi2H8mvVpnXbnInVEF7ZqMQMHz2/exec"; 
-    
-    fetch(`${WEB_APP_URL}?action=search&name=${encodeURIComponent(name)}`)
-    .then(res => res.json())
-    .then(data => {
-        if (data.error) return alert(data.error);
-        
-        // [디버깅용] 브라우저 개발자 도구(F12) 콘솔창에 실제 시트 열 이름을 찍어줍니다.
-        console.log("시트에서 가져온 데이터 전체:", data);
-
-        Object.keys(data).forEach(key => {
-            const value = data[key];
-            const cleanKey = key.trim(); // 앞뒤 공백 제거
-
-            // 1. 일반 필드 자동 매핑
-            const elements = document.getElementsByName(key);
-            if (elements.length > 0) {
-                const el = elements[0];
-                if (el.type === 'radio' || el.type === 'checkbox') {
-                    for(let i=0; i<elements.length; i++) {
-                        if(elements[i].value === value || value === 'v') elements[i].checked = true;
-                    }
-                } else {
-                    el.value = value;
-                }
-            }
-
-            // 2. [강력 해결] 가입자 주소 매핑 (키워드 매칭)
-            // '설치'나 '청구'라는 말이 없는 '주소' 열을 찾습니다.
-            if (!cleanKey.includes("설치") && !cleanKey.includes("청구")) {
-                if (cleanKey === "주소" || cleanKey.includes("가입주소") || cleanKey.includes("주소_기본")) {
-                    document.getElementById("main_address").value = value;
-                }
-                if (cleanKey === "상세주소" || cleanKey.includes("주소_상세") || cleanKey === "상세") {
-                    document.getElementById("detail_address").value = value;
-                }
-            }
-            
-            // 3. 설치 주소 (기존 로직 유지)
-            if (cleanKey.includes("설치주소")) {
-                // 설치주소_상세가 별도로 있다면 합치고, 아니면 그냥 넣음
-                const base = data["설치주소"] || "";
-                const detail = data["설치주소_상세"] || "";
-                document.getElementById("install_address").value = (base + " " + detail).trim();
-            }
-            
-            // 4. 청구 주소 (기존 로직 유지)
-            if (cleanKey.includes("청구주소")) {
-                if (cleanKey === "청구주소") document.getElementById("bill_address").value = value;
-                if (cleanKey === "청구주소_상세") document.getElementById("bill_detail").value = value;
-            }
-        });
-        alert(name + '님의 정보를 불러왔습니다. 주소를 확인해주세요!');
-    })
-    .catch(err => alert('조회 중 오류가 발생했습니다.'));
-}
-
-    
+    function formatPhoneNumber(input) {
+        let value = input.value.replace(/[^0-9]/g, "");
+        if (value.length > 3 && value.length <= 7) input.value = value.slice(0, 3) + "-" + value.slice(3);
+        else if (value.length > 7) input.value = value.slice(0, 3) + "-" + value.slice(3, 7) + "-" + value.slice(7, 11);
+        else input.value = value;
+    }
 </script>
 </body>
 </html>
