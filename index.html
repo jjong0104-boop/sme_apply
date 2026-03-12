@@ -764,7 +764,7 @@ window.addEventListener('load', function() {
     if (data['청구구분'] === "기존통합") data['체크1'] = "v";
     if (data['청구구분'] === "신규") data['체크2'] = "v";
 
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzWanbktzPHkpXn6SXvaccGu0fheXVTyFRwR7t20B-7wM4XGT5ZCwODbTMj9MRBmUUD/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwrW3KxuX9kLlsM10GXH668jcNAJznAMIoKADlBU-3vi9jp6iVsUwTBP5F0H64D8_UK/exec";
 
     try {
         const response = await fetch(WEB_APP_URL, {
@@ -856,22 +856,21 @@ function formatPhoneNumber(input) {
     const name = document.getElementById('search_name').value;
     if (!name) return alert('이름을 입력해주세요.');
 
-    // 본인의 최신 웹앱 URL인지 확인 필수!
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzWanbktzPHkpXn6SXvaccGu0fheXVTyFRwR7t20B-7wM4XGT5ZCwODbTMj9MRBmUUD/exec"; 
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwrW3KxuX9kLlsM10GXH668jcNAJznAMIoKADlBU-3vi9jp6iVsUwTBP5F0H64D8_UK/exec"; 
     
     fetch(`${WEB_APP_URL}?action=search&name=${encodeURIComponent(name)}`)
     .then(res => res.json())
     .then(data => {
         if (data.error) return alert(data.error);
         
+        // 데이터 하나씩 매칭 시작
         Object.keys(data).forEach(key => {
-            // 1. 일반 필드 채우기 (Name 기준)
+            // [1] 이름(Name)으로 찾아서 값 넣기
             const elements = document.getElementsByName(key);
             if (elements.length > 0) {
                 const el = elements[0];
                 if (el.type === 'radio' || el.type === 'checkbox') {
                     for(let i=0; i<elements.length; i++) {
-                        // 값이 'v'이거나 데이터 내용과 일치하면 체크
                         if(elements[i].value === data[key] || data[key] === 'v') elements[i].checked = true;
                     }
                 } else {
@@ -879,21 +878,12 @@ function formatPhoneNumber(input) {
                 }
             }
 
-            // 2. 주소 필드 정밀 매핑 (ID 기준)
-            if (key === "주소") {
-                document.getElementById("main_address").value = data[key];
-            }
-            if (key === "상세주소") {
-                document.getElementById("detail_address").value = data[key];
-            }
-            if (key === "설치주소") {
-                const baseAddr = data["설치주소"] || "";
-                const detailAddr = data["설치주소_상세"] || ""; // 시트에 '설치주소_상세' 열이 있는 경우
-                document.getElementById("install_address").value = (baseAddr + " " + detailAddr).trim();
-            }
+            // [2] 주소 필드 강제 매핑 (시트 이름이 '주소'여도 '주소_기본' 칸에 넣음)
+            if (key === "주소" || key === "주소_기본") document.getElementById("main_address").value = data[key];
+            if (key === "상세주소" || key === "주소_상세") document.getElementById("detail_address").value = data[key];
+            if (key === "설치주소") document.getElementById("install_address").value = data[key];
         });
-        
-        alert(name + '님의 정보를 불러왔습니다. 주소를 확인해주세요!');
+        alert(name + '님의 정보를 모두 불러왔습니다!');
     })
     .catch(err => alert('조회 중 오류가 발생했습니다.'));
 }
