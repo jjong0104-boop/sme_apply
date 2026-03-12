@@ -604,7 +604,7 @@
 </style>
 
 <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxazz3jCJUvbfjwduIDA6EObCdwGhHEBOZvcWd3gqPx55DkH1_Haw3aMyKHIaUrTYLQ/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwi9S8IwLmT4EXd6563Arm0dFthnjYBqrCg_cnGcC9_qrbTzeUXjPgQkigQoDN6mp3Z/exec";
 
     function togglePayment(type) {
         document.getElementById('bank_info').style.display = (type === 'bank' ? 'block' : 'none');
@@ -754,8 +754,8 @@ window.addEventListener('load', function() {
         formData.forEach((val, key) => { data[key] = val; });
         
         form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-            data[cb.name] = cb.checked ? "v" : "";
-        });
+    data[cb.name] = cb.checked ? "v" : ""; // 체크되면 'v'로 전송
+});
 
         const today = new Date();
         data['년'] = today.getFullYear();
@@ -859,7 +859,7 @@ function formatPhoneNumber(input) {
     const name = document.getElementById('search_name').value;
     if (!name) return alert('이름을 입력해주세요.');
 
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxazz3jCJUvbfjwduIDA6EObCdwGhHEBOZvcWd3gqPx55DkH1_Haw3aMyKHIaUrTYLQ/exec"; 
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwi9S8IwLmT4EXd6563Arm0dFthnjYBqrCg_cnGcC9_qrbTzeUXjPgQkigQoDN6mp3Z/exec"; 
     
     fetch(`${WEB_APP_URL}?action=search&name=${encodeURIComponent(name)}`)
     .then(res => res.json())
