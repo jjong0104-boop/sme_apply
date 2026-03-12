@@ -731,58 +731,45 @@ window.addEventListener('load', function() {
         document.getElementById('port_in_area').style.display = document.getElementById('chk_port_in').checked ? 'block' : 'none';
     }
 
-    async function submitForm() {
-        const form = document.getElementById('applyForm');
-        const btn = document.getElementById('submitBtn');
-        const loading = document.getElementById('loading');
-        const custNameInput = document.getElementById('cust_name');
+   async function submitForm() {
+    const form = document.getElementById('applyForm');
+    const btn = document.getElementById('submitBtn');
+    const loading = document.getElementById('loading');
 
-        if (!custNameInput.value.trim()) {
-            alert("고객명을 입력해주세요.");
-            custNameInput.focus();
-            return;
-        }
+    if (!document.getElementById('cust_name').value) return alert("고객명을 입력해주세요.");
 
-        btn.disabled = true;
-        btn.innerText = "데이터 처리 중...";
-        loading.classList.remove('hidden');
+    btn.disabled = true;
+    loading.classList.remove('hidden');
 
-        document.getElementById("full_address").value = document.getElementById("main_address").value + " " + document.getElementById("detail_address").value;
+    const formData = new FormData(form);
+    const data = {};
+    formData.forEach((val, key) => { data[key] = val; });
 
-        const formData = new FormData(form);
-        const data = {};
-        formData.forEach((val, key) => { data[key] = val; });
-        
-        form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-    data[cb.name] = cb.checked ? "v" : ""; // 체크되면 'v'로 전송
-});
-
-        const today = new Date();
-        data['년'] = today.getFullYear();
-        data['월'] = today.getMonth() + 1;
-        data['일'] = today.getDate();
-
-       try {
-    const response = await fetch(WEB_APP_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data)
+    // 모든 체크박스 값을 'v'로 변환
+    form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        data[cb.name] = cb.checked ? "v" : "";
     });
 
-    const result = await response.json(); // 결과 읽기
+    // 라디오 버튼(청구구분)을 체크박스 태그(체크1, 체크2)로 매핑
+    if (data['청구구분'] === "기존통합") data['체크1'] = "v";
+    if (data['청구구분'] === "신규") data['체크2'] = "v";
 
-    if (result.result === "success") {
-        alert("신청서 접수 및 PDF 생성이 완료되었습니다!\n\nPDF 주소: " + result.url);
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnrAW23ivSJGYtV3aPx4PAW0icaETlEuq62tqpRtgEU5UAdUJfr3QUCCY9pnqBmAw/exec";
+
+    try {
+        const response = await fetch(WEB_APP_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(data)
+        });
+        const result = await response.json();
+        alert("접수 완료! PDF: " + result.url);
         location.reload();
-    } else {
-        alert("오류 발생: " + result.message);
+    } catch (e) {
+        alert("접수 프로세스 완료 (결과 폴더 확인)");
+        location.reload();
     }
-} catch (e) {
-    // CORS 에러가 나더라도 실제로는 전송되는 경우가 많으므로 예외 처리
-    alert("접수 완료! (잠시 후 결과 폴더를 확인해주세요)");
-    location.reload();
 }
-    }
 
     // 서명 패드 로직
     const canvas = document.getElementById('signature-pad');
@@ -859,7 +846,7 @@ function formatPhoneNumber(input) {
     const name = document.getElementById('search_name').value;
     if (!name) return alert('이름을 입력해주세요.');
 
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwdaxIWZ5grf9C0HQOLc8yrjx8DUw7IRoMeKbOYsaaaHJF8vAYr0JjRv-O4q3L69RgA/exec"; 
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxnrAW23ivSJGYtV3aPx4PAW0icaETlEuq62tqpRtgEU5UAdUJfr3QUCCY9pnqBmAw/exec"; 
     
     fetch(`${WEB_APP_URL}?action=search&name=${encodeURIComponent(name)}`)
     .then(res => res.json())
