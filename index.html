@@ -591,7 +591,7 @@
 </style>
 
 <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxeoIPXHvQaRbyxx4rFnjDMNyAS9YIdWsbW7nLPEvx2R9YFnHd0x7zLJzqhhxMvGpEf/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxazz3jCJUvbfjwduIDA6EObCdwGhHEBOZvcWd3gqPx55DkH1_Haw3aMyKHIaUrTYLQ/exec";
 
     function togglePayment(type) {
         document.getElementById('bank_info').style.display = (type === 'bank' ? 'block' : 'none');
@@ -846,7 +846,7 @@ function formatPhoneNumber(input) {
     const name = document.getElementById('search_name').value;
     if (!name) return alert('이름을 입력해주세요.');
 
-    const WEB_APP_URL = "여기에_본인의_웹앱_URL_입력"; 
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxazz3jCJUvbfjwduIDA6EObCdwGhHEBOZvcWd3gqPx55DkH1_Haw3aMyKHIaUrTYLQ/exec"; 
     
     fetch(`${WEB_APP_URL}?action=search&name=${encodeURIComponent(name)}`)
     .then(res => res.json())
