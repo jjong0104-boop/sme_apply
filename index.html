@@ -550,7 +550,20 @@
         </div>
     </div>
 </div>
-
+            
+<div class="section" style="border: 2px solid #e1007e; background: #fff5f8;">
+    <h3>5. 신청서 사본 발송 (선택)</h3>
+    <div class="sub-box">
+        <label style="font-weight: bold; color: #e1007e; cursor: pointer;">
+            <input type="checkbox" name="mail_send_check" value="on"> 📄 작성된 PDF 신청서를 고객 이메일로 즉시 발송합니다.
+        </label>
+        <div style="margin-top: 10px;">
+            <input type="email" name="고객이메일" placeholder="발송받을 고객의 이메일 주소를 입력하세요" 
+                   style="width: 100%; padding: 12px; border: 1px solid #ffc1e3; border-radius: 4px;">
+        </div>
+    </div>
+</div>
+            
 <div class="section" style="text-align: center; margin-top: 30px;">
             <button type="button" id="submitBtn" class="submit-btn" onclick="submitForm()">신청서 제출하기</button>
             <div id="loading" class="hidden" style="margin-top: 20px;">
