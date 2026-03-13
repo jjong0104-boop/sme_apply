@@ -493,11 +493,17 @@
     </div>
 </div>
 
-    <div class="section">
-    <h3>[요금제 정보]</h3>
-    <table style="width:100%; border-collapse: collapse; text-align: center;">
+    <div class="section" style="margin-top: 20px;">
+    <h3 style="color: #333; margin-bottom: 10px;">[요금제 정보]</h3>
+    
+    <div style="background-color: #fff0f5; padding: 10px; margin-bottom: 5px; border-radius: 5px;">
+        <label><input type="checkbox" name="종량제"> 종량제</label> &nbsp;
+        <label><input type="checkbox" name="정액제" checked> 정액제</label>
+    </div>
+
+    <table style="width:100%; border-collapse: collapse; text-align: center; border: 1px solid #ddd;">
         <thead>
-            <tr style="background-color: #f2f2f2;">
+            <tr style="background-color: #f2f2f2; font-size: 14px;">
                 <th style="border: 1px solid #ddd; padding: 8px; width: 40%;">정액제명</th>
                 <th style="border: 1px solid #ddd; padding: 8px; width: 20%;">회선수</th>
                 <th style="border: 1px solid #ddd; padding: 8px; width: 40%;">대상번호</th>
@@ -505,21 +511,21 @@
         </thead>
         <tbody>
             <script>
-                const options = ["자유3", "자유4", "자유6", "자유8", "자유10", "자유15", "자유20", "자유30", "자유50"];
+                const plans = ["자유3", "자유4", "자유6", "자유8", "자유10", "자유15", "자유20", "자유30", "자유50"];
                 for (let i = 1; i <= 4; i++) {
                     document.write(`
                         <tr>
                             <td style="border: 1px solid #ddd; padding: 5px;">
-                                <select name="정액제명_${i}" style="width: 100%; padding: 5px; border: none;">
-                                    <option value="">선택하세요</option>
-                                    ${options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                                <select name="정액제명${i}" style="width: 100%; padding: 6px; border: 1px solid #eee; border-radius: 3px;">
+                                    <option value="">요금제 선택</option>
+                                    ${plans.map(p => `<option value="${p}">${p}</option>`).join('')}
                                 </select>
                             </td>
                             <td style="border: 1px solid #ddd; padding: 5px;">
-                                <input type="number" name="회선수_${i}" style="width: 90%; padding: 5px; border: none; text-align: center;">
+                                <input type="number" name="회선수${i}" placeholder="0" style="width: 80%; padding: 6px; border: 1px solid #eee; border-radius: 3px; text-align: center;">
                             </td>
                             <td style="border: 1px solid #ddd; padding: 5px;">
-                                <input type="text" name="대상번호_${i}" style="width: 95%; padding: 5px; border: none;">
+                                <input type="text" name="대상번호${i}" placeholder="번호 입력" style="width: 90%; padding: 6px; border: 1px solid #eee; border-radius: 3px;">
                             </td>
                         </tr>
                     `);
